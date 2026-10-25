@@ -74,7 +74,7 @@ Everything else about the project lives in [docs](docs): file formats, the game'
 
 ## Notes
 
-- **Assets.** Some community assets have unclear ownership; we use them only inside this project and will remove anything on request. Details in [docs/licensing.md](docs/licensing.md). The [COTLS reference-assets guide](extra-assets/reference-assets/cotls-vanilla/README.md) describes the Polish base-game menu, text and audio resources and how to rebuild their archives; these references are not an automatically installed UM language pack.
+- **Assets.** Some community assets have unclear ownership; we use them only inside this project and will remove anything on request. Details in [docs/licensing.md](docs/licensing.md). The [COTLS reference-assets guide](extra-assets/reference-assets/cotls-vanilla/README.md) describes the Polish base-game menu, text and audio resources, their known gaps, and how to rebuild, install, update and restore the archives; these references are not an automatically installed UM language pack.
 - **Compatibility.** The mod was made with the HD Lands texture pack. Large visual overhauls that change base game files (for example Evil Islands: Rebirth) are not supported and may break.
 - **Use of AI.** Much of the tooling (um-multitool, um.dll, EIStarter-UM) was written with AI help; the code is reviewed, tested and maintained by humans. The file formats the tools handle were reverse-engineered with AI from the game's executable and files, then compared byte for byte with the game's own files and with older community tools.
 - **Politics.** Western and Russian modders contributed. This is a passion project; we take no part in political discussions or conflicts.

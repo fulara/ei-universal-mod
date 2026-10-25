@@ -40,6 +40,10 @@ Keep the original `pol-sfx_res` reference unchanged. Merge the fallback subset o
 
 Use the current UM maps rather than replacing them with maps from an old localization. A static check of the 222 UM map-dump `.eis` / `.yaml` files found 11 literal `SAY` identifiers, all already present in `pol-texts_res`; no additional `SendStringEvent` / `say_block` calls were found in the English quest source tree. No blanket aliases for the differently named Russian scenario strings are added. This check does not resolve dynamically constructed identifiers or translate new UM content.
 
+### Known base-game text gaps
+
+The retained Polish texts lack four entries found in the Russian 1.06 edition: `LITEM SuccubusBlue00`, `LITEM SuccubusBlue00_2`, `LITEM SuccubusBlue00_3` (harpy-head item names/descriptions) and `TIP 30103` (the exit-to-Windows tooltip). They are not silently translated or copied from Russian here. The references are preserved source material, not a claim of complete Russian-key coverage.
+
 ## Rebuild the game archives
 
 Use [um-multitool](../../../tools/um-multitool/README.md), not a ZIP archiver. `restool --pack` rebuilds the raw asset directories; `texts --pack` rebuilds the grouped text directories.
@@ -47,6 +51,7 @@ Use [um-multitool](../../../tools/um-multitool/README.md), not a ZIP archiver. `
 The following is a POSIX-shell example, run from the repository root with `um-multitool` on `PATH`. It writes all output to a new temporary directory, leaving the reference files unchanged. The SFX inputs are copied there first; fallback files are added only when the target path does not already exist, preserving any existing Polish recordings:
 
 ```sh
+set -e
 REF="extra-assets/reference-assets/cotls-vanilla"
 OUT="$(mktemp -d "${TMPDIR:-/tmp}/ei-cotls-pl.XXXXXX")"
 
@@ -69,9 +74,31 @@ On Windows, use `um-multitool.exe` with the same subcommands and Windows paths. 
 
 Rebuilt archive containers need not be byte-identical to the original `.res` files: packing can deduplicate payloads and change metadata. Validation compared entry paths under the format's case-insensitive lookup and every payload's length and SHA-256. On the tested case-insensitive filesystem, 31 mixed `Acks`/`acks` path spellings were canonicalized during the SFX roundtrip; payloads and lookup keys were unchanged.
 
-## Scope and installation caution
+## Install, update and restore
 
-For an owned base-game installation, close the game and back up the original archives before replacing selected files in its `Res` directory. These are **base-game** resources: do not overwrite `Universal-Mod/res`, its gameplay databases or its maps with them. New UM content requires its own compatible language pack.
+### First installation
+
+1. Close the game before changing its resources.
+2. Find the **original base-game installation**, containing `game.exe` and `Res`. The tested GOG path was `C:\GOG Games\Evil Islands\Res`; this is not `EIStarter-UM\mods\Universal-Mod\res`.
+3. Before the first replacement, copy the original `menus.res`, `speech.res`, `sfx.res`, `texts.res` and `textslmp.res` to a separate backup directory outside `Res`. Keep that clean backup; do not overwrite it with already localized files during later updates.
+4. Rebuild the archives using the commands above. Copy the five resulting `.res` files from the printed output directory into the base game's `Res`, replacing only those five files. Do not copy the source directories or the three-file Russian fallback subset directly into the game.
+5. Start through your usual launcher. Check the menu and Polish text before continuing. On CrossOver, the separately tested Polish setup used `LANG=pl_PL.UTF-8` and `LC_ALL=pl_PL.UTF-8` in the bottle; see the [CrossOver locale instructions](https://github.com/Kyr4l/ei-universal-mod/blob/master/docs/macos-crossover.md#4-match-the-locale-to-the-games-text-resources).
+
+These are **base-game** resources: do not overwrite `Universal-Mod/res`, its gameplay databases or its maps with them. New and overridden UM text remains controlled by the active UM language pack; these files do not translate that content.
+
+### Updates and reinstalls
+
+- **Updating these Polish resources:** rebuild and replace the same five base-game archives with the game closed. Retain your first clean backup. A future Polish recording at one of the fallback paths takes precedence over the Russian fallback.
+- **Updating/reinstalling UM:** the [documented launcher updater](../../../docs/EIStarter-UM.md) replaces the selected mod folder, not the separate base-game `Res` directory. It does not install or refresh this Polish package. Custom files placed inside the mod folder can be replaced by a mod update.
+- **Reinstalling/repairing the base game:** the installer may restore its original-language archives; reapply the rebuilt Polish files afterward. Keep the clean backup separately so it is not lost with the installation directory.
+
+There is no automatic Polish-package installer or update integration in this reference-assets change.
+
+### Rollback
+
+Close the game and restore the five original archives from your clean backup into the base game's `Res`. If the original edition uses a different text encoding, restore its locale settings too; the tested Russian CrossOver setup used `ru_RU.UTF-8` for both `LANG` and `LC_ALL`. Rolling back these base archives does not require deleting your mod or its saves.
+
+## Verification limits
 
 The graphical menu and Polish accented text were checked separately in a CrossOver installation. Extraction and archive rebuilding were checked for all new assets, and one MP3 and one WAV were decoded to PCM. Full in-game audio playback was not verified. Choosing a Polish locale does not translate Russian mod strings and can make mixed-encoding resources unreadable.
 
