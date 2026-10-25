@@ -57,6 +57,22 @@ Both can be installed side by side; each has its own folder and its own saves, s
 
 For development, link the repository's `Universal-Mod` directory into the launcher's `mods` folder.
 
+## Language packs
+
+English is the default. `lang-packs/pol` translates the mod's additional item and spell descriptions, multiplayer names and quests. It does not replace the base game's menu graphics or voices; use a Polish base-game installation for those.
+
+To switch the selected mod's language:
+
+1. Close the game and back up its `res/texts.res`, `res/textslmp.res` and `maps/*.mq`.
+2. Copy both `.res` files from `lang-packs/<LANGUAGE>/res/` into that mod's `res/`.
+3. Copy all `.mq` files from `lang-packs/<LANGUAGE>/maps/` into that mod's `maps/`, replacing only matching files. Do not replace or delete the whole `maps` directory.
+
+For Polish, `<LANGUAGE>` is `pol`. The launcher's separate `Language=pl` setting changes only the launcher. On CrossOver, also use the [Polish locale settings](docs/macos-crossover.md#4-match-the-locale-to-the-games-text-resources).
+
+Use a language pack built for the installed mod version. An updater can restore English files, so reapply the matching pack after updating. To return to English, repeat the same steps with `eng`.
+
+Language-pack builds use current English text and quest metadata as the baseline. Missing or invalid translations produce warnings and fall back to English rather than blocking a release. Polish source text is UTF-8; the [autopacker](tools/ei-um-autopacker/README-MAKEMOD.md) converts it to Windows-1250 for the game.
+
 ## Multiplayer
 
 The game's master servers are long gone, so the multiplayer menu is empty unless a host is on your local network. Join a game directly: in the Multiplayer menu, enter the host's IP address. A ping value means it works; 999 means the IP is wrong or the host's NAT or firewall blocks incoming connections.

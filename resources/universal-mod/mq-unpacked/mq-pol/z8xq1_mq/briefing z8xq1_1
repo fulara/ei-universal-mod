@@ -1,0 +1,12 @@
+[Trudne] Ogry na Piaskach
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Nasz sojusznik, orkowy klan Shei-Var, poprosił nas o pomoc. Donoszą, że trzy ogry żyjące na Piaskach połączyły siły z ich wrogami!
+#phrase Hero  2
+Niech zgadnę... Pewnie chcesz mnie poprosić, żebym się tym zajął?
+#phrase Merc1  3
+Zgadza się! Musimy wspierać naszych sojuszników. To oni utrzymują Piaski pod kontrolą dla nas.
+#phrase Merc1  4
+Uważaj, te ogry to poważni przeciwnicy! Są naprawdę twarde i bardzo silne. A skoro już tam będziesz, możesz też splądrować skarby ogrów!

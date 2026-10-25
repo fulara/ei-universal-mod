@@ -1,0 +1,8 @@
+Kholai dostał głowę maga-zombi!
+#show Hero
+#show Glav
+#CAMERA 2
+#phrase Hero  1
+Bracie Khatulu! Kholai dostanie głowę maga-zombi!
+#phrase Glav  2
+Dziękuję. Teraz pozostaje nam już tylko czekać na wyniki jego eksperymentów...

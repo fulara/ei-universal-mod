@@ -1,0 +1,12 @@
+Nowe zagrożenie
+#show Hero
+#show Glav
+#CAMERA 3 0 3.5 1.5
+#phrase Glav  1
+Zawsze nie ufałem ludziom, którzy nazywają siebie uczonymi, a jednocześnie służą rządowi.
+#phrase Glav  2
+A teraz słyszę, że w zrujnowanej posiadłości na północ od miasta pojawiła się grupa uczonych. Próbują zbadać i odtworzyć potężną magię, która obróciła tę posiadłość w ruiny!
+#phrase Glav  3
+Jeśli im się uda, rząd zdobędzie nową, straszliwą broń, a przecież wiesz, co by to oznaczało dla Ostatniej kryjówki.
+#phrase Glav  4
+Tych morderczych uczonych trzeba zniszczyć, razem z wojowniczymi magami, którzy pomagają im w badaniach!

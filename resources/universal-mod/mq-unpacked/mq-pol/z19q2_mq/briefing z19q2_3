@@ -1,0 +1,10 @@
+Władca Smoków nie żyje
+#show Hero
+#show Rick
+#CAMERA 2
+#phrase Hero  1
+Z Władcą Smoków już koniec! Aż mi go żal: z pewnością moglibyśmy dojść do jakiegoś porozumienia...
+#phrase Rick  2
+Tak, możesz litować się nad Władcą Smoków. Ale pomyśl — czy ci, którzy mają nieszczęście mieszkać blisko jego legowiska, okazaliby mu litość?
+#phrase Hero  3
+Hmmm... Masz rację, chyba nie powinienem się zbytnio przejmować przedwczesną śmiercią Władcy Smoków!

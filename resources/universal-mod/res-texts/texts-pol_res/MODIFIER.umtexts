@@ -1,0 +1,21 @@
+# um-texts 1
+=== MODIFIER a0
+Obszar większy o połowę
+Zwiększa początkowy obszar działania zaklęcia o połowę.
+-A+
+
+=== MODIFIER d0
+Czas trwania dłuższy o połowę
+Wydłuża czas trwania zaklęcia o połowę.
+-D+
+
+=== MODIFIER e0
+Efekt silniejszy o połowę
+Zwiększa efekt zaklęcia o połowę.
+-E+
+
+=== MODIFIER r0
+Zasięg większy o połowę
+Zwiększa zasięg zaklęcia o połowę.
+-R+
+

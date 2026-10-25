@@ -311,6 +311,15 @@ process_quests() {
         local lang_pack_dir="$MOD_DIR/lang-packs/$lang_code"
         mkdir -p "$lang_pack_dir/maps"
 
+        if [[ "$lang_code" != "eng" ]]; then
+            local encoding_args=()
+            [[ "$lang_code" == "pol" ]] && encoding_args=(--source-encoding utf-8 --target-encoding cp1250)
+            python3 bin/pack_language.py quests --tool bin/um-multitool \
+                --english "$MQ_UNPACKED_DIR/mq-eng" --translation "$lang_dir" \
+                --output "$lang_pack_dir/maps" "${encoding_args[@]}" || return 1
+            continue
+        fi
+
         local quest_dirs=("$lang_dir"/*_mq)
         [[ ${#quest_dirs[@]} -eq 0 ]] && continue
 
@@ -318,7 +327,7 @@ process_quests() {
 
         # 1. Convert quest INI -> REG in place across every quest at once
         find "$lang_dir" -maxdepth 3 -type f -name "*.ini" -print0 | \
-            parallel -0 -j "$PARALLEL_JOBS" bin/um-multitool inireg {} > /dev/null || true
+            parallel -0 -j "$PARALLEL_JOBS" bin/um-multitool inireg {} > /dev/null || return 1
         # The archive stores each file's modification time: a freshly made .reg would give every .mq a
         # new timestamp (and git a change) at each build. It takes its .ini's time instead.
         find "$lang_dir" -maxdepth 3 -type f -name "*.ini" -print0 | while IFS= read -r -d '' ini; do
@@ -327,7 +336,7 @@ process_quests() {
 
         # 2. Batch-pack every *_mq folder in this language directory in one parallel call,
         #    omitting quest.ini (only the source for quest.reg, not archive content).
-        bin/um-multitool restool --pack -d "$lang_dir" -o "$lang_dir" -m -e quest.ini
+        bin/um-multitool restool --pack -d "$lang_dir" -o "$lang_dir" -m -e quest.ini || return 1
 
         # 3. Clean up temporary REG files (source quest.ini remains untouched)
         find "$lang_dir" -maxdepth 3 -type f -name "*.reg" -delete 2>/dev/null || true
@@ -461,15 +470,14 @@ update_version_info() {
     # Update inidir/config.ini version
     sed -i "s/^Version=.*/Version=$current_version/" "$INI_DIR/config.ini" 2>/dev/null || true
 
-    # Update version_name in texts folders
-    # (through um-multitool: the entry may be a loose file or inside STRING.umtexts, the grouped texts format)
+    # Generated version text belongs to English; other packs inherit it while staging.
     local versiontmp
     versiontmp="$(mktemp)"
-    for textsres in "$RES_TEXTS_DIR"/texts-*_res; do
+    for textsres in "$RES_TEXTS_DIR"/texts-eng_res; do
         cp -fL "$VERSION_TEMPLATE" "$versiontmp"
         sed -i "s/ver\./ver. $current_version/" "$versiontmp"
         sed -i "s/post-commit\./post-commit. $commit_hash/" "$versiontmp"
-        bin/um-multitool texts --set "$textsres" "string version_name" "$versiontmp"
+        bin/um-multitool texts --set "$textsres" "string version_name" "$versiontmp" || { rm -f "$versiontmp"; return 1; }
     done
     rm -f "$versiontmp"
     log_ok "Version $current_version (commit $commit_hash) written across configs"
@@ -505,8 +513,16 @@ pack_texts_resources() {
         local langpackdir="$MOD_DIR/lang-packs/$langcode/res"
         mkdir -p "$langpackdir"
 
-        # texts --pack reads both layouts: grouped <TYPE>.umtexts files and loose files (one per entry)
-        bin/um-multitool texts --pack "$restexts" -o "$langpackdir/$targetname"
+        if [[ "$langcode" == "eng" ]]; then
+            bin/um-multitool texts --pack "$restexts" -o "$langpackdir/$targetname" || return 1
+        else
+            local encoding_args=()
+            [[ "$langcode" == "pol" ]] && encoding_args=(--source-encoding utf-8 --target-encoding cp1250)
+            local english_dir="$RES_TEXTS_DIR/${restextsname/-$langcode/-eng}"
+            python3 bin/pack_language.py texts --tool bin/um-multitool \
+                --english "$english_dir" --translation "$restexts" \
+                --output "$langpackdir/$targetname" "${encoding_args[@]}" || return 1
+        fi
 
         # Primary English language is copied directly to mod root res
         if [[ "$langcode" == "eng" ]]; then
@@ -515,8 +531,14 @@ pack_texts_resources() {
         fi
     done
 
-    echo "Copy texts.res and textslmp.res from lang-packs/<LANGUAGE>/res/ into mod res/ to switch language" > \
-        "$MOD_DIR/lang-packs/HOWTO-SWITCHLANG.txt"
+    cat > "$MOD_DIR/lang-packs/HOWTO-SWITCHLANG.txt" <<'LANGUAGE_HELP'
+To switch the mod language, copy BOTH sets of files from lang-packs/<LANGUAGE>/:
+  res/*.res -> the mod's res/ directory
+  maps/*.mq -> the mod's maps/ directory
+Overwrite the existing files. Reapply both sets manually after each mod updater run.
+Polish mod assets use the code pol (lang-packs/pol); the launcher's Polish UI uses pl.
+Changing the launcher UI language alone does not switch the mod's texts or quests.
+LANGUAGE_HELP
 
     log_ok "Text archives packed"
 }
@@ -686,15 +708,15 @@ main() {
 
     create_directory_structure
     convert_ini_to_reg
-    process_quests
+    process_quests || return 1
     copy_maps
     dump_mob_files
     copy_media
     copy_hd_pack
     process_dds_textures
     process_databases
-    update_version_info
-    pack_texts_resources
+    update_version_info || return 1
+    pack_texts_resources || return 1
     pack_general_resources
     compile_mod_dll
     sync_to_release_directory

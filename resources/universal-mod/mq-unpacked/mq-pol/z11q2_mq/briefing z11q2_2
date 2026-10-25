@@ -1,0 +1,10 @@
+Skarb to tylko bajka...
+#show Hero
+#show Huber
+#CAMERA 3 -10 3 1
+#phrase Huber  1
+I udało ci się znaleźć skarb?
+#phrase Hero  1
+Wygląda na to, że cała ta historia była tylko opowiastką. Nie udało mi się odnaleźć skarbu.
+#phrase Huber  3
+Jaka szkoda! Cóż, będziemy musieli poszukać złota gdzie indziej.

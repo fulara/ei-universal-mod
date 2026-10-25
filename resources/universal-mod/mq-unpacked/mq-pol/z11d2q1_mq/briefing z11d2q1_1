@@ -1,0 +1,14 @@
+[Średnie] Armadillo w kopalni Babura
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Armadillo opanowały kopalnię Babura. Ten stary skąpiec jest wściekły i oferuje niezłą nagrodę temu, kto je wytępi.
+#phrase Hero  2
+Armadillo? Od kiedy te stworzenia atakują kopalnie?
+#phrase Merc1  3
+Najwyraźniej odkąd znalazły bogatą żyłę złota. Babur chce, żeby wszystkie zginęły. Zostawił też duży worek złota w zachodniej części kopalni.
+#phrase Merc1  4
+Głębiej, na dalekim północnym wschodzie, jest jeszcze jedna skrzynia z samorodkiem złota. Przynieś wszystko.
+#phrase Hero  5
+Dobrze, zajmę się tym.

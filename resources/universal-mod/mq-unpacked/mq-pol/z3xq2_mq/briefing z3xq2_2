@@ -1,0 +1,8 @@
+Nie ma mowy, żebym pokonał tę jadowitą żabę!
+#show Hero
+#show Nsheriff
+#CAMERA 5
+#phrase Hero  1
+Nie dam rady z tym potworem! Samo dotarcie do jaskini też nie należy do przyjemnych...
+#phrase Nsheriff  2
+Co za szkoda! Cóż, w takim razie ktoś inny będzie musiał rozprawić się z ogrzą jadowitą żabą.

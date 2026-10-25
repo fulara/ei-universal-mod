@@ -1,0 +1,14 @@
+Oczyść drogę do jaskini
+Musisz pozbyć się ogrów strzegących drogi do jaskini!
+#subobj  1
+Wyeliminuj ogry po prawej stronie drogi
+Prawej strony drogi strzegą dwa ogry. Zabij je!
+#subobj  2
+Wyeliminuj ogry po lewej stronie drogi
+Tej drogi strzeże tylko jeden ogr. Zabij go!
+#subobj  3
+Zabij ogra strażnika
+Ten ogr pilnuje wejścia. Wiesz, co robić.
+#subobj  4
+Otwórz wejście do jaskini
+Użyj dźwigni obok wejścia, aby je otworzyć.

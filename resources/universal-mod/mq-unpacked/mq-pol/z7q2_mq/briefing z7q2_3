@@ -1,0 +1,10 @@
+Pustelnik będzie zadowolony!
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Z tego co wiem, Pustelnik zawsze dotrzymuje słowa. Uwolniłeś jaszczury, więc teraz jego plemię zostawi wioskę w spokoju.
+#phrase Hero  2
+Hej, to brzmi dobrze. Gdyby na Gipath było tylko jedno plemię Jaszczurów i gdyby Pustelnik je kontrolował, byłoby po prostu wspaniale!
+#phrase Elder  3
+Zgadzam się! Ale niestety, musimy zadowolić się tym, co mamy.

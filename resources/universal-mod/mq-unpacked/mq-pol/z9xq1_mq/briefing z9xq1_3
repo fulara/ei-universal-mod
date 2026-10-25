@@ -1,0 +1,14 @@
+Żadnych smoków! Ale skarb wciąż tam jest...
+#show Hero
+#show Nsheriff
+#CAMERA 5
+#phrase Hero  1
+Byłem na tej górze i nie widziałem tam żadnych smoków — ani młodych, ani starych. To wszystko tylko bajki. Wybraniec na pewno po prostu to wymyślił, żeby uchodzić za bohatera.
+#phrase Nsheriff  2
+A skarb — on też okazał się bajką?
+#phrase Hero  3
+Nie, to akurat była prawda, chociaż skarb okazał się raczej skromny — tylko zardzewiały żelazny miecz... Stary smok dał taki także Wybrańcowi, ale tamten miał zaklęcie, a mój to tylko zardzewiały kawałek żelaza... I niewiele da się z tym zrobić, bo Babur nie umie obrabiać metalu.
+#phrase Nsheriff  4
+Czyli ryzykowałeś na darmo?
+#phrase Hero  5
+Ale skąd! Zdobyłem doświadczenie, a jak mówią, tego nie da się przepić, prawda?

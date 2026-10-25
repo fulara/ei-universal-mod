@@ -1,0 +1,12 @@
+[Łatwe] Wielka jadowita żaba
+#show Hero
+#show Nsheriff
+#CAMERA 5
+#phrase Hero  1
+Co to za dziwne plotki krążą po wiosce? Ludzie opowiadają o jakimś Ogrze, który nauczył się przemieniać w jadowitą żabę...
+#phrase Nsheriff  2
+No pięknie! Nic nikomu nie można powiedzieć, żeby zaraz wszystkiego nie przekręcili! Oczywiście nikt się w nic nie przemienił; po prostu Orkowie wyhodowali kolejną ogrzą jadowitą żabę...
+#phrase Nsheriff  3
+Wróżbici gotują wywar z jakichś ziół, polewają nim zwyczajną jadowitą żabę i ona wyrasta na olbrzyma! Za każdym razem, gdy Orkowie zyskują takiego sprzymierzeńca, szukamy śmiałków gotowych rozprawić się z jadowitą żabą.
+#phrase Nsheriff  4
+Przy okazji, skoro już wszystko o tym wiesz, może sam spróbujesz? jadowitą żabę znajdziesz na północnym wschodzie Podgórza!

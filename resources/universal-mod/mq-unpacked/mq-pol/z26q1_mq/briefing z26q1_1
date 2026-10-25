@@ -1,0 +1,18 @@
+[Średnie] Otwórz portal
+#show Hero
+#show KMage
+#CAMERA 2
+#phrase Hero  1
+Opowiedz mi więc o tej tajemnej jaskini!
+#phrase KMage  2
+W tej jaskini znajduje się pradawny portal. Używamy go do podróży między wyspami. Jednak niedawno główną drogę zablokowały spadające skały, a drugą zamknięto, aby nikt nie przedostał się przez portal...
+#phrase Hero  3
+Ale dlaczego zablokowaliście drogę?
+#phrase KMage  4
+Zauważyliśmy, że niektóre potwory zaczęły interesować się tą jaskinią i nie jest już dla nas bezpieczna. Nie możemy wysyłać ludzi w podróż przez portal ani nawet do pilnowania jaskini. Niektóre potwory urządziły sobie w niej kryjówkę!
+#phrase KMage  5
+Musisz otworzyć bramy i uruchomić portal. Potrzebujesz dwóch kluczy: najpierw do otwarcia bram, a potem do uruchomienia portalu. Zanim moi strażnicy stamtąd uciekli, każdy klucz schowali w skrzyni.
+#phrase Hero  6
+Brzmi dość łatwo! Coś jeszcze?
+#phrase KMage 7
+Cóż... Jeśli jednak masz dość zręczne ręce, bramy można otworzyć bez klucza. Mechanizm jest stary. Powodzenia!

@@ -1,0 +1,14 @@
+Zagrożenie ze strony Gadziołbów
+Dotarły wieści, że Gadziołby zaczęły opuszczać swoje podziemia i wychodzić na powierzchnię. Kapitan Tilvar wraz z oddziałem żołnierzy wyruszył do kopalń, by walczyć z tym zagrożeniem, ale od tamtej pory nie ma od nich żadnych wieści. Musisz odnaleźć Tilvara i w razie potrzeby udzielić mu pomocy.
+#subobj  1
+Znajdź przejście do kopalń
+Przejście do kopalń znajduje się na północy, za mostem na rzece wpadającej do jeziora od wschodu.
+#subobj  2
+Otwórz bramę
+Aby dostać się do kopalń, musisz otworzyć bramę.
+#subobj  3
+Znajdź kapitana Tilvara
+Kapitan Tilvar i jego oddział zostali wysłani, by zabić Gadziołby, które opuściły podziemia i wyszły na otwartą przestrzeń. Musisz odnaleźć kapitana.
+#subobj  4
+Zabij Gadziołby
+Kapitan nie żyje, ale jego misja trwa nadal: wszystkie Gadziołby muszą zginąć.

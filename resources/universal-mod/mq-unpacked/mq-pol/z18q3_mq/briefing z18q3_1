@@ -1,0 +1,16 @@
+Jeden z niewolników jest zdrajcą...
+#show Hero
+#show Glav
+#CAMERA 3 0 3.5 1.5
+#phrase Glav  1
+Moje serce przepełnia smutek, smutek i gniew! Nasza kryjówka zawsze była ostatnim schronieniem dla nieszczęsnych niewolników, którzy nie byli w stanie dalej znosić bezlitosnej pracy na plantacjach. A teraz okazuje się, że jeden z nich gotów jest zdradzić to schronienie!
+#phrase Glav  2
+Ten człowiek jest niewolnikiem nie tylko z tytułu, ale i duchem! Za miskę zupy gotów jest sprzedać wszystko, co wie o Ostatniej kryjówki!
+#phrase Hero  3
+Czy mamy więc walczyć ze strażą?
+#phrase Glav  4
+Na szczęście jeszcze nie. Ten nikczemny zdrajca ma o sobie bardzo wysokie mniemanie i odmawia rozmowy z kimkolwiek poza wyższymi oficerami!
+#phrase Glav  5
+Jeśli zginie, zanim przybędą dowódcy, nasze sekrety umrą razem z nim.
+#phrase Glav  6
+W tej chwili ta brudna hiena napycha brzuch w żołnierskiej stołówce na południe od plantacji. Budynek zwykle pełen jest nadzorców niewolników i strażników, ale jeśli zdołasz przemknąć tam niezauważony, pozbędziesz się zdrajcy bez większych kłopotów.

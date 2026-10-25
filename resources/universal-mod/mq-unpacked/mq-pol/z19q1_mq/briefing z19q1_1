@@ -1,0 +1,12 @@
+Władca Cieni
+#show Hero
+#show Rick
+#CAMERA 3 30 3 1
+#phrase Rick  1
+Armia, która ma najechać Gipath, składa się nie tylko z ludzi, lecz także z zombi, ghuli i najgroźniejszych ze wszystkich nieumarłych — cieni.
+#phrase Rick  2
+Czarnoksiężnik, który potrafi przyzywać je z nicości, mieszka w mieście Suslanger; jeśli zginie, armia najeźdźców osłabnie.
+#phrase Hero  3
+Hmm... Gdyby ten czarnoksiężnik był gdzieś w pobliżu portalu, mógłbym spróbować go dopaść. Ale jeśli mam iść aż od portalu do miasta, po prostu mnie zabiją!
+#phrase Rick  4
+Oczywiście, że nie wyślę cię tam przez portal! Zostaniesz teleportowany prosto do Suslangeru. Musisz tylko wejść do miasta i odnaleźć bramę, po której bokach stoją dwie rzeźby orłów. To posiadłość Władcy Cieni — jego właśnie musisz zabić!

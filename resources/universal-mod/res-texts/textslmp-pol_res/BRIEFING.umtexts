@@ -1,0 +1,83 @@
+# um-texts 1
+=== briefing intro_4k
+Poznaj rzemieślnika
+#show Hero
+#show Stark
+#ANIMATION 5
+#CAMERA 11
+#phrase Stark 1
+To wy jesteście tymi obcymi, którzy przeszli przez stary portal?
+#ANIMATION 15
+#CAMERA 10
+#phrase Hero 2
+Nie, po prostu zrespiliśmy się tutaj, bo to lobby multiplayera.
+#phrase Stark 3
+Stary, co do cholery...
+
+=== briefing intro_c
+Przywitaj kupca
+#show Hero
+#show Shemale
+#ANIMATION 39
+#CAMERA 0
+#phrase Hero 1
+Witaj, wspaniała pani!
+#CAMERA 11
+#phrase Shemale 2
+Witaj.
+
+=== briefing intro_f
+Złóż hołd lordowi Firezowi
+#show Hero
+#show Firez
+#ANIMATION 26
+#CAMERA 0
+#phrase Hero 1
+Witaj, Wasza Ekscelencjo! Jak mogę zdobyć twoje zaufanie?
+#ANIMATION 57
+#CAMERA 11
+#phrase Firez 2
+Przeżyj pierwszy tydzień.
+#ANIMATION 32
+#CAMERA 10
+#phrase Hero 3
+Chcę pomóc Khadaganowi odzyskać wielkość na Jigran i mieć w tym swój udział.
+#ANIMATION 11
+#CAMERA 11
+#phrase Firez 4
+Doskonale. Potrzebuję żywych. Umarłych mam już dość.
+
+=== briefing intro_m
+Oddaj honory marszałkowi
+#show Hero
+#show Marshal
+#ANIMATION 24
+#CAMERA 2
+#phrase Hero 1
+Witaj, szlachetny panie!
+#ANIMATION 15
+#CAMERA 3
+#phrase Marshal 2
+Imperium potrzebuje ludzi gotowych działać, a nie tylko mówić. Jeśli szukasz zajęcia, znajdziesz je.
+#CAMERA 2
+#phrase Hero 3
+Postaram się odwdzięczyć za twoją gościnność, ale teraz muszę się przygotować...
+#CAMERA 3
+#phrase Marshal 4
+Spocznij!
+
+=== briefing intro_s
+Poznaj mistrza Sukro
+#show Hero
+#show Sukro
+#ANIMATION 5
+#CAMERA 11
+#phrase Sukro 1
+Witaj. Jestem mistrz Sukro, znakomity kowal. Zawsze miło zobaczyć w naszym mieście nowe twarze, zwłaszcza ludzi gotowych pomóc w tych trudnych czasach.
+#ANIMATION 15
+#CAMERA 10
+#phrase Hero 2
+I ja cię witam, szlachetny kowalu. Mam nadzieję, że i dla mnie coś zrobisz?
+#phrase Sukro 3
+Oczywiście. Ale skoro nie służysz Khadaganowi pod rozkazami lorda Fireza, za moje wyroby trzeba będzie zapłacić. Zapewniam jednak, że cię nie rozczarują!
+

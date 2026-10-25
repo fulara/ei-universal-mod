@@ -1,0 +1,10 @@
+Nie da się podejść do Aiset-Beka...
+#show Hero
+#show Glav
+#CAMERA 3 20 3 1.5
+#phrase Glav  1
+Aiset-Bek nadal żyje?! Hm... Pamiętasz naszą małą rozmowę o zaufaniu i podejrzeniach? Nie sądzisz, że teraz powinienem przyjrzeć się tobie i twojej przeszłości?
+#phrase Hero  2
+Przysięgam, że zabiję Aiset-Beka! Może nie teraz, ale dopadnę go... choćby za wszelką cenę!
+#phrase Glav  3
+Dobrze, wierzę ci... Na razie.

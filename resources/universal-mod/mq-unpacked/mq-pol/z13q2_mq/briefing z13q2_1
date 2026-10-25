@@ -1,0 +1,14 @@
+[Średnie] W Ingos pojawiły się czarne jednorożce!
+#show Hero
+#show Huber
+#CAMERA 2
+#phrase Hero  1
+Wasza Ekscelencjo, wyglądacie na zmartwionego. Co się stało?
+#phrase Huber  2
+Nawet nie pytaj, doskonale wiesz, co się stało! Leśni z Czarnego Klanu nauczyli się hodować czarne jednorożce i wszyscy o tym wiedzieli - wszyscy oprócz mnie, aż do dziś!
+#phrase Hero  3
+I co w tym złego?
+#phrase Huber  4
+W pełni dorosły czarny jednorożec jest znacznie silniejszy i bardziej złośliwy niż zwykły! Ani wojownik, ani zwykły mieszczanin nie zdołałby przejść przez lasy pełne takich bestii!
+#phrase Huber  5
+Ale te okropne stworzenia są jeszcze młode, nie są aż tak silne, więc proszę cię, spróbuj je wszystkie zabić, zanim będzie za późno!

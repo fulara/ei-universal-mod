@@ -1,0 +1,18 @@
+[Średnie] Mam sprytny plan!
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Szczerze mówiąc, nie lubię za dużo myśleć, ale skoro teraz jestem kapitanem, to chyba będę musiał. No więc oto, co wymyśliłem...
+#phrase Nsheriff  2
+Orkowie są naszymi wrogami. I Gobliny są naszymi wrogami. Więc jeśli się pokłócą, wyjdzie nam to tylko na dobre!
+#phrase Hero  3
+Wow, Rivar, ale z ciebie myśliciel! Prawdziwy mędrzec! Nigdy bym na to nie wpadł... taki błyskotliwy pomysł!
+#phrase Hero  4
+To skończ z tymi bzdurami i powiedz, co ci chodzi po głowie, nie owijaj w bawełnę.
+#phrase Nsheriff  5
+Sprowadza się to do tego: ukradnijmy gobliński totem i postawmy go na górze Rady Orków. Gdy tylko Orkowie zobaczą tę zgniłą czaszkę w swoim świętym miejscu, wpadną w szał i dorzucą do niej co najmniej trzy tuziny innych goblińskich głów. Świeższych, he-he…
+#phrase Nsheriff  6
+Powiedziano mi, że gobliński totem jest teraz na najbardziej wysuniętej na wschód wyspie w delcie rzeki. A góra rady jest zawsze w tym samym miejscu — na północnym brzegu rzeki.
+#phrase Hero  7
+To nie jest zły pomysł. Chodź, zobaczmy, co da się zrobić!

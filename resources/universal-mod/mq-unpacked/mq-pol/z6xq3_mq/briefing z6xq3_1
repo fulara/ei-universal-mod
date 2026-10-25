@@ -1,0 +1,14 @@
+[Średnie] Prosiaczek Pięciak zaginął!
+#show Hero
+#show Nsheriff
+#CAMERA 5
+#phrase Hero  1
+Czemu jesteś taki nieszczęśliwy? Jeśli masz jakiś problem, po prostu mi powiedz - może będę mógł pomóc!
+#phrase Nsheriff  2
+Zdecydowanie nie jestem szczęśliwy... Jaszczury mieszkające na północy Środkowych Gór ukradły prosiaczka Pięciaka! Pamiętam, jak Wybraniec zwykł go kopać, tak naprawdę bez powodu, a Pięciak bardzo tego nie lubił! Ach, widzisz, on jest taki bystry i uroczy... A teraz już go nie ma!
+#phrase Hero  3
+Chwileczkę, chwileczkę... Jakiego prosiaczka? Pamiętam Pięciaka - to przecież wielgachna świnia!
+#phrase Nsheriff  4
+No cóż, dla nas wciąż jest maleńkim, słodkim stworzonkiem... Ale po co o tym gadać! Jaszczury zabrały go do wąwozów przy jeziorze i obawiam się, że to ostatni raz, kiedy go widzieliśmy!
+#phrase Hero  5
+Dobrze, nie martw się. Może jeszcze zobaczysz swoje cenne zwierzątko!

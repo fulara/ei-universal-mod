@@ -1,0 +1,10 @@
+Pięciak wrócił!
+#show Hero
+#show NSheriff
+#show Pig
+#phrase Nsheriff  1
+Och, mój mały różowy przyjacielu! Popatrz, jaki jest chudy! Biedactwo, musiałeś wiele wycierpieć!
+#phrase Hero  2
+Ekhm!... Przepraszam, a mnie też nie zamierzasz nic powiedzieć?
+#phrase Nsheriff  3
+Och! Przepraszam. Bardzo się cieszę, że Pięciak wrócił, i oczywiście jestem ogromnie wdzięczny!

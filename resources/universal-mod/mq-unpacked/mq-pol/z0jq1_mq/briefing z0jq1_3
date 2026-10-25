@@ -1,0 +1,12 @@
+Nie wrócą!
+#show Hero
+#show Marshal
+#CAMERA 11
+#phrase Hero  1
+Pozbyłem się tych oddziałów! Portal jest zamknięty i mam nadzieję, że przez jakiś czas nie wrócą.
+#phrase Marshal  2
+Wiesz, co przygotowywali?
+#phrase Hero  3
+Szykowali wyprawę badawczą, a może inwazję. Wyglądali na mocno wystraszonych tym miejscem i atakowali wszystko, co zobaczyli!
+#phrase Marshal  4
+To ma sens. Ci zwiadowcy zapewne boją się wszystkiego, czego nie znają. Typowi Khadaganianie...

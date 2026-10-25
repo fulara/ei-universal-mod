@@ -1,0 +1,10 @@
+Teren wokół kopalń jest oczyszczony
+#show Hero
+#show Huber
+#CAMERA 2
+#phrase Hero  1
+Wasza Ekscelencjo, przynoszę dwie wiadomości. Jedna jest zła: kapitan Tilvar zginął przy bramie do kopalń. Druga jest o wiele lepsza — Gadziołby zostały zabite!
+#phrase Huber  2
+Tak, oczywiście uczczę Tilvara minutą ciszy. Ale najpierw muszę napisać do stolicy i zameldować, że pod moimi światłymi rządami zagrożenie dla Ingos zostało usunięte!
+#phrase Huber  3
+Właściwie to chyba wspomnę o twoich zasługach w moim raporcie, więc być może za jakieś trzy miesiące otrzymasz oficjalne wyróżnienie!

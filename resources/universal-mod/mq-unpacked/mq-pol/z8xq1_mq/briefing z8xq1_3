@@ -1,0 +1,11 @@
+Trzy ogry nie żyją!
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Dobra robota! To powinno poprawić naszą pozycję w walce z Orkami.
+#phrase Hero  2
+To też nie było łatwe. O mało nie kosztowało mnie to życia!
+#phrase Merc1  3
+No cóż... na szczęście tak się nie stało i możesz nadal nas wspierać. Większość tego, co znalazłeś, jest bezwartościowa. Jednak Orkowy Alfabet ma dla nas wielką wartość!
+Oto twoja nagroda w złocie!

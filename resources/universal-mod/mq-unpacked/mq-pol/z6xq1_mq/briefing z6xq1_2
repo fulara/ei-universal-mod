@@ -1,0 +1,8 @@
+Nie ma jak przedrzeć się do jasnowidza
+#show Hero
+#show Nsheriff
+#CAMERA 5
+#phrase Hero  1
+Mmm, tak, to nie jest tak łatwe, jak się wydawało. Nie mogę przebić się przez osadę i dotrzeć do Jasnowidza. Musimy wymyślić coś innego!
+#phrase Nsheriff  2
+Dobrze, zastanówmy się... Może mógłbym przekupić tego Jasnowidza... Ale i tak byłoby lepiej, gdyby ktoś go po prostu zabił.

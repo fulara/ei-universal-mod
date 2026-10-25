@@ -1,0 +1,8 @@
+Z Królową skończone!
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Gratulacje! Ale czy wiesz, że błędne ogniki wkrótce będą miały nową królową? Ha, ha, czy to znaczy, że znowu będziesz musiał płacić za naprawę swojego pancerza!
+#phrase Hero  2
+Och, nieważne! Znam już drogę do wąwozu, więc nowa Królowa nie porządzi zbyt długo!

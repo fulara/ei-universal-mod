@@ -1,0 +1,14 @@
+[Łatwe] Zwiadowcy Khadaganu
+#show Hero
+#show Marshal
+#CAMERA 11
+#phrase Marshal  1
+Właśnie otrzymałem meldunek, z którego wynika, że drugi portal został uruchomiony!
+#phrase Hero  2
+Jaki portal? Jest jeszcze jakiś oprócz tego w mieście?
+#phrase Marshal  3
+Na wschodzie jest opuszczony portal. Sądziliśmy, że jest zepsuty, ale najwyraźniej komuś udało się go ponownie uruchomić!
+#phrase Marshal  4
+Wygląda też na to, że Cesarstwo Khadaganu przygotowuje inwazję. Wysłali zwiadowców, żeby zbadali Jigran. Jeśli ich wyeliminujesz i zamkniesz portal, może zyskamy dość czasu na przygotowanie obrony. Gdyby spróbowali wrócić...
+#phrase Hero 5
+Skoro to zwiadowcy, to chyba nie powinni być aż tak silni. Myślę, że dam radę...

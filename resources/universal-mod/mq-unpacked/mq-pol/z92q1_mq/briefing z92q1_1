@@ -1,0 +1,12 @@
+[Trudne] Skarb harpii
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Naszej wiosce brakuje kosztowności z powodu trwającej wojny z orkami na Piaskach. Słyszałem, że w odległych górach żyją harpie, które posiadają wielki skarb.
+#phrase Hero  2
+Hmmm... Szczerze mówiąc, spodziewam się mnóstwa kłopotów! Harpie to groźni przeciwnicy i raczej nie oddadzą swojego skarbu dobrowolnie.
+#phrase Merc1  3
+Nie będzie żadnych trudności! Chcę tylko, żebyś zabrał skarb harpii. Nawet nie musisz z nimi walczyć... teoretycznie.
+#phrase Merc1  4
+Oczywiście to wciąż niebezpieczne przedsięwzięcie. Dobrze, zrobię to! Ale chcę część skarbu jako nagrodę!

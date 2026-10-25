@@ -1,0 +1,10 @@
+[Trudne] Królowa błędnych ogników
+#show Hero
+#show Nsheriff
+#CAMERA 5
+#phrase Hero  1
+Gdybyś tylko wiedział, Rivarze, jak bardzo mam już dość tych błędnych ogników! Moje oparzenia się goją, ale za każdym razem muszę płacić za naprawę pancerza, a szczerze mówiąc, to wcale nie kosztuje mało!
+#phrase Nsheriff  2
+W takim razie musisz odnaleźć Królową błędnych ogników — tę, która je rozmnaża. Jeśli ją zabijesz, przez jakiś czas tych stworzeń będzie znacznie mniej.
+#phrase Nsheriff  3
+Spróbuj poszukać Królowej w górskim wąwozie na północ od głównej bramy Martwego Miasta. Jest tam miejsce z kryształami, a Królowa mieszka gdzieś w pobliżu. Powodzenia!

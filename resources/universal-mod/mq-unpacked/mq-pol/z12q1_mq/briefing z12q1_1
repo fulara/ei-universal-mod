@@ -1,0 +1,18 @@
+[Trudne] Stare kopalnie odkrywkowe
+#show Hero
+#show Huber
+#CAMERA 2
+#phrase Hero  1
+Wasza Ekscelencjo, czy nie mielibyście przypadkiem dla mnie jakiegoś zadania? Nawet nie będę prosił o zapłatę. Dla mnie najważniejsze jest zdobywanie doświadczenia.
+#phrase Huber  2
+Och, podoba mi się twoje podejście. Tak, tak, idealnie jest, gdy ludzie chcą ryzykować za darmo. Oczywiście, że mam dla ciebie zadanie!
+#phrase Huber  3
+Budżet naszej prowincji jest ostatnio nieco... napięty, więc postanowiłem wznowić prace w starych kopalniach odkrywkowych. Problem w tym, że najpierw musimy oczyścić je ze wszystkich potworów, które się tam lęgną!
+#phrase Hero  4
+Dobrze, tylko dajcie mi klucz do bramy, a zajmę się tym!
+#phrase Huber  5
+No cóż, tu też jest problem... Jakiś czas temu rozkazałem ukryć klucz w dolinie zaczynającej się na północny wschód od obozu wojskowego. Ale teraz podobno po dolinie krąży stado wściekłych tygrysów i nie pozwalają moim sługom wejść po klucz. Będziesz więc musiał zdobyć go sam!
+#phrase Huber  6
+A skoro już o tym mowa, czemu przy okazji nie pozbyłbyś się także tych tygrysów? Kazałem zrobić to żołnierzom z obozu, ale ośmielili się zbuntować — rzekomo nie wypłacono im żołdu! Ach, jaka nędzna postawa, nie sądzisz?
+#phrase Hero  7
+Nie... Och, to znaczy, tak, oczywiście macie rację, Wasza Ekscelencjo. I nie martwcie się o tygrysy ani stare kopalnie, wszystko zostanie zrobione ku waszemu zadowoleniu!

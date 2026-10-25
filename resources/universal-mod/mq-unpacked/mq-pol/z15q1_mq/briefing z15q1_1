@@ -1,0 +1,12 @@
+Królowa pająków
+#show Hero
+#show Glav
+#CAMERA 9
+#phrase Glav  1
+Nasi zwiadowcy donoszą, że Khadaganianie schwytali królową pająków i hodują pająki łowcze.
+#phrase Hero  1
+Jakby tych szkodników było już za mało...
+#phrase Glav  2
+Jest nas niewielu, a jeśli te pająki wzmocnią siły Cesarstwa Khadaganu, nie zdołamy ich powstrzymać!
+#phrase Glav  3
+Musisz pokrzyżować ich plany, inaczej zginiemy!

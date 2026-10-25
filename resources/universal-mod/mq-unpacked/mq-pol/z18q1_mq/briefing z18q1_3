@@ -1,0 +1,10 @@
+Kolekcjoner jest w domu!
+#show Hero
+#show Glav
+#CAMERA 3 20 3 1.5
+#phrase Glav  1
+A więc kolekcjoner bezpiecznie wrócił do domu. Ale dobrze się zastanów: czy wszyscy strażnicy nie żyją? Czy ktoś przypadkiem zdołał uciec?
+#phrase Hero  2
+Nikt, przysięgam!
+#phrase Glav  3
+Dobra robota, jestem bardzo zadowolony. Teraz nikt nie będzie wiedział, o co oskarżono Baluddina i jakie dowody przeciw niemu istniały!

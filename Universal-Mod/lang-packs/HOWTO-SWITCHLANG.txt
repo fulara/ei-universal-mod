@@ -1,1 +1,6 @@
-Copy texts.res and textslmp.res from lang-packs/<LANGUAGE>/res/ into mod res/ to switch language
+To switch the mod language, copy BOTH sets of files from lang-packs/<LANGUAGE>/:
+  res/*.res -> the mod's res/ directory
+  maps/*.mq -> the mod's maps/ directory
+Overwrite the existing files. Reapply both sets manually after each mod updater run.
+Polish mod assets use the code pol (lang-packs/pol); the launcher's Polish UI uses pl.
+Changing the launcher UI language alone does not switch the mod's texts or quests.

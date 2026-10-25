@@ -1,0 +1,12 @@
+[Łatwe] Podziemne stworzenia
+#show Hero
+#show NSheriff
+#CAMERA 9
+#phrase NSheriff  1
+Proszę, pomóż nam, rozchodzą się plotki, że w pobliżu starej kopalni widziano pancerniki. Ale to niemożliwe! Te potwory wyginęły całe pokolenia temu.
+#phrase Hero  2
+Hmm... Czy jest jakiś sposób, żebym mógł wam pomóc?
+#phrase NSheriff  3
+Jeśli te plotki są prawdziwe, naszej wiosce może grozić niebezpieczeństwo. Proszę, idź zbadać starą kopalnię.
+#phrase NSheriff  4
+Uważaj, wygląda na to, że w tunelach, w których osiedlili się orkowie, kręcą się dziwne stworzenia. Sprawdź, czy te plotki są prawdziwe, i od razu rozpraw się z problemem!

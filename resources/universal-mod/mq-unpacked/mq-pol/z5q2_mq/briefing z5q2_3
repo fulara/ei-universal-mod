@@ -1,0 +1,10 @@
+Odzyskałem niebezpieczny magiczny artefakt!
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Dobra robota! Znacznie osłabiliśmy orków.
+#phrase Hero  2
+Oby, bo mam już dość tego całego napięcia między mieszkańcami wioski a orkami.
+#phrase Nsheriff  3
+Na razie sytuacja jest spokojna i możesz odpocząć. Dziękuję!

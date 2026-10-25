@@ -1,0 +1,14 @@
+[Łatwe] Magiczna piramida
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Słuchaj, mamy wielki problem! Na pewno wiesz, jak Wybraniec rozbroił magiczną piramidę i wypędził Orków ze wschodniej części Podgórza?
+#phrase Hero  2
+Daj spokój, przecież wszyscy o tym wiedzą!
+#phrase Nsheriff  3
+Właśnie, a Orkom udało się znowu uruchomić piramidę! Te świnie! Teraz nie możemy walczyć z nimi jak równy z równym i boję się, że wkrótce podbiją całe Podgórze! Chciałbym, żebyś dokonał podobnego wyczynu jak kiedyś Wybraniec: czy mógłbyś znów wyłączyć piramidę?
+#phrase Nsheriff  4
+Tym razem będzie jeszcze trudniej: nie możesz po prostu użyć magicznego obelisku tak jak on, najpierw potrzebujesz specjalnego klucza. Moi szpiedzy donoszą, że Wróżbita, który ma ten klucz, mieszka w wiosce Orków. Znajdziesz go na płaskowyżu na wschodzie Podgórza, za rzeką.
+#phrase Nsheriff  5
+Zrób to, a twoja chwała dorówna chwale Wybrańca!

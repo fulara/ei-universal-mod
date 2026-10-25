@@ -1,0 +1,10 @@
+Smoki nie żyją!
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Wiedziałem, że te młode smoki są całkiem niegroźne!
+#phrase Hero  2
+Całkiem niegroźne?... Te smoki omal nie zjadły mnie na śniadanie! Miałem mnóstwo szczęścia, że zdołałem ujść z życiem!
+#phrase Merc1  3
+Wybacz, nie wiedziałem, że te potwory są aż tak niebezpieczne! W przyszłości musimy być lepiej przygotowani!

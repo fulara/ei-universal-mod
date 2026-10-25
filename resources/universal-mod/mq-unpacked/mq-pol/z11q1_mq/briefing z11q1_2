@@ -1,0 +1,10 @@
+Kłusownicy sami zniknęli
+#show Hero
+#show Huber
+#CAMERA 3 -10 3 1
+#phrase Huber  1
+Już wróciłeś?
+#phrase Hero  1
+Wygląda na to, że kłusownicy sami się wynieśli. Nie udało mi się ich odnaleźć.
+#phrase Huber  3
+To mi chyba wystarczy. Od teraz będę miał cię na oku!

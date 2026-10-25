@@ -1,0 +1,8 @@
+Amulet nie jest teraz niebezpieczny
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Przepraszam. Wygląda na to, że niepotrzebnie spanikowałem. Smoczy amulet działa tylko w niektóre dni roku i jeszcze długo będziemy musieli czekać.
+#phrase Nsheriff  2
+Na razie nie musimy się spieszyć, więc możesz zająć się innymi sprawami.

@@ -1,0 +1,37 @@
+# um-texts 1
+=== SPELL detect_life
+Wykrywanie życia
+Pozwala wskazanej istocie wyczuwać wszystkie stworzenia w określonym promieniu.
+
+=== SPELL ensorcell
+Zauroczenie
+Najpotężniejszy czar astralny. Oszałamia istotę, sprawiając, że zakochuje się ona w rzucającym czar.
+
+=== SPELL fireraze
+Ofiara dla ognia
+Zadaje ogromne obrażenia wszystkim wokół rzucającego czar, włącznie z nim samym.
+
+=== SPELL lichdom
+Nekroza
+Sprawia, że wskazana istota staje się trudniejsza do wykrycia przez żywe stworzenia.
+
+=== SPELL link
+Więź
+Pozwala dwóm magom połączyć swoje zasoby energii magicznej.
+
+=== SPELL necro
+Przywołanie nieumarłego
+Przywołuje nieumarłego we wskazanym miejscu.
+
+=== SPELL panic
+Charyzma
+Wskazana istota zyskuje zdolność posługiwania się bardziej złożoną magią.
+
+=== SPELL possession
+Opętanie
+Pozwala tak silnie skupić zmysły na wskazanej istocie, że możliwe staje się postrzeganie świata tak jak ona.
+
+=== SPELL stench
+Zniekształcenie
+Istota objęta tym czarem staje się łatwiejsza do wykrycia za pomocą wszystkich rodzajów percepcji.
+

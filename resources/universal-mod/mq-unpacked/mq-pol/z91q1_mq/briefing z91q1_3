@@ -1,0 +1,8 @@
+Gotowe!
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Dobrze! To znaczy, że w razie nagłej potrzeby nadal możemy dotrzeć do Wielkiego Maga.
+#phrase Merc1  1
+Niedobrze! Ledwo uszedłem z życiem! Następnym razem poproś kogoś innego.

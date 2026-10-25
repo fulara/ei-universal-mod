@@ -1,0 +1,14 @@
+Patrole Khadaganu
+Z najnowszego meldunku wynika, że Khadaganianie krążą w pobliżu zamku. Wyeliminuj ich!
+#subobj  1
+Zabij północne patrole
+Powinny tam być dwie grupy żołnierzy Khadaganu. Rzadko schodzą z drogi.
+#subobj  2
+Zabij południowe patrole
+Z południa nadchodzą dwie grupy patrolujących żołnierzy.
+#subobj  3
+Uwolnij zachodnią wioskę
+Grupa żołnierzy blokuje drogę do zachodniej wioski. Uwolnij wieśniaków.
+#subobj  4
+Rozpraw się z kapitanem
+Kapitan tych patrolujących żołnierzy znajduje się na wschód od zamku i zagraża wieśniakom.

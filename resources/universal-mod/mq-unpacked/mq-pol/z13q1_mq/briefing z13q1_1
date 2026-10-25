@@ -1,0 +1,12 @@
+[Średnie] Karansul potrzebuje pomocy
+#show Hero
+#show Huber
+#CAMERA 3 30 3 1
+#phrase Huber  1
+Mój dobry przyjaciel, kupiec Karansul, poprosił mnie o... no... pewnego rodzaju przysługę. Martwi się, że jego fabryki na wschodnim brzegu jeziora przestały działać.
+#phrase Huber  2
+Od dawna nie było stamtąd ani dostaw, ani żadnych wieści, więc nikt nie wie, co się dzieje. Karansul poprosił mnie o pomoc w rozwiązaniu tego problemu, więc ja z kolei proszę ciebie, żebyś się tym zajął.
+#phrase Huber  3
+Rozumiesz, że kłopoty mojego przyjaciela bardzo mnie niepokoją, a zaniepokojony gubernator potrafi uprzykrzyć życie wszystkim, którzy mu podlegają!
+#phrase Huber  4
+Dlatego w twoim własnym interesie będzie udać się do posiadłości Karansula, znaleźć przyczynę tego stanu rzeczy, a potem ją usunąć!

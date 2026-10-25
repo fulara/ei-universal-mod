@@ -1,0 +1,10 @@
+Gotowe!
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Dobrze! Nawet trochę żal mi tych rozbójników — stracili prawie cały swój łup!
+#phrase Hero  2
+A co, jeśli przez to postanowią zdobyć więcej łupu — z naszej wioski?
+#phrase Nsheriff  3
+W takim razie znowu bym do ciebie przyszedł, wykonałbyś kolejne zadanie i wszyscy bylibyśmy bardzo szczęśliwi... Z wyjątkiem rozbójników, he-he...

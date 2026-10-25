@@ -1,0 +1,8 @@
+Nie ma mowy, żebym pokonał Orków!
+#show Hero
+#show Nsheriff
+#CAMERA 5
+#phrase Hero  1
+Orkowie są zbyt groźni. Potrzebuję więcej doświadczenia, żeby z nimi walczyć!
+#phrase Nsheriff  2
+Rozumiem... W końcu na razie Orkowie są wystarczająco zajęci na wschodzie. Może zdążysz wyłączyć piramidę, zanim postanowią zająć się nami na poważnie!

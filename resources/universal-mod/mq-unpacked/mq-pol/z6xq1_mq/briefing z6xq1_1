@@ -1,0 +1,14 @@
+[Średnie] Główny jasnowidz
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Szkoda, że nie ma z nami Wybrańca! On dogadałby się z orkami, a teraz zamierzają zaatakować naszą wioskę!
+#phrase Nsheriff  2
+Zajęli starą osadę goblinów w Środkowych Górach i niedawno wybrali sobie nowego Jasnowidza, który poprowadzi ich w wyprawach! Nie wiem, co zrobimy...
+#phrase Hero  3
+To takie trudne? Wystarczy posłać paru zdolnych ludzi i podrżnąć temu Jasnowidzowi gardło... Orkom trochę zajmie wybranie następnego!
+#phrase Nsheriff  4
+Myślisz, że mi to nie przyszło do głowy? Ale bardzo trudno dostać się do ich osady, a Jasnowidz na pewno jest dobrze chroniony! Nie mogę posyłać ludzi na pewną śmierć, a jak dotąd nikt się nie zgłosił...
+#phrase Hero  5
+No cóż, właśnie się zgłosił. Ja to zrobię.

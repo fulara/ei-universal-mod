@@ -1,0 +1,14 @@
+Otwórz portal
+Znajdź klucze, aby otworzyć bramy i uruchomić portal.
+#subobj  1
+Znajdź klucz do bram
+Potrzebujesz klucza, żeby dotrzeć do drugiej części jaskini. Powinien być w skrzyni niedaleko wejścia.
+#subobj  2
+Otwórz bramy
+Gdy zdobędziesz klucz, otwórz obie bramy, a następnie poszukaj klucza do portalu.
+#subobj  3
+Znajdź klucz do portalu
+Portalu nie można uruchomić bez właściwego klucza. Powinien on znajdować się w skrzyni.
+#subobj  4
+Uruchom portal
+Użyj klucza do portalu, aby uruchomić mechanizm w jego pobliżu.

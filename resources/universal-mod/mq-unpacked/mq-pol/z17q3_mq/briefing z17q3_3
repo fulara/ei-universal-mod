@@ -1,0 +1,10 @@
+Cyklopy zabite!
+#show Hero
+#show Glav
+#CAMERA 2
+#phrase Hero  1
+Stare powiedzenie jednak mówi prawdę: to, co wygląda groźnie, nie zawsze jest niebezpieczne! Cyklopy okazały się dość mizernymi przeciwnikami!
+#phrase Glav  2
+Doskonale! Rozumiem twoją dumę i radość, i podzielam je...
+#phrase Glav  3
+Ale pamiętaj: jeszcze mogą wrócić...

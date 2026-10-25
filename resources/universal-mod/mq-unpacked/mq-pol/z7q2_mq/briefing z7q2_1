@@ -1,0 +1,12 @@
+[Średnie] Prośba Pustelnika
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Mamy szansę poprawić nasze stosunki z jaszczurami i mam nadzieję, że odegrasz w tym główną rolę!
+#phrase Hero  2
+Czyli mam powtórzyć wyprawę Wybrańca po Wielką Skorupę?
+#phrase Nsheriff  3
+Nie, nie, nie o to chodzi. Niedawno do wioski przyszedł Pustelnik Jaszczur i poprosił, by uwolnić jego pobratymców z pułapki.
+#phrase Nsheriff  4
+Młode i głupie Jaszczury zapuściły się na ziemie Orków na zachód od północnego brzegu rzeki i dały się wtrącić do więzienia. Pustelnik obiecał, że jeśli Jaszczury zostaną uwolnione, zabroni plemieniu naprzykrzać się ludziom przez cały miesiąc!
