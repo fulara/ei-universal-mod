@@ -1,0 +1,10 @@
+Nieumarli zniknęli sami z siebie
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Wybacz, jeśli nastraszyłem cię swoją opowieścią i naraziłem na niebezpieczeństwo! Słyszałem, że ci nieumarli po prostu zniknęli, sami z siebie.
+#phrase Hero  2
+Na zawsze?
+#phrase Nsheriff  3
+Nie sądzę... Ale tymczasem mógłbyś zrobić coś innego. Niestety, mamy wiele innych problemów!

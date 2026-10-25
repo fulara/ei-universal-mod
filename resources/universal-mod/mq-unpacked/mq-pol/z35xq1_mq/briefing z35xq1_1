@@ -1,0 +1,18 @@
+[Średnie] Oszalałe zwierzęta
+#show Hero
+#show Marshal
+#CAMERA 3 0 3.5 1.5
+#phrase Marshal  1
+Widzę, że nie masz nic lepszego do roboty. Chodź no tutaj!
+#phrase Hero  2
+Co?
+#phrase Marshal  3
+Nasi ludzie odpierają tam ataki oszalałych bestii, a ty sobie spacerujesz. Widzę, że jest w tobie materiał na dobrego wojownika. Zapiszę cię. Jeśli żaden z naszych ludzi nie polegnie, zarobisz trochę złota.
+#phrase Hero  4
+Gdyby tylko lord Firez nie prowadził tych swoich zgubnych eksperymentów...
+#phrase Marshal  5
+To nie twoja sprawa.
+#phrase Hero  6
+Dopilnuję, żeby nasi żołnierze nie ponieśli strat podczas odpierania ataków, panie.
+#phrase Marshal  7
+Spocznij!

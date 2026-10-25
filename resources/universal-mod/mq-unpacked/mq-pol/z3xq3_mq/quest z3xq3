@@ -1,0 +1,23 @@
+Magiczna piramida
+Orkowie wrócili na Podgórze i zdołali nawet ponownie uruchomić piramidę. Trzeba ją wyłączyć, ale tym razem będzie to jeszcze trudniejsze...
+#subobj  1
+Dotrzeć do północnego brodu
+Aby wyłączyć piramidę, potrzebujesz specjalnego klucza; ma go Wróżbita. Wróżbitę można znaleźć na płaskowyżu we wschodniej części Podgórza. Jedyna droga prowadzi tam przez najbardziej na wschód położoną rzekę. Bród znajduje się na północy, niedaleko jaskini.
+#subobj  2
+Zabić strażników brodu
+Brodu strzegą Orkowie. Aby go przekroczyć, będziesz musiał zabić strażników.
+#subobj  3
+Odnaleźć Wróżbitę
+Szukaj Wróżbity na południu wschodniego płaskowyżu.
+#subobj  4
+Zabić Wróżbitę
+Aby zdobyć klucz, musisz zabić Wróżbitę.
+#subobj  5
+Zabrać klucz
+Z ciała Wróżbity zabierz klucz do Magicznego Obelisku, który steruje piramidą.
+#subobj  6
+Odnaleźć obelisk
+Obelisk sterujący piramidą znajduje się w centrum obozu Orków. Jest jednak pilnie strzeżony.
+#subobj  7
+Wyłączyć piramidę
+Aby wyłączyć piramidę, opuść Magiczny Obelisk. Użyj klucza, który zabrałeś z ciała Wróżbity.

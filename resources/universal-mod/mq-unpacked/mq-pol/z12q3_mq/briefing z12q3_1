@@ -1,0 +1,14 @@
+[Trudne] Kapitan Tilvar zaginął!
+#show Hero
+#show Huber
+#CAMERA 3 20 3.5 1
+#phrase Huber  1
+Bardzo się martwię o kapitana Tilvara! Odkąd wysłałem go z oddziałem, żeby wybił te wszystkie Gadziołby w pobliżu kopalń, nie mam od niego żadnych wieści!
+#phrase Huber  2
+Potrzebuję człowieka, który będzie gotów ruszyć na północ przez jezioro i dowiedzieć się, co się z nim stało. I sądzę, że ty właśnie możesz być tym człowiekiem!
+#phrase Hero  3
+To dla mnie zaszczyt, Wasza Ekscelencjo! Ale chciałbym zrozumieć jedną rzecz: myślałem, że Gadziołby to podziemne stwory? Spodziewacie się, że zejdę pod ziemię i będę walczył z nimi tam na dole?
+#phrase Huber  4
+Ależ nie, niech te koszmarne stwory siedzą w swoich katakumbach tak długo, jak im się podoba! Tilvarowi kazałem zabić tylko te, które ośmieliły się wyjść na powierzchnię!
+#phrase Huber  5
+Ty także możesz wziąć udział w tym przedsięwzięciu — a jeśli potwierdzą się moje najgorsze obawy, będziesz musiał dokończyć tę robotę sam. Nie mogę obiecać ci nagrody, ale doświadczenie, które zdobędziesz, będzie bezcenne!

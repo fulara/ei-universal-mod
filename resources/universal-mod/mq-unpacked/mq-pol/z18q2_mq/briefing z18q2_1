@@ -1,0 +1,18 @@
+Śmierć Aiset-Bekowi!
+#show Hero
+#show Glav
+#CAMERA 3 0 3.5 1.5
+#phrase Glav  1
+Czy słyszałeś kiedyś o Aiset-Beku?
+#phrase Hero  2
+Oczywiście! Nawet strażnicy mówią o nim szeptem...
+#phrase Glav  3
+Ach... Powinienem z tobą poważnie porozmawiać: zastanawiam się, skąd tak dobrze znasz zwyczaje strażników...
+#phrase Hero  4
+Podejrzewasz mnie o coś, bracie Khatulu?
+#phrase Glav  5
+Ależ skąd, żadnych podejrzeń! Ufam ci tak, jak ufam samemu sobie, a żeby to udowodnić, chciałbym cię poprosić o wykonanie wyroku śmierci, który wydano na Aiset-Beka już dawno temu.
+#phrase Glav  6
+W tej chwili lustruje garnizon przy południowym moście, na zachodnim brzegu rzeki; to dobra okazja, by Aiset-Bek zapłacił za wszystko!
+#phrase Glav  7
+Jestem pewien, że chętnie zabijesz tego krwiożerczego pająka! Ale jeśli odmówisz, to muszę przyznać, że naprawdę mogę nabrać podejrzeń...

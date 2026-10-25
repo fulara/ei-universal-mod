@@ -1,0 +1,10 @@
+Nie udało się powstrzymać ataku!
+#show Hero
+#show Marshal
+#CAMERA 3 20 3 1.5
+#phrase Marshal  1
+Co się stało?!
+#phrase Hero  2
+To zadanie mnie przerasta, te dzikie zwierzęta są takie...
+#phrase Marshal  3
+Wszyscy jesteście równie bezużyteczni! Będę musiał znowu chwycić za topór!

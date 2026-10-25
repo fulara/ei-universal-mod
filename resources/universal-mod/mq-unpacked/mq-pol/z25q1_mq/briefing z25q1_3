@@ -1,0 +1,10 @@
+Droga jest już bezpieczna!
+#show Hero
+#show KMage
+#CAMERA 10
+#phrase KMage  1
+Bardzo ci dziękuję. Miejmy nadzieję, że niedługo będziemy mogli handlować z innymi wyspami!
+#phrase Hero  2
+Ale co, jeśli postanowią walczyć z Cesarstwem Kanii?
+#phrase KMage  3
+To słuszna uwaga. Może jednak będziemy musieli zaczekać...

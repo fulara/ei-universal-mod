@@ -1,0 +1,12 @@
+[Trudne] Droga do Wielkiego Maga
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Stara wiedźma doniosła, że droga do Wielkiego Maga została zablokowana. Teraz musimy iść niebezpieczną ścieżką przez lawowe jaskinie. Czy możesz uczynić tę drogę bezpieczniejszą?
+#phrase Hero  1
+O ile czeka za to nagroda... i to porządna! Brzmi to dość niebezpiecznie!
+#phrase Merc1  3
+Oczywiście, wszystko, co zdołamy zebrać, będzie twoje. Jestem pewien, że dasz sobie radę.
+#phrase Merc1  4
+A teraz idź i oczyść korytarze ze wszystkich żywiołaków lawy. Uważaj jednak na golemy!

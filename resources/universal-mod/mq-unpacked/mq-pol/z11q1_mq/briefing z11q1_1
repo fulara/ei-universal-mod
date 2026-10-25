@@ -1,0 +1,14 @@
+[Łatwe] Kłusownicy w książęcych łowiskach!
+#show Hero
+#show Huber
+#CAMERA 3 30 3 1
+#phrase Huber  1
+Książę polecił mi zająć się pewnym problemem. Kłusownicy polujący w książęcych łowiskach... trzeba temu położyć kres!
+#phrase Huber  2
+Straż miejska donosi, że odkryła jelenie zabite na terenach łowieckich za miastem. Najlepiej zacząć tam, żeby znaleźć tych kłusowników.
+#phrase Huber  3
+Musisz zrozumieć, że troski księcia są także moimi, bo łowiska wokół miasta utrzymują również nas. Nie możemy sobie pozwolić, by dzielić te tereny z obcymi.
+#phrase Hero  1
+Dobrze, pójdę przepędzić tych kłusowników. Ale musi z tego być dla mnie coś więcej niż miska ciepłej zupy po powrocie!
+#phrase Huber  4
+Oczywiście, mój przyjacielu, książę jest dobry i hojny dla swoich sprzymierzeńców! O ile służą mu wiernie.

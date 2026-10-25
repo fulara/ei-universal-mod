@@ -1,0 +1,10 @@
+Kopalnia jest oczyszczona!
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Dobra robota! Naprawdę oczyściłeś kopalnię Babura. Stary sknera będzie zadowolony.
+#phrase Hero  2
+Odzyskałem worek złota z zachodniej części i ładny samorodek złota z północnego wschodu.
+#phrase Merc1  3
+Doskonale. Oto twoja nagroda!

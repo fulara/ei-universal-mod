@@ -1,0 +1,16 @@
+[Trudne] Prawda i opowieści o Martwym Mieście
+#show Hero
+#show Nsheriff
+#CAMERA 5
+#phrase Hero  1
+Wszyscy znają legendę o Wybrańcu rozmawiającym ze smokiem w Martwym Mieście, tak samo jak wiedzą o mieczu, który stamtąd przyniósł — magicznym, a do tego żelaznym!
+#phrase Hero  2
+Jak myślisz, Rivarze, co w tym jest prawdą, a co jedynie naszym wymysłem?
+#phrase Nsheriff  3
+Szczerze mówiąc, nie wiem. Widziałem ten miecz na własne oczy, ale nigdy nie spotkałem smoka. Może to tylko opowieść. Zamierzasz spróbować zapuścić się do Martwego Miasta?
+#phrase Hero  4
+No cóż... Właściwie tak. Mówią, że na starym cmentarzu jest krypta i można tam znaleźć coś cennego.
+#phrase Nsheriff  5
+To już zależy od ciebie. Nie będę cię zniechęcał, ale powiem ci jedno: zanim wejdziesz do krypty, wejdź na Samotną Górę. Kto wie, może naprawdę mieszka tam jakiś stary smok? I może nie spodoba mu się, jeśli zaczniesz kręcić się po jego domenie, nawet się wcześniej nie witając?
+#phrase Nsheriff  6
+Krótko mówiąc, po prostu uważaj, dobrze?

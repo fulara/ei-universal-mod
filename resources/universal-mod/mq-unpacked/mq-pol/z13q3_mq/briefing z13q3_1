@@ -1,0 +1,20 @@
+[Średnie] Gubernator czeka na prezent
+#show Hero
+#show Huber
+#CAMERA 3 0 3.5 1
+#phrase Huber  1
+Może słyszałeś, że kolekcjonuję egzotyczną broń i inne rzadkości?
+#phrase Hero  2
+Oczywiście, Wasza Ekscelencjo. Wszyscy znają waszą wspaniałą kolekcję!
+#phrase Huber  3
+Dobrze, dobrze... A czy wiesz, że ludzi, których nazywa się "Wasza Ekscelencjo", należy od czasu do czasu obdarowywać miłymi prezentami? Może o tym nie wiedziałeś, ale teraz cię oświeciłem, że tak powiem, prawda?
+#NOLIPS
+#CAMERA 10
+#phrase Hero  4
+Mmm... Chyba wiem, co macie na myśli!
+#phrase Hero  5
+Mmmm... Wasza Ekscelencjo! Chciałbym sprawić wam prezent; czy moglibyście powiedzieć, co szczególnie sprawiłoby wam przyjemność?
+#phrase Huber  6
+Oczywiście, że mógłbym! Chciałbym mieć ten złoty samorodek, który zdobi szyję Królewskiego Jelenia. Bestię bardzo łatwo znaleźć - pasie się w szerokiej dolinie na północ od rzeki, razem z resztą stada.
+#phrase Huber  7
+Ale proszę, zachowaj ostrożność. Królewski Jeleń, w przeciwieństwie do zwykłych jeleni, potrafi się bronić, więc jeśli zginiesz, moja kolekcja nie zyska nowego eksponatu! To byłoby bardzo, bardzo smutne, nie sądzisz?

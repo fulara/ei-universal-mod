@@ -1,0 +1,16 @@
+[Średnie] Uratuj GoGo!
+#show Hero
+#show Nsheriff
+#CAMERA 5
+#phrase Hero  1
+Wydaje mi się, że gobliny znacznie częściej niż dawniej kręcą się w pobliżu wioski. Pamiętasz, ile razy wybiliśmy ich straże na moście, a oni za każdym razem wysyłają tam nową grupę!
+#phrase Nsheriff  2
+To nic dziwnego! Kiedy stary GoGo był wodzem, gobliny nigdy nie naprzykrzały się ludziom zbyt mocno. Szczerze mówiąc, właśnie dlatego orkowie nienawidzili GoGo. Zmusili więc gobliny, żeby miały nowego wodza, znacznie bardziej zajadłego. A teraz postanowili wykonać na biednym GoGo egzekucję.
+#phrase Nsheriff  3
+Byłoby znacznie lepiej, gdyby GoGo żył: gobliny nigdy nie posłuchają rozkazów nowego wodza, dopóki stary wódz wciąż żyje.
+#phrase Hero  4
+Rozumiem! Ale jak mamy to osiągnąć?
+#phrase Nsheriff  5
+Egzekucja GoGo ma się odbyć w delcie rzeki, na środkowej wyspie. Jeśli zabijesz orków i zaprowadzisz GoGo na Jałową Wyspę, będzie tam bezpieczny!
+#phrase Nsheriff  6
+I jeszcze jedna rada: spróbuj dostać się na terytorium orków od strony zerwanego mostu. Słyszałem, że da się go bardzo łatwo naprawić, wystarczyłaby jedna deska! Jeśli jakąś zobaczysz, po prostu ją zabierz, może się przydać.

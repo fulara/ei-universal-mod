@@ -1,0 +1,20 @@
+Stare kopalnie odkrywkowe
+Namiestnik chce ponownie otworzyć stare wyrobiska odkrywkowe. Wszystko, co temu przeszkadza, musi zostać usunięte! Zadanie obejmuje również wybicie tygrysów w dolinie, gdzie znajduje się skrytka z kluczem do bram kopalni.
+#subobj  1
+Wejście do doliny ze skrytką
+Wejście do doliny znajduje się gdzieś między niskimi wzgórzami na północny zachód od obozu wojskowego. W tej chwili w obozie trwa bunt, więc postaraj się nie dać zauważyć żołnierzom.
+#subobj  2
+Odszukanie skrytki z kluczem
+Klucz do bram prowadzących do kopalni odkrywkowych znajduje się w skrytce gdzieś na końcu doliny. Nie będzie łatwo go znaleźć, bo po dolinie krąży wiele dzikich tygrysów. A zabicie ich wszystkich jest ważną częścią tego zadania!
+#subobj  3
+Zdobycie klucza
+Musisz wyjąć go ze skrytki.
+#subobj  4
+Odszukanie wejścia do starych kopalni odkrywkowych
+Wejście do starych kopalni odkrywkowych znajduje się na wschodzie, za potężną bramą.
+#subobj  5
+Otwarcie bramy
+Aby otworzyć bramę, użyj klucza ze skrytki.
+#subobj  6
+Zapewnienie bezpieczeństwa wyrobiskom
+Normalna praca w kopalniach będzie mogła zostać wznowiona dopiero wtedy, gdy wszystkie złe stwory w kopalniach i dolinie ze skrytką zostaną wybite.

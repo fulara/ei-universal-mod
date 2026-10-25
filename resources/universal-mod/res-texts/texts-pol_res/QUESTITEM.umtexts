@@ -1,0 +1,41 @@
+# um-texts 1
+=== QUESTITEM DoorKey00
+Klucz do bramy więzienia
+Ten klucz otwiera bramę więzienia.
+
+=== QUESTITEM KKey01
+Klucz do bramy kopalni
+Otwiera bramę w północnej części kopalni.
+
+=== QUESTITEM KKey02
+Klucz do kopalni
+Ten klucz jest potrzebny, by wejść do wschodniej części kopalni.
+
+=== QUESTITEM KKey03
+Klucz do bramy wąwozu
+Ten klucz pozwala wejść do wąwozu w południowo-wschodniej części miasta.
+
+=== QUESTITEM KKey04
+Klucz do bramy tajemnej jaskini
+Ten klucz otwiera wejście do jaskini z artefaktem.
+
+=== QUESTITEM KKey05
+Klucz do bramy
+Ten klucz otwiera bramę do jaskini z portalem.
+
+=== QUESTITEM KKey06
+Klucz do opuszczonych kopalni
+Ten klucz otwiera bramy opuszczonych kopalni.
+
+=== QUESTITEM KKey07
+Klucz
+Takich kluczy używa się do dźwigni w kopalniach.
+
+=== QUESTITEM Ogrestuff
+Naszyjnik ogra
+Ogr pewnie już odkrył, że stracił naszyjnik... czy zrozumie, jak do tego doszło?
+
+=== QUESTITEM TeleportKey01
+Klucz do portalu
+Ten klucz uruchamia portal.
+

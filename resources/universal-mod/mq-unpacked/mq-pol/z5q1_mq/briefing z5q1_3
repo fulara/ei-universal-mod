@@ -1,0 +1,10 @@
+Matka Pancernik nie żyje!
+#show Hero
+#show NSheriff
+#CAMERA 9
+#phrase NSheriff  1
+A więc plotki były prawdziwe?
+#phrase Hero  2
+Cała jaskinia jest pełna orków i potworów. Powinniśmy oczyścić cały tunel.
+#phrase NSheriff  3
+Na razie bezpośrednie zagrożenie zostało zażegnane. Są też inne, pilniejsze niebezpieczeństwa.

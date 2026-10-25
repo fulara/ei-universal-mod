@@ -1,0 +1,20 @@
+[Trudne] Nieumarli są blisko Martwego Miasta!
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Chyba musiałem zgodzić się zostać starszym naszej wioski w zły dzień! Od tamtej pory nie mamy spokoju: Gobliny, Orkowie, Jaszczury, a teraz jeszcze ci nieumarli koło Martwego Miasta!
+#show Hero
+#show Nsheriff
+#phrase Hero  2
+No i co z tego? Jasne, szkielety nie są niczym przyjemnym, ale przecież trzymały się blisko ruin, prawda?
+#phrase Nsheriff  3
+To prawda, szkielety nie odchodzą daleko od swoich grobów. Ale nie mówię o nich: jeśli nie ma grobu, nieumarli mogą pójść wszędzie! Na przykład tutaj, do wioski, rozumiesz?
+#phrase Hero  4
+Hm... A skąd wzięło się to dziwo świata?
+#phrase Nsheriff  5
+Z tego samego starego miejsca — to wszystko przez przygody Wybrańca! Opowiadał, że na ziemiach Martwego Miasta, na północny zachód od miasta, szkielety zaatakowały obóz wyprawy Khadaganu. I oczywiście nikomu nie chciało się pogrzebać zabitych.
+#phrase Nsheriff  6
+I wygląda na to, że jeden z zabitych był Nekromantą, więc jego magia nadal działa, choć jego samego już nie ma! Krótko mówiąc, nieumarli włóczą się teraz po całym obozie i w każdej chwili mogą przyjść tutaj.
+#phrase Hero  7
+To musimy ich zniszczyć, i to jak najszybciej! Myślę, że mógłbym się tym zająć.

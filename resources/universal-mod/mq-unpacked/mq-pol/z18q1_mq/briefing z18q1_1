@@ -1,0 +1,18 @@
+Porządny człowiek ma kłopoty!
+#show Hero
+#show Glav
+#CAMERA 3 20 3.5 1.5
+#phrase Glav  1
+W bractwie Ostatniej kryjówki obowiązuje zasada: jeśli porządny człowiek ma kłopoty, a my możemy mu pomóc, to pomagamy. Teraz kłopoty ma kolekcjoner staroci imieniem Baluddin i chciałbym mu pomóc.
+#phrase Hero  2
+Hmm... Na pewno jest porządnym człowiekiem?
+#phrase Glav  3
+Wątpisz w moje słowa? I bardzo dobrze: tylko wątpliwości mogą doprowadzić cię do prawdy. Opowiem ci o Baluddinie!
+#phrase Glav  4
+Brat Blondyn powiedział mi, że Baluddin dał schronienie nieznanemu człowiekowi o bardzo dziwnym wyglądzie i bardzo się zmartwił, gdy straż go pojmała.
+#phrase Glav  5
+Doszedłem do wniosku, że Baluddin jest szlachetnym człowiekiem, choć znalazł się w trudnym położeniu, więc wysłałem mu wiadomość. Teraz Baluddin donosi nam o najnowszych wydarzeniach w mieście, a my od czasu do czasu pomagamy mu powiększać kolekcję.
+#phrase Glav  6
+Dowódca jednego z oddziałów straży dowiedział się o tym, aresztował Baluddina i urządził zasadzkę w pobliżu jego domu.
+#phrase Glav  7
+Musimy zabić strażników, którzy wiedzą, za co kolekcjoner został aresztowany, i odprowadzić go do domu; wtedy nikt nie dowie się, co naprawdę się stało!

@@ -1,0 +1,23 @@
+Inwazja na Gipath
+Khadagan przygotowuje inwazję na Gipath przez Portal znajdujący się w Suslangerze. Musisz wyłączyć Portal i uniemożliwić tę inwazję.
+#subobj  1
+Dotarcie do portalu
+Portal znajduje się na południowym wschodzie; jedyny sposób, by dostać się w jego pobliże, prowadzi przez jeden z wiszących mostów.
+#subobj  2
+Odnalezienie dowódcy armii najeźdźczej
+Kwatera główna armii mieści się w małym domu niedaleko Portalu.
+#subobj  3
+Zabicie dowódcy
+Dowódcę armii najeźdźczej trzeba zabić.
+#subobj  4
+Zdobycie klucza do Portalu
+Zabierz z ciała dowódcy klucz zamykający Portal prowadzący na Gipath.
+#subobj  5
+Użycie lewego magicznego obelisku
+Aby wyłączyć Portal, musisz użyć klucza na prawym i lewym Magicznym Obelisku.
+#subobj  6
+Użycie prawego magicznego obelisku
+Aby wyłączyć Portal, musisz użyć klucza na prawym i lewym Magicznym Obelisku.
+#subobj  7
+Wyłączenie portalu
+Gdy użyjesz obu Magicznych Obelisków, Portal zostanie wyłączony i armia nie będzie mogła najechać Gipath.

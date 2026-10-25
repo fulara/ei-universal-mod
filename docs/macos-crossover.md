@@ -103,7 +103,7 @@ Under the existing `[EnvironmentVariables]` section, add or update:
 
 Preserve other bottle settings. Start the game again after changing the locale. If a custom launch script explicitly sets `LANG` or `LC_ALL`, update that script too rather than keeping conflicting locale settings.
 
-For a separately installed Polish base-game localization, `pl_PL.UTF-8` for both values produced code page 1250 and correct Polish menu characters. This does **not** translate the mod's Russian strings or provide a Polish language pack. Mixing legacy text resources from different encodings can leave some text unreadable. Changing the launcher's own language also does not translate the game's graphical menu resources.
+For a Polish base-game localization, use `pl_PL.UTF-8` for both values; this produced code page 1250 and correct Polish menu characters. To translate the mod's additions as well, apply both the `res` and `maps` files from its `lang-packs/pol` pack as described in the [language-pack instructions](../README.md#language-packs). The locale alone does not translate resources. Mixing legacy text resources from different encodings can leave some text unreadable. Changing the launcher's own language also does not translate the game's graphical menu resources.
 
 ## 5. Launch and check
 

@@ -1,0 +1,20 @@
+Mag-zombi
+#show Hero
+#show Glav
+#CAMERA 3 0 3.5 1.5
+#phrase Glav  1
+Często wspominam brata Blondyna, który odszedł od nas równie dziwnie, jak się wśród nas pojawił. Ten młodzieniec wyglądał całkiem zwyczajnie, ale był bardzo bystry i przebiegły. Nawet teraz, gdy Blondyna nie ma już z nami, jego czyny żyją w naszej pamięci.
+#phrase Glav  2
+Na przykład niedawno otrzymałem wiadomość od skompromitowanego Nekromanty Kholaia, z którym Blondyn prowadził jakieś bardzo tajemnicze interesy. Tym razem jednak sprawa Kholaia jest całkiem prosta i zbieżna z naszą.
+#phrase Glav  3
+Jego wróg, młody mag Taivo, zdołał wykorzystać ciało martwego Nekromanty i stworzył z niego maga-zombi. To stworzenie nigdy nie śpi ani nie odpoczywa, jest silniejsze od zwykłego zombi, a do tego posługuje się magią bojową!
+#phrase Glav  4
+Kholai chce nauczyć nas, jak szybko i bezpiecznie zabijać takich przeciwników — uważa, że byłby to cios w autorytet Taiva. Żeby jednak to osiągnąć, potrzebuje głowy maga-zombi.
+#phrase Hero  5
+Masz zamiar rozkazać mi, żebym ją zdobył?
+#phrase Glav  6
+Ależ skąd! Wszyscy jesteśmy tu braćmi, nikt nikomu niczego nie rozkazuje. Wszystko odbywa się całkowicie dobrowolnie, bo ludzie rozumieją, że trzeba działać!
+#phrase Glav  7
+Kiedy więc sam dojdziesz do wniosku, że to musi zostać zrobione, pamiętaj, że mag-zombi przebywa teraz w mieście Nekromantów.
+#phrase Glav  8
+A wieża starego Kholaia stoi na północ od miasta. Tylko bądź ostrożny! Dom skompromitowanego Nekromanty jest strzeżony równie pilnie jak samo miasto!

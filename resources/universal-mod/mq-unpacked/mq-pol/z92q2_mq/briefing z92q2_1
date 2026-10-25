@@ -1,0 +1,12 @@
+[Trudne] W Gipath zauważono smoki!
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Jaszczury żyjące w odległych górach pochodzą pierwotnie z dalekiej krainy. Mówi się, że była to kiedyś idylliczna ziemia, ale dziś jest uschła i opustoszała. Ostatnio widziano młode smoki. Jaszczury musiały sprowadzić je ze swojej ojczyzny, bo smoki wyginęły w Gipath bardzo dawno temu.
+#phrase Hero  2
+Smoki?!... Masz na myśli te wielkie, latające jaszczury, które zabijają i pożerają każdego, kto stanie im na drodze?!
+#phrase Merc1  3
+Tak, zgadza się. Ale nie martw się, to jeszcze młode osobniki i nie osiągnęły pełni swoich możliwości.
+#phrase Merc1  4
+Ale kiedy w pełni dorosną, nikt nie będzie już w stanie im się przeciwstawić! Musisz je wszystkie zabić, bo jaszczury z odległych gór są ich sprzymierzeńcami, a wobec nas niestety nie są już tak przyjazne.

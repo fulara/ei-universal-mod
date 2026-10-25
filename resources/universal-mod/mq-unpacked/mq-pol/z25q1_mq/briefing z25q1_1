@@ -1,0 +1,14 @@
+[Średnie] Oczyść drogę do jaskini
+#show Hero
+#show KMage
+#CAMERA 2
+#phrase Hero  1
+Nie wyglądasz najlepiej. Co się stało?
+#phrase KMage  2
+Cóż, zwiadowcy donieśli, że ogry strzegą teraz drogi do jaskini!
+#phrase Hero  3
+A co w tym złego?
+#phrase KMage  4
+W tej jaskini znajduje się pradawny portal... Nie możemy pozwolić, żeby te potwory zagradzały drogę. W pobliżu środka jeziora jest też kilka żywiołaków lodu...
+#phrase KMage  5
+Oczywiście za oczyszczenie drogi otrzymasz niewielką nagrodę. Komuś takiemu jak ty nie powinno to zająć wiele czasu!

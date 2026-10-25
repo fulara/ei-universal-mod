@@ -1,0 +1,10 @@
+Gotowe!
+#show Hero
+#show Merc1
+#CAMERA 9
+#phrase Merc1  1
+Dobra robota! Cieszę się, że wyszedłeś z tego cało!
+#phrase Hero  2
+Cóż... to zadanie było wszystkim, tylko nie czymś łatwym. Mam nadzieję, że nagroda jest wysoka.
+#phrase Merc1  3
+Oczywiście! Masz, weź tę kupę złota jako nagrodę!

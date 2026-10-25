@@ -1,0 +1,12 @@
+[Łatwe] Łup rozbójników
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Wygląda na to, że nasza wioska nigdy nie pozbędzie się tych rozbójniczych sąsiadów! Wszystkie moje plany na nic się nie zdają. Nigdy nie zdołamy zniszczyć ich do końca! Ale teraz mam znakomity nowy pomysł…
+#phrase Hero  2
+Hmm... Właściwie, kiedy słyszę słowa „znakomity nowy pomysł”, zawsze spodziewam się jakiegoś haczyka!
+#phrase Nsheriff  3
+Ależ skąd, nie ma żadnego haczyka! Chcę tylko, żebyś odebrał rozbójnikom łup. Nie musisz się nawet z nimi bić. Najważniejsze to zdobyć worek, który trzymają w swoim obozie.
+#phrase Nsheriff  4
+Oczywiście dojścia do obozu są dobrze strzeżone, ale mógłbyś przechytrzyć strażników...

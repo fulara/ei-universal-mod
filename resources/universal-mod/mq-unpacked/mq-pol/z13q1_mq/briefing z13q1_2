@@ -1,0 +1,12 @@
+Karansul poradził sobie sam
+#show Hero
+#show Huber
+#CAMERA 3 -10 3 1
+#phrase Huber  1
+Wygląda na to, że nie masz tyle szczęścia, ile sądziłem?
+#phrase Hero  2
+Niestety nie. Posiadłość Karansula okazała się naprawdę trudna!
+#phrase Huber  3
+Tak, wiem. Cóż, dobrze, możesz o tym zapomnieć. Karansul wynajął grupę poważnych ludzi, którzy już uporali się z tym problemem.
+#phrase Huber  4
+Możesz więc rozejrzeć się za innym zajęciem, bardziej odpowiednim do twoich zdolności!

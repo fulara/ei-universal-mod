@@ -1,0 +1,10 @@
+Droga jest już bezpieczna!
+#show Hero
+#show KMage
+#CAMERA 10
+#phrase KMage  1
+Bardzo ci dziękuję! Wyślę robotników, żeby jak najszybciej usunęli skały!
+#phrase Hero  2
+A co z potworami?
+#phrase KMage  3
+Poradzą sobie z nimi. Miejmy nadzieję...

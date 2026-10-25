@@ -1,0 +1,12 @@
+[Łatwe] Orkowy artefakt
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Słyszeliśmy, że orkowie w kopalni strzegą starego artefaktu.
+#phrase Hero  2
+Czemu interesują się takim antycznym gratem?
+#phrase Nsheriff  3
+Powinniśmy go zdobyć, na wypadek gdyby zachował jeszcze jakieś magiczne właściwości.
+#phrase Nsheriff  4
+Może pomóc nam osłabić orków, jeśli kiedykolwiek planują zaatakować wioskę.

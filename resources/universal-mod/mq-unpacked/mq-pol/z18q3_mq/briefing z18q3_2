@@ -1,0 +1,10 @@
+Zdrajca umarł śmiercią naturalną
+#show Hero
+#show Glav
+#CAMERA 3 20 3 1.5
+#phrase Glav  1
+Możesz o tym zapomnieć. Ten zdradziecki niewolnik umarł śmiercią naturalną.
+#phrase Hero  2
+Naturalną?
+#phrase Glav  3
+Ależ oczywiście! Cóż może być bardziej naturalnego niż śmierć od trucizny dodanej do jego misy przez niewolnika-kucharza? Jak już mówiłem, nasza kryjówka jest ostatnią nadzieją dla tych, którzy pracują na plantacjach, a oni nie chcą tej nadziei stracić!

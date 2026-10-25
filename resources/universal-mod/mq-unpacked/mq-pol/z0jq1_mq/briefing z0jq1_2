@@ -1,0 +1,8 @@
+Gdzie oni są?
+#show Hero
+#show Marshal
+#CAMERA 11
+#phrase Hero  1
+Nie widziałem żadnego z tych khadagańskich zwiadowców, o których wcześniej wspominałeś. Twoje informacje mogą być nieaktualne!
+#phrase Marshal  2
+Wyślę kilku strażników, tak na wszelki wypadek...

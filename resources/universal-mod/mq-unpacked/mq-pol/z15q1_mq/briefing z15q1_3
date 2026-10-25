@@ -1,0 +1,12 @@
+Królowa pająków nie żyje!
+#show Hero
+#show Glav
+#CAMERA 9
+#phrase Glav  1
+Dobra robota, mój przyjacielu! To powinno dać nam przewagę w kolejnych bitwach.
+#phrase Hero  1
+Jednak to już więcej nie zadziała, pająk był pilnie strzeżony. Następnym razem na pewno podwoją straże.
+#phrase Glav  2
+Na razie królowa nie żyje. Nie sądzę, by Khadaganianie szybko znaleźli nową. Musisz wiedzieć, że samice są u tego gatunku bardzo rzadkie.
+#phrase Hero  2
+Mam nadzieję, że masz rację...

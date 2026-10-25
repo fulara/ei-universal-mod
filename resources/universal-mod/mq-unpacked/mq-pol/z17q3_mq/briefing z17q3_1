@@ -1,0 +1,10 @@
+Wyjście z kryjówki jest niebezpieczne!
+#show Hero
+#show Glav
+#CAMERA 3 20 3 1.5
+#phrase Glav  1
+Ostrzegłem już wszystkich innych i teraz muszę ostrzec także ciebie. Nie opuszczaj Ostatniej kryjówki wyjściem prowadzącym na pustynię nekromantów!
+#phrase Glav  2
+Coś wydarzyło się na północy Suslangera i rodzina cyklopów, która tam mieszkała, opuściła swoje siedlisko. Teraz wałęsają się przy wyjściu do naszych katakumb!
+#phrase Hero  3
+Tak, to rzeczywiście niebezpieczni sąsiedzi... trzeba się ich pozbyć. Zajmę się tym!

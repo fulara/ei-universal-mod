@@ -1,0 +1,14 @@
+[Trudne] Łysy znów wrócił do swoich starych sztuczek!
+#show Hero
+#show Huber
+#CAMERA 3 -10 3 1
+#phrase Huber  1
+Co za bezczelność! Ten nędzny złodziej Łysy znów ośmielił się obrabować mój dom!!! Ci rozbójnicy wiedzą, że mojego wiernego kapitana Tilvara nie ma już z nami, więc wyprawiają troll wie co! Aż wstyd, że nigdy nie rozkazałem zniszczyć tej rozbójniczej nory na zachodnim brzegu jeziora, kiedy miałem jeszcze okazję...
+#phrase Huber  2
+I oto do czego doprowadziła moja pobłażliwość: zaginął klucz do namiestnikowskiego arsenału, a jeśli go nie odzyskamy, rozbójnicy dostaną w swoje ręce najnowocześniejszą broń!
+#phrase Hero  3
+Co? Chcecie powiedzieć, że macie tam coś, czego nie da się kupić u Karansula?
+#phrase Huber  4
+Gdybym tylko wiedział! Szczerze mówiąc, nigdy nie zadałem sobie trudu, żeby zajrzeć do tego arsenału, to była odpowiedzialność kapitana Tilvara...
+#phrase Huber  5
+Tak czy inaczej, musimy odzyskać ten klucz!

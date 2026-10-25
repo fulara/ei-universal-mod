@@ -1,0 +1,14 @@
+[Średnie] Smoki zagrażają wiosce!
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Środkowe Góry to prawdziwy ból głowy! Orkowie, gobliny, a teraz jeszcze jaszczury...
+#phrase Hero  2
+A co z tymi Jaszczurami? Czy nie mamy z nimi pokoju od czasu, gdy Wybraniec odniósł Wielką Muszlę na jej właściwe miejsce? I nasze stosunki z Pustelnikiem są całkiem dobre...
+#phrase Nsheriff  3
+Mówiłem o innym plemieniu, które nie uznaje ani Muszli, ani Pustelnika. Mieszkają w dolinie na północy Środkowych Gór i kradną nam bydło, ale to nie jest główny problem...
+#phrase Nsheriff  4
+Zdołali zrobić nowy smoczy amulet, więc mogą teraz nakazać smokom atakować ludzi! Na razie trzymają amulet w skrytce, w ruinach obserwatorium, ale w każdej chwili mogą go zabrać i użyć.
+#phrase Hero  5
+Rozumiem. Czyli amulet musi zniknąć? Dobrze, zobaczę, co da się zrobić...

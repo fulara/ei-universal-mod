@@ -1,0 +1,14 @@
+[Łatwe] Miejski skarbiec świeci pustkami!
+#show Hero
+#show Huber
+#CAMERA 3 30 3 1
+#phrase Huber  1
+Mój drogi przyjacielu, miastu brakuje pieniędzy, a jeśli nie zdobędziemy więcej złota, nie będziemy już mogli płacić ludziom takim jak ty.
+#phrase Huber  2
+Słyszałem, że daleko na południu znajduje się skarb. Nie wierzę jednak w bajki i dotąd nie było powodu, by ryzykować życie moich ludzi.
+#phrase Huber  3
+Wyglądasz mi na żądnego przygód. Może chciałbyś sprawdzić, czy w tych opowieściach jest choć ziarno prawdy? W nagrodę obiecuję ci porządny udział w skarbie, jeśli naprawdę istnieje.
+#phrase Hero  1
+No proszę... mam się włóczyć po okolicy na chybił trafił, szukając bajkowego skarbu, a potem może jeszcze dostanę nagrodę?
+#phrase Huber  4
+Wybacz, mój przyjacielu, w tej chwili nie mogę zaproponować ci innego zadania! A teraz idź, wkrótce mam ważne spotkanie ze strażą miejską.

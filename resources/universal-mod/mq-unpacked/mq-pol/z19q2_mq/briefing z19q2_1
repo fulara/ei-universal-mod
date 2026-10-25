@@ -1,0 +1,16 @@
+Khadagańczycy zwerbowali Władcę Smoków!
+#show Hero
+#show Rick
+#CAMERA 3 0 3.5 1
+#phrase Rick  1
+Zdolność widzenia na ogromne odległości nie zawsze przynosi mi radość! Dziś na przykład przyniosła nowy problem...
+#phrase Rick  2
+Dowódcy sił inwazyjnych, generałowi Iriskellowi, udało się pozyskać Władcę Smoków jako sprzymierzeńca swojej armii!
+#phrase Hero  3
+Jeden smok to tylko jeden smok, choćby był nawet trzy razy władcą!
+#phrase Rick  4
+Nie powiedziałem, że będzie sam! Władca Smoków nigdzie nie rusza się bez swojej eskorty, a pokonanie ich wszystkich nie będzie łatwe...
+#phrase Hero  5
+Ale czy to w ogóle możliwe?
+#phrase Rick  6
+Tak, bo inaczej nie posyłałbym cię przeciw nim. Spróbuj szukać Władcy Smoków na pustyni na wschodzie.

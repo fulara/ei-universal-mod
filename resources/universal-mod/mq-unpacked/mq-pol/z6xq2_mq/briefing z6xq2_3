@@ -1,0 +1,10 @@
+Smoki nie zaatakują!
+#show Hero
+#show Nsheriff
+#CAMERA 9
+#phrase Nsheriff  1
+Teraz jaszczury nie będą mogły kazać smokom atakować naszej wioski!
+#phrase Hero  2
+To całkiem miło... Ale co, jeśli smoki same postanowią zaatakować wioskę, bez żadnych rozkazów?
+#phrase Nsheriff  3
+Och, nie martw się tym. Smoki mają tam, gdzie są, dość pożywienia, więc nie muszą nigdzie latać!

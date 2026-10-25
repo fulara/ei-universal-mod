@@ -1,0 +1,386 @@
+# um-texts 1
+=== WEAPON Axe Alloy
+Siekiera ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Bad_Axe Bronze
+Chłopska siekiera
+Taką siekierą można ścinać drzewa. Albo rozbić ją na sobie...
+
+=== WEAPON Bad_Crossbow Bronze
+Roztrzaskana kusza
+W zwarciu można jej też używać jako pałki - nie będzie ci żal takiego sprzętu.
+
+=== WEAPON Bad_Dagger Bronze
+Nóż kuchenny
+Takim nożem można oddzielić uszy hieny od jej głowy.
+
+=== WEAPON Bad_Hammer Bronze
+Pałka
+Doskonała do trzepania dywanów... ...i wbijania rozumu do głów niewolników.
+
+=== WEAPON Bad_Short_Bow Bronze
+Stary łuk
+Dobry sprzęt dla początkującego łucznika, który marzy o doskonaleniu swoich umiejętności.
+
+=== WEAPON Bad_Spear Bronze
+Kiepska włócznia
+Nazwa w pełni odzwierciedla jej skuteczność.
+
+=== WEAPON Bad_Sword Bronze
+Źle wyważony miecz
+Takim mieczem nie da się walczyć zbyt długo!
+
+=== WEAPON Battle_Axe Alloy
+Topór ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Bone_Crossbow Burned_bones
+Kościana kusza (twarda kość)
+Jeśli brakuje ci gotówki, możesz postrzelać do siebie z tej mechanicznej zabawki.
+
+=== WEAPON Bone_Crossbow Decayed_bones
+Kościana kusza (cienka kość)
+Wykonanie kuszy to według standardów Gipath sztuka, a użycie do niej cienkiej kości to szaleństwo.
+=== WEAPON Bone_Crossbow Dragon_Black_Bones
+Kościana kusza (kość niebieskiego smoka)
+Na Gipath nie znajdziesz lepszej kuszy.
+
+=== WEAPON Bone_Crossbow Dragon_Green_Bones
+Kościana kusza (kość zielonego smoka)
+Na tę świetną broń trzeba wydać dużo pieniędzy.
+
+=== WEAPON Bone_Crossbow Dragon_Red_Bones
+Kościana kusza (kość czerwonego smoka)
+Nawet troll by się jej przestraszył.
+
+=== WEAPON Bone_Crossbow Dry_bones
+Kościana kusza (gruba kość)
+Świetna broń i kiepski materiał.
+
+=== WEAPON Bone_Crossbow Scrab_bones
+Kościana kusza (kość pancerza)
+Nie najgorsze połączenie ceny i jakości.
+
+=== WEAPON Bone_Dagger Burned_bones
+Kościany sztylet (twarda kość)
+Na początek wystarczy.
+
+=== WEAPON Bone_Dagger Decayed_bones
+Kościany sztylet (cienka kość)
+Kościany sztylet jest lepszy od kamiennego, ale w tym przypadku materiał dobrano wyjątkowo źle.
+
+=== WEAPON Bone_Dagger Dragon_Black_Bones
+Kościany sztylet (kość niebieskiego smoka)
+Najlepszy sztylet na Gipath.
+
+=== WEAPON Bone_Dagger Dragon_Green_Bones
+Kościany sztylet (kość zielonego smoka)
+Prawdziwy sztylet bojowy.
+
+=== WEAPON Bone_Dagger Dragon_Red_Bones
+Kościany sztylet (kość czerwonego smoka)
+Taki sztylet jest oznaką wysokiej pozycji w społeczeństwie.
+
+=== WEAPON Bone_Dagger Dry_bones
+Kościany sztylet (gruba kość)
+Trochę lepszy niż sztylet z cienkiej kości.
+
+=== WEAPON Bone_Dagger Scrab_bones
+Kościany sztylet (kość pancerza)
+Z tym sztyletem nie bój się ruszać na czarnego dzika.
+
+=== WEAPON Cheat_Dagger Alloy
+Rytualny nóż ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Crash_Axe Bronze
+Naostrzona siekiera
+Tą siekierą można przeganiać szczury.
+
+=== WEAPON Crash_Crossbow Bronze
+Stara kusza
+Przebija skórzany pancerz ze stu kroków.
+
+=== WEAPON Crash_Short_Bow Bronze
+Nieudany łuk
+To już lepszy stosunek jakości do ceny.
+
+=== WEAPON Crash_Spear Bronze
+Lekki szpadel
+Nie najgorsza broń dla nowicjusza.
+
+=== WEAPON Crash_Sword Bronze
+Złamany miecz
+Dobry miecz, gdyby nie to, że jest złamany i wykuty w pośpiechu.
+
+=== WEAPON Crossbow Alloy
+Kusza ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Crystal_Axe Diamond
+Diamentowa siekiera
+Najlepsza możliwa siekiera.
+
+=== WEAPON Crystal_Bow Diamond
+Diamentowy łuk
+Arcydzieło z dawnych czasów.
+
+=== WEAPON Crystal_Crossbow Diamond
+Diamentowa kusza
+Nie jest tania, ale bełt wystrzelony z tej kuszy przebije każdy rodzaj pancerza.
+
+=== WEAPON Crystal_Mace Diamond
+Diamentowa maczuga
+Nawet meteorytowa zbroja nie oprze się jej ciosom!
+
+=== WEAPON Crystal_Short_Bow Diamond
+Diamentowy krótki łuk
+Wart co najmniej tyle, co królewskie klejnoty!
+
+=== WEAPON Curved_Dagger Alloy
+Szkocki sztylet ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Dagger Alloy
+Sztylet ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Hammer Alloy
+Młot bojowy ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Komposite_Bow Adamantium
+Adamantowy łuk kompozytowy
+Niewiele potrafi oprzeć się temu łukowi.
+
+=== WEAPON Komposite_Bow Bronze
+Brązowy łuk kompozytowy
+Ciężki i nieporęczny, ale potrafi zadać trochę obrażeń.
+
+=== WEAPON Komposite_Bow Iron
+Żelazny łuk kompozytowy
+Lepszy niż długi łuk, ale to właściwie wszystko.
+
+=== WEAPON Komposite_Bow Meteoric
+Meteorytowy łuk kompozytowy
+Ten niezwykle potężny łuk potrafi przebić nawet zbroję płytową.
+
+=== WEAPON Komposite_Bow Mithrill
+Mitrylowy łuk kompozytowy
+Mocny i potężny, choć istnieją jeszcze lepsze łuki!
+
+=== WEAPON Komposite_Bow Steel
+Stalowy łuk kompozytowy
+Takich łuków właściwie nie robi się ze stali, ale wszystko jest możliwe.
+
+=== WEAPON Light_Crystal_Axe Diamond
+Lekka diamentowa siekiera
+Jedna z najlepszych diamentowych siekier.
+
+=== WEAPON Light_Crystal_Bow Diamond
+Lekki diamentowy łuk
+Tylko jeden łuk ma większą siłę przebicia.
+
+=== WEAPON Light_Crystal_Crossbow Diamond
+Lekka diamentowa kusza
+Jedna z najlepszych diamentowych kusz.
+=== WEAPON Light_Crystal_Dagger Diamond
+Lekki diamentowy sztylet
+Jeden z najlepszych diamentowych sztyletów.
+
+=== WEAPON Light_Crystal_Mace Diamond
+Lekka diamentowa maczuga
+Jedna z najlepszych diamentowych maczug.
+
+=== WEAPON Light_Crystal_Short_Bow Diamond
+Lekki krótki diamentowy łuk
+Jeden z najlepszych krótkich diamentowych łuków.
+
+=== WEAPON Light_Crystal_Spear Diamond
+Lekka diamentowa włócznia
+Jedna z najlepszych diamentowych włóczni.
+=== WEAPON Light_Crystal_Sword Diamond
+Lekki diamentowy miecz
+Jeden z najlepszych diamentowych mieczy.
+
+=== WEAPON Long_Bow Alloy
+Długi łuk ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Long_Crossbow Alloy
+Ciężka kusza ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Long_Spear Alloy
+Długa pika ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Long_Sword Alloy
+Długi miecz ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Mace Alloy
+Maczuga ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Saber Alloy
+Szabla ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Short_Bow Alloy
+Krótki łuk ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Spear Alloy
+Włócznia ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Spiked_Club Alloy
+Ciężka maczuga z kolcami ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Spiked_Mace Alloy
+Maczuga z kolcami ze stopu meteorytowego
+<placeholder>
+
+=== WEAPON Stone_Axe Corundum
+Korundowa siekiera
+Tą siekierą możesz się nawet skaleczyć!
+
+=== WEAPON Stone_Axe Jade
+Jadeitowa siekiera
+Niezbyt ostra, ale potrafi rzucać zaklęcia!
+
+=== WEAPON Stone_Axe Malachite
+Obsydianowa siekiera 
+Lepsze od niej są tylko kamienne siekiery z korundu.
+
+=== WEAPON Stone_Battle_Axe Corundum
+Korundowy topór
+Ten topór sprawi, że przeciwnik nabierze do ciebie szacunku.
+
+=== WEAPON Stone_Battle_Axe Jade
+Jadeitowy topór
+Dobrze wygląda i mocno uderza.
+
+=== WEAPON Stone_Battle_Axe Malachite
+Obsydianowy topór
+Lepsze od niego są tylko kamienne topory z korundu.
+
+=== WEAPON Stone_Battle_Sword Corundum
+Korundowy miecz bojowy
+Najlepszy miecz na Gipath.
+
+=== WEAPON Stone_Battle_Sword Granite
+Granitowy miecz bojowy
+Tą bronią można skutecznie walczyć z goblinami.
+=== WEAPON Stone_Battle_Sword Jade
+Jadeitowy miecz bojowy
+Ma wielki potencjał, jeśli nasycisz go magią!
+
+=== WEAPON Stone_Battle_Sword Malachite
+Obsydianowy miecz bojowy
+Jeden z najlepszych.
+
+=== WEAPON Stone_Battle_Sword Rock
+Kamienny miecz bojowy
+Całkiem dobra broń, ale materiał dobrano niefortunnie.
+
+=== WEAPON Stone_Battle_Sword Silicon
+Krzemienny miecz bojowy
+Niezła broń, warta swojej ceny.
+
+=== WEAPON Stone_Battle_hammer Corundum
+Ciężki korundowy młot
+To naprawdę ciężka sztuka! Lepsze są tylko młoty metalowe.
+
+=== WEAPON Stone_Battle_hammer Jade
+Ciężki jadeitowy młot
+Spróbuj przywołać nim piorun.
+
+=== WEAPON Stone_Battle_hammer Malachite
+Ciężki obsydianowy młot 
+Lepsze od niego są tylko ciężkie kamienne młoty z korundu.
+
+=== WEAPON Stone_Dagger Corundum
+Korundowy sztylet
+Dobry sztylet kłujący - najlepszy z kamiennych sztyletów.
+
+=== WEAPON Stone_Dagger Jade
+Jadeitowy sztylet
+Z takiego materiału powinno się robić raczej biżuterię...
+
+=== WEAPON Stone_Dagger Malachite
+Obsydianowy sztylet
+Lepsze od niego są tylko kamienne sztylety z korundu.
+
+=== WEAPON Stone_Hammer Corundum
+Korundowy młot
+Wystarczy, by pierwszym ciosem rozbić goblinowi głowę!
+
+=== WEAPON Stone_Hammer Jade
+Jadeitowy młot
+Drogi młot.
+
+=== WEAPON Stone_Hammer Malachite
+Obsydianowy młot
+Lepsze od niego są tylko młoty z korundu.
+
+
+=== WEAPON Stone_Short_Bow Corundum
+Łuk (strzały z korundowymi grotami)
+Zadaje największe możliwe obrażenia dla tego rodzaju broni.
+
+=== WEAPON Stone_Short_Bow Jade
+Łuk (strzały z jadeitowymi grotami)
+Nie zmarnuj ani jednej strzały!
+
+=== WEAPON Stone_Short_Bow Malachite
+Łuk (strzały z obsydianowymi grotami)
+Jeden z najlepszych w swoim rodzaju.
+
+=== WEAPON Stone_Spear Corundum
+Włócznia z korundowym grotem
+Teraz to naprawdę wygląda jak prawdziwa włócznia...
+
+=== WEAPON Stone_Spear Jade
+Włócznia z jadeitowym grotem
+Piękna włócznia!
+
+=== WEAPON Stone_Spear Malachite
+Włócznia z obsydianowym grotem
+Lepsze od niej są tylko kamienne włócznie z korundu.
+
+
+=== WEAPON Stone_Sword Corundum
+Korundowy miecz
+Lepsze od mieczy z korundu są tylko miecze metalowe.
+
+=== WEAPON Stone_Sword Jade
+Jadeitowy miecz
+Ostry, kosztowny, potężny.
+
+=== WEAPON Stone_Sword Malachite
+Obsydianowy miecz
+Lepsze od niego są tylko kamienne miecze z korundu.
+
+=== WEAPON Thief_Crossbow Bronze
+Złodziejska kusza
+Taką kuszą można zabić trolla, trafiając go w czoło!
+
+=== WEAPON Thief_Dagger Bronze
+Złodziejski sztylet
+Jeśli pieniądze nie grają roli, nie znajdziesz lepszego noża.
+=== WEAPON Thief_Short_Bow Bronze
+Złodziejski łuk
+Złodziejskich łuków używają najbardziej doświadczeni myśliwi.
+
+=== WEAPON Thief_Spear Bronze
+Złodziejski szpikulec
+Choć zadaje niewielkie obrażenia, może służyć jako broń pomocnicza.
+
+=== WEAPON Thief_Sword Bronze
+Złodziejski miecz
+Takim mieczem możesz udowodnić młodemu ogrowi, że jedzenie bywa robaczywe.
+

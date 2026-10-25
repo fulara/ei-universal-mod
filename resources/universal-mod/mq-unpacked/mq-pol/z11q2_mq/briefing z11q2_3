@@ -1,0 +1,12 @@
+Skarb został odnaleziony!
+#show Hero
+#show Huber
+#CAMERA 10
+#phrase Hero  1
+Wasza Ekscelencjo, możecie poinformować księcia, że w miejskim skarbcu jest teraz pod dostatkiem złota! Widziałem też nieumarłego.
+#phrase Huber  1
+Nieumarłego?! Nie opowiadaj takich historii!
+#phrase Hero  2
+Wierz albo nie, ale skarbu strzegł nieumarły mag! Może to złoto też jest przeklęte...
+#phrase Huber  2
+Nie ma czegoś takiego jak klątwy. Masz tu obiecany udział i świętuj swój sukces!

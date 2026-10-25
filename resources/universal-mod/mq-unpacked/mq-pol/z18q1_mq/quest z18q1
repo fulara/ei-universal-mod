@@ -1,0 +1,20 @@
+Kłopoty kolekcjonera
+Baluddin, kolekcjoner staroci, został aresztowany przez oddział straży. Musisz zabić strażników i odprowadzić kolekcjonera do domu.
+#subobj  1
+Dotarcie do domu kolekcjonera
+Dom kolekcjonera znajduje się w mieście. Poznasz go po dwóch małych posągach przy wejściu.
+#subobj  2
+Zniszczenie zasadzki
+Część strażników czeka w zasadzce w domu po drugiej stronie ulicy, by aresztować każdego, kto spróbuje skontaktować się z kolekcjonerem.
+#subobj  3
+Wejście do koszar straży
+Koszary znajdują się w mieście, na południowy zachód od bram. Żeby do nich wejść, najpierw musisz otworzyć drzwi.
+#subobj  4
+Zabicie strażników
+Strażnicy, którzy przetrzymują Baluddina, muszą zginąć.
+#subobj  5
+Podejście do Baluddina
+Po prostu podejdź do Baluddina i powiedz mu, żeby poszedł z tobą.
+#subobj  6
+Odprowadzenie Baluddina do domu
+Zaprowadź Baluddina do wejścia do jego domu.

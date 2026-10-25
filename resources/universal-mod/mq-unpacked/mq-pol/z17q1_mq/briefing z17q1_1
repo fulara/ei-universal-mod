@@ -1,0 +1,12 @@
+Zaginęła posłanka z miasta!
+#show Hero
+#show Glav
+#CAMERA 2
+#phrase Hero  1
+Powiedziano mi, że chcieliście się ze mną widzieć, bracie Khatulu?
+#phrase Glav  2
+Chciałem właściwie czegoś innego, ale zaraz o tym usłyszysz. Kilka dni temu pewien szlachetny człowiek, nasz stronnik, zdołał zdobyć w mieście bardzo ważny dokument. Dokument ten opisuje ruchy straży.
+#phrase Glav  3
+Wysłał do mnie posłankę, ale ta nigdy nie dotarła. Podejrzewam, że teraz już nie żyje, i opłakuję tę dzielną kobietę... Choćby po to, by okazać szacunek jej pamięci, chciałbym mieć ten dokument tutaj, w Ostatniej kryjówce.
+#phrase Glav  4
+Posłanka miała przybyć z południa, więc może powinieneś najpierw sprawdzić tamtą drogę. To nie jest rozkaz, rozumiesz, ale jeśli dokument się nie znajdzie, mimo wszystko będę bardzo niezadowolony!
