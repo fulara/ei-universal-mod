@@ -16,6 +16,7 @@ IMGUI_SRCS = $(IMGUI_DIR)/imgui.cpp $(IMGUI_DIR)/imgui_draw.cpp $(IMGUI_DIR)/img
              $(IMGUI_DIR)/imgui_widgets.cpp $(IMGUI_DIR)/imgui_impl_glfw.cpp $(IMGUI_DIR)/imgui_impl_opengl2.cpp
 SRCS = main.cpp ../um-multitool/i18n.cpp $(IMGUI_SRCS)
 HDRS = $(wildcard *.hpp) assets/um-bot.ico ../um-multitool/mp_file.hpp ../um-multitool/viewer/item_db.hpp ../um-multitool/lang/ru.txt ../um-multitool/i18n.hpp
+HDRS += ../um-multitool/text_groups.hpp ../um-multitool/viewer/item_texts.hpp $(wildcard ../um-multitool/cp*.hpp)
 
 COMMON_FLAGS = -std=c++17 -O2 -Wall -Wextra -pthread -I. -I../um-multitool -isystem $(IMGUI_DIR)
 LINUX_FLAGS = $(COMMON_FLAGS) $(shell pkg-config --cflags glfw3)
@@ -50,12 +51,14 @@ $(TARGET).exe: $(SRCS) $(HDRS) $(WIN_RES)
 	$(WIN_CXX) $(WIN_FLAGS) -o $@ $(SRCS) $(WIN_RES) $(WIN_LIBS)
 
 clean:
-	rm -f $(TARGET) $(TARGET).exe $(WIN_RES)
+	rm -f $(TARGET) $(TARGET).exe $(WIN_RES) $(TEST_BINS)
 
-# make test: offline checks of the rules against what was verified in the game (needs Universal-Mod/res and Universal-Mod/mp)
-test: tests/um_bot_tests
+# Offline game-rule checks plus asset-free development, text reload and lobby lifecycle regressions.
+TEST_BINS = tests/um_bot_tests tests/development_tests tests/game_texts_tests tests/net_lifecycle_tests
+test: $(TEST_BINS)
 	cd $(CURDIR) && ./tests/um_bot_tests ../..
-tests/um_bot_tests: tests/um_bot_tests.cpp $(HDRS)
-	$(CXX) -std=c++17 -O1 -Wall -Wextra -I. -I../um-multitool -o $@ $<
+	cd $(CURDIR) && ./tests/development_tests && ./tests/game_texts_tests && ./tests/net_lifecycle_tests
+$(TEST_BINS): tests/%: tests/%.cpp $(HDRS)
+	$(CXX) -std=c++17 -O1 -Wall -Wextra -pthread -I. -I../um-multitool -o $@ $<
 
 .PHONY: all linux win clean test

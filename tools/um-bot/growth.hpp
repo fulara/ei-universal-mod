@@ -7,6 +7,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstring>
+#include <limits>
 #include <string>
 #include <vector>
 
@@ -35,6 +36,7 @@ inline int PerkCost(const items::Database& db, size_t index, int abilitiesOwned)
     const long double p = db.perks[index].costNum, prev = index % 3 && index > 0 ? db.perks[index - 1].costNum : 0.0L;
     const long double base = std::trunc(50.0L * (std::pow(1.61L, p / 5.0L) - std::pow(1.61L, prev / 5.0L)));
     const double T = static_cast<float>(base * std::pow(1.9500000476837158L, abilitiesOwned)); // 1.95 is a float constant in the game
+    if (!std::isfinite(T) || T > std::numeric_limits<int>::max()) return 0; // not representable as an XP purchase
     if (T <= 0) return 0;
     double m = std::pow(10.0, std::floor(std::log10(T)));
     double q = T / m;
@@ -43,7 +45,8 @@ inline int PerkCost(const items::Database& db, size_t index, int abilitiesOwned)
         m = static_cast<double>(static_cast<float>(m * 0.1));
         q = T / m;
     }
-    return static_cast<int>(std::floor(q + 0.5) * m);
+    const double cost = std::floor(q + 0.5) * m;
+    return cost <= std::numeric_limits<int>::max() ? static_cast<int>(cost) : 0;
 }
 
 struct Prefs {
@@ -196,12 +199,27 @@ inline Plan MakePlan(const items::Database& db, const mp::Character& ch, const P
     return plan;
 }
 
+// SpellAddon can change strength's carrying coefficient. Recover it from the source
+// caches BEFORE changing Strength or Lift; no vanilla coefficient is assumed.
+inline float CarryScale(const items::Database& db, const mp::Member& m) {
+    const float strength = mp::GetF(m.stats, 0x10), capacity = mp::GetF(m.stats, 0x54);
+    const int liftLevel = PerkLevel(m, 21);
+    if (liftLevel > 3) return 0;
+    const size_t row = 21 * 3 + static_cast<size_t>(liftLevel) - 1;
+    if (liftLevel > 0 && row >= db.perks.size()) return 0;
+    const float lift = liftLevel > 0 ? static_cast<float>(db.perks[row].bonus) : 0.0f;
+    const float divisor = (1.0f + lift * 0.01f) * strength;
+    if (!std::isfinite(divisor) || divisor <= 0 || !std::isfinite(capacity) || capacity <= 0) return 0;
+    const float scale = capacity / divisor;
+    return std::isfinite(scale) && scale > 0 ? scale : 0;
+}
+
 // UnitStats_Recompute's cached values that the camp and the shop planner read: the attributes with their ability bonus, the carrying capacity and the actions.
-inline void Refresh(const items::Database& db, mp::Member& m) {
+inline void Refresh(const items::Database& db, mp::Member& m, float carryScale) {
     auto bonus = [&](size_t cat) { const int lv = PerkLevel(m, cat); return lv > 0 && cat * 3 + static_cast<size_t>(lv) - 1 < db.perks.size() ? static_cast<float>(db.perks[cat * 3 + static_cast<size_t>(lv) - 1].bonus) : 0.0f; };
     const float str = mp::GetF(m.stats, 0x0C) + bonus(23), dex = mp::GetF(m.stats, 0x14) + bonus(24), in = mp::GetF(m.stats, 0x1C) + bonus(25);
     mp::SetF(m.stats, 0x10, str); mp::SetF(m.stats, 0x18, dex); mp::SetF(m.stats, 0x20, in);
-    mp::SetF(m.stats, 0x54, (bonus(21) * 0.01f + 1.0f) * str * 12.0f);
+    mp::SetF(m.stats, 0x54, (bonus(21) * 0.01f + 1.0f) * str * carryScale);
     const float legs = mp::GetF(m.stats, 0x5C) > 0 ? mp::GetF(m.stats, 0x5C) : 1.0f;
     mp::SetF(m.stats, 0x2C, dex * 0.2f + 10.0f);
     mp::SetF(m.stats, 0x30, (bonus(20) * 0.01f + 1.0f) * legs * (dex * 0.2f + 10.0f));
@@ -211,12 +229,14 @@ inline void Refresh(const items::Database& db, mp::Member& m) {
 inline std::string Apply(const items::Database& db, mp::Character& ch, const Plan& plan) {
     if (ch.members.empty() || plan.buys.empty()) return "";
     mp::Member& me = ch.members[0];
+    const float carryScale = CarryScale(db, me);
+    if (carryScale <= 0) return "";
     for (const Buy& b : plan.buys) {
         if (b.perk) me.stats[static_cast<size_t>(mp::kPerkBase) + static_cast<size_t>(b.index) / 3] = static_cast<uint8_t>(b.index % 3 + 1);
         else me.stats[static_cast<size_t>(kSkillBase + b.index)] = static_cast<uint8_t>(b.to);
     }
     mp::SetF(me.stats, mp::kExpSpent, mp::GetF(me.stats, mp::kExpSpent) + static_cast<float>(plan.cost));
-    Refresh(db, me);
+    Refresh(db, me, carryScale);
     std::string text = "experience: " + std::to_string(plan.cost) + " of " + std::to_string(plan.freeBefore) + " spent";
     for (const std::string& l : plan.lines) text += "\n  " + l;
     return text;

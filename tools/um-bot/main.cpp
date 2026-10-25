@@ -4,12 +4,12 @@
 // player (its own network client, no game copy) and play alongside a human: follow, heal, fight their
 // targets, by the settings of this window.
 //
-// Skeleton: the settings and the window. The network client (the game's UDP protocol, port 8888) is not
-// written yet: Connect only says so. See README.md for the plan.
 #include "net.hpp" // first: winsock2.h before windows.h
 #include "growth.hpp"
 #include "shop.hpp"
 #include "spells.hpp"
+#include "development.hpp"
+#include "game_texts.hpp"
 
 #include <GLFW/glfw3.h>
 
@@ -43,6 +43,12 @@
 static const char* const kVersion = "0.1.30";
 
 
+struct DevelopmentLabel {
+    std::string name;
+    const gametext::Entry* text = nullptr;
+    const gametext::Entry* group = nullptr;
+};
+
 struct App {
     bot::Config cfg;
     bool dirty = false;               // settings changed since the last save
@@ -60,12 +66,107 @@ struct App {
     std::string dbFor;                // the database choice + character it was looked for
     std::string dbPath;               // the file it was loaded from ("" = none found)
     bool dbLoaded = false;
+    development::Draft development;
+    gametext::Catalog gameTexts;
+    std::string textsDatabase, textsCharacter, textsSource;
+    bool textsDiscovered = false, quotesDirty = true;
+    std::vector<DevelopmentLabel> skillLabels, perkLabels;
+    std::vector<development::Quote> skillQuotes, perkQuotes;
+    float previewHealth = 0, previewMana = 0;
+    bool selectedPerk = false;
+    size_t selectedDevelopment = 0;
     void Log(const std::string& s, bool toFile = true) {
         if (toFile) net::BotLogLine(s);
         log.push_back(s);
         while (log.size() > 200) log.pop_front();
     }
 };
+
+static void CancelDevelopment(App& app, const char* reason) {
+    if (app.development.Dirty())
+        app.Log(std::string("manual development [CANCELLED]: ") + reason + "; planned experience was not spent");
+    app.development.Reset();
+    app.quotesDirty = true;
+}
+
+static bool CanDevelop(const App& app) {
+    return app.client.InTown() && app.client.partyIn.empty() && app.client.swapReceived.empty() &&
+           !app.client.swapMoney && app.dbLoaded && !app.character.members.empty() &&
+           app.characterError.empty() && !app.characterFor.empty() && !app.nameDirty;
+}
+
+static void RefreshDevelopmentLabels(App& app) {
+    app.skillLabels.clear();
+    for (const auto& skill : development::kSkills) {
+        const auto* text = app.gameTexts.Find(skill.key);
+        app.skillLabels.push_back({text && !text->name.empty() ? text->name : skill.name, text, nullptr});
+    }
+    app.perkLabels.clear();
+    for (const auto& perk : app.db.perks) {
+        const auto* text = app.gameTexts.Find("PERK " + perk.key);
+        std::string key = perk.key;
+        if (!key.empty() && key.back() >= '1' && key.back() <= '3') key.back() = '0';
+        const auto* group = app.gameTexts.Find("PERK " + key);
+        std::string name = text && !text->name.empty() ? text->name : perk.name;
+        if (group && !group->name.empty()) name = group->name + ": " + name;
+        app.perkLabels.push_back({std::move(name), text, group});
+    }
+}
+
+static void EnsureGameTexts(App& app) {
+    if (app.textsDiscovered && app.textsDatabase == app.dbPath &&
+        app.textsCharacter == app.cfg.character && app.textsSource == app.cfg.gameTextSource) return;
+    app.textsDiscovered = true;
+    app.textsDatabase = app.dbPath;
+    app.textsCharacter = app.cfg.character;
+    app.textsSource = app.cfg.gameTextSource;
+    app.gameTexts.Discover(app.dbPath, app.cfg.character, app.cfg.gameTextSource);
+    if (!app.gameTexts.packs.empty()) {
+        const auto& requested = app.cfg.gameTextPack.empty() ? app.gameTexts.packs.front().id : app.cfg.gameTextPack;
+        if (!app.gameTexts.Select(requested) && app.gameTexts.selectedId.empty()) {
+            const std::string problem = app.gameTexts.error;
+            if (app.gameTexts.Select(app.gameTexts.packs.front().id)) app.Log(problem + "; using detected game texts");
+        }
+    }
+    RefreshDevelopmentLabels(app);
+}
+
+static void ConfirmDevelopment(App& app) {
+    if (!CanDevelop(app) || !app.development.Dirty()) return;
+    // Reprice and replay against the current authoritative character, never a stale GUI copy.
+    development::Draft checked;
+    checked.Begin(app.character);
+    std::string error;
+    for (const auto& purchase : app.development.purchases) {
+        const bool bought = purchase.perk ? checked.BuyPerk(app.db, purchase.index, error)
+                                         : checked.BuySkill(app.db, purchase.index, error);
+        if (!bought || checked.purchases.back().cost != purchase.cost ||
+            checked.purchases.back().from != purchase.from) {
+            app.Log("manual development [FAILED]: the character or purchase requirements changed; plan again");
+            CancelDevelopment(app, "purchase validation failed");
+            return;
+        }
+    }
+    const std::filesystem::path backup(app.characterFor + ".bak");
+    std::error_code ec;
+    if (!std::filesystem::exists(backup, ec)) {
+        std::filesystem::copy_file(app.characterFor, backup, std::filesystem::copy_options::none, ec);
+        if (ec) { app.Log("manual development [FAILED]: cannot back up character: " + ec.message()); return; }
+    } else if (ec) { app.Log("manual development [FAILED]: cannot check character backup: " + ec.message()); return; }
+    if (!mp::Save(app.characterFor, checked.character, error)) {
+        app.Log("manual development [FAILED]: character not saved: " + error);
+        return;
+    }
+    app.character = std::move(checked.character);
+    app.client.SetMpRaw(mp::Serialize(app.character));
+    for (const auto& purchase : checked.purchases) {
+        const std::string& name = purchase.perk ? app.perkLabels[purchase.index].name : app.skillLabels[purchase.index].name;
+        app.Log("manual development [EXECUTED]: " + name + " " + std::to_string(purchase.from) + " -> " +
+                std::to_string(purchase.to) + "; " + std::to_string(purchase.cost) + " XP");
+    }
+    app.development.Reset();
+    app.quotesDirty = true;
+}
 
 // A combo over an enum's labels; true when changed.
 template <typename E, size_t N>
@@ -244,6 +345,7 @@ static std::string DoGrowth(mp::Character& ch, const items::Database& db, const 
     const growth::Plan plan = growth::MakePlan(db, ch, pf);
     if (plan.buys.empty()) return "";
     std::string text = growth::Apply(db, ch, plan);
+    if (text.empty()) return "training skipped: invalid source carrying capacity or Strength";
     if (cfg.announce) { std::string said; for (const std::string& l : plan.lines) said += (said.empty() ? "" : ", ") + l; client.Say("trained (" + std::to_string(plan.cost) + " exp): " + said); }
     std::string err;
     if (!path.empty() && !mp::Save(path, ch, err)) return text + "\n  not saved: " + err;
@@ -341,6 +443,7 @@ static void EnsureDb(App& app) { // (re)load the database when the choice or the
     const std::string key = app.cfg.database + "|" + app.cfg.character;
     if (app.dbFor == key) return;
     app.dbFor = key;
+    CancelDevelopment(app, "database changed");
     app.db = items::Database{};
     app.dbPath = LoadDb(app.cfg, app.db);
     app.dbLoaded = !app.dbPath.empty();
@@ -352,6 +455,7 @@ static void SetHealing(App& app) { // the healing potion's belt slot (from the d
 }
 static void StartConnection(App& app) {
     SetHealing(app);
+    CancelDevelopment(app, "connecting");
     app.shopped = false; app.shopWaitFrom = 0; app.shopSeed = std::random_device{}() | 1u;
     app.client.holdEntry = app.cfg.shop || app.cfg.grow; // the quest is entered after the camp visit
     app.client.acceptSwaps = app.cfg.acceptSwaps;
@@ -399,19 +503,22 @@ static void ConnectionPanel(App& app) {
         Tip("Joins the game: asks the server for its info, then logs in (needs a character)");
     } else if (ImGui::Button("Disconnect")) {
         app.keepConnected = false;
+        app.client.CancelHostReturn("disconnected by user");
         if (app.client.worldUnit) app.client.LeaveWorld(); // the final save first; it disconnects 2 s later
         else app.client.Disconnect();
     }
     ImGui::SameLine();
     using S = net::Client::State;
     const S st = app.client.state;
-    ImGui::TextUnformatted(st == S::Accepted ? "Logged in (the game's messages after the login are not written yet)"
+    ImGui::TextUnformatted(st == S::Accepted ? (app.client.InTown() ? "Connected: town/lobby" :
+                           app.client.worldUnit ? "Connected: in quest" : "Connected: synchronizing")
                            : st == S::AskingInfo || st == S::LoggingIn ? "Connecting..."
                            : st == S::Rejected || st == S::Failed ? app.client.error.c_str() : "Not connected");
     if (st == S::Accepted || st == S::LoggingIn)
         ImGui::TextDisabled("Server: %s (key %08X), client id %u", app.client.info.host.c_str(), app.client.info.key, app.client.clientId);
 
     // The bot's character
+    ImGui::BeginDisabled(!idle);
     char path[1024];
     std::snprintf(path, sizeof path, "%s", c.character.c_str());
     ImGui::SetNextItemWidth(-160);
@@ -439,10 +546,14 @@ static void ConnectionPanel(App& app) {
     }
     if (app.characterFor != c.character) { // (re)load it
         app.characterFor = c.character;
+        CancelDevelopment(app, "character changed");
+        app.character = {};
         app.nameDirty = false;
         app.characterError.clear();
         if (!c.character.empty() && !mp::Load(c.character, app.character, app.characterError)) app.Log("Character not read: " + app.characterError);
     }
+    ImGui::EndDisabled();
+    EnsureGameTexts(app);
     if (c.character.empty()) ImGui::TextDisabled("Choose the bot's character (.mp). A fresh one is recommended.");
     else if (!app.characterError.empty()) ImGui::TextColored(ImVec4(1, 0.45f, 0.4f, 1), "%s", app.characterError.c_str());
     else if (!app.character.members.empty()) {
@@ -733,6 +844,238 @@ static void CharacterPanel(App& app) {
     ImGui::PopTextWrapPos();
 }
 
+static void RefreshDevelopmentQuotes(App& app) {
+    if (!app.quotesDirty) return;
+    app.quotesDirty = false;
+    app.skillQuotes.clear();
+    app.perkQuotes.clear();
+    const auto& ch = app.development.Dirty() ? app.development.character : app.character;
+    if (ch.members.empty() || !development::HasStats(ch.members[0])) return;
+    const auto& m = ch.members[0];
+    for (size_t i = 0; i < app.skillLabels.size(); ++i)
+        app.skillQuotes.push_back(development::SkillQuote(app.db, m, i));
+    for (size_t i = 0; i < app.perkLabels.size(); ++i)
+        app.perkQuotes.push_back(development::PerkQuote(app.db, m, i));
+    app.previewMana = spells::MaxMana(app.db, m);
+    // UnitStats_MaxHealth: the documented mana formula with Strength and the Health ability.
+    const float xp = mp::GetF(m.stats, mp::kExpTotal);
+    const double level = xp > 50 ? std::log(xp / 50.0) / std::log(1.61) : 0;
+    const int healthLevel = growth::PerkLevel(m, 16);
+    const size_t row = 16 * 3 + static_cast<size_t>(healthLevel > 0 ? healthLevel - 1 : 0);
+    const int bonus = healthLevel > 0 && row < app.db.perks.size() ? app.db.perks[row].bonus : 0;
+    app.previewHealth = static_cast<float>(mp::GetF(m.stats, 0x10) / 25.0 * 30.0 *
+                                          std::pow(1.1, level) * (1.0 + bonus * 0.01));
+}
+
+static void DevelopmentDescription(const App& app, bool perk, size_t index, bool canDevelop) {
+    const auto& labels = perk ? app.perkLabels : app.skillLabels;
+    const auto& quotes = perk ? app.perkQuotes : app.skillQuotes;
+    if (index >= labels.size() || index >= quotes.size()) return;
+    i18n::Verbatim verbatim;
+    const auto& label = labels[index];
+    const auto& quote = quotes[index];
+    ImGui::TextWrapped("%s", label.name.c_str());
+    ImGui::Separator();
+    bool described = false;
+    if (label.group && !label.group->description.empty()) {
+        ImGui::TextWrapped("%s", label.group->description.c_str());
+        described = true;
+    }
+    if (label.text && !label.text->description.empty() && label.text != label.group) {
+        if (described) ImGui::Spacing();
+        ImGui::TextWrapped("%s", label.text->description.c_str());
+        described = true;
+    }
+    if (!described) ImGui::TextWrapped("No description in the selected game text source.");
+    ImGui::Separator();
+    if (quote.cost > 0) ImGui::Text("Cost: %d XP", quote.cost);
+    if (perk) {
+        const auto& p = app.db.perks[index];
+        ImGui::Text("Level: %zu / 3", index % 3 + 1);
+        ImGui::Text("Required STR / DEX / INT: %.0f / %.0f / %.0f", p.attrMin[0], p.attrMin[1], p.attrMin[2]);
+        if (!p.skill.empty() && p.skill != "none")
+            ImGui::TextWrapped("Required skill: %s %d", growth::SkillName(p.skillIndex), p.skillLevel);
+        if (!p.prereq.empty() && p.prereq != "none") ImGui::TextWrapped("Prerequisite: %s", p.prereq.c_str());
+        ImGui::Text("Database bonus: %d", p.bonus);
+        ImGui::TextWrapped("Ability prices increase with every owned ability level.");
+    } else {
+        ImGui::TextUnformatted("Raises the skill by one point (maximum 100).");
+    }
+    if (!quote.allowed) ImGui::TextWrapped("%s", quote.reason.c_str());
+    if (!canDevelop) ImGui::TextWrapped("Purchases require this bot's confirmed town/lobby state.");
+    ImGui::Spacing();
+    ImGui::TextWrapped("Descriptions come from game resources; prices and requirements come from the active database.");
+}
+
+static void DevelopmentRow(App& app, bool perk, size_t index, int level, bool canDevelop, const char* ownedName = nullptr) {
+    i18n::Verbatim verbatim;
+    const auto& labels = perk ? app.perkLabels : app.skillLabels;
+    const auto& quotes = perk ? app.perkQuotes : app.skillQuotes;
+    if (index >= labels.size() || index >= quotes.size()) return;
+    const auto& quote = quotes[index];
+    ImGui::PushID(static_cast<int>(index));
+    ImGui::TableNextRow();
+    ImGui::TableNextColumn();
+    const bool allowed = canDevelop && quote.allowed;
+    if (!allowed) ImGui::PushStyleColor(ImGuiCol_Text, ImGui::GetStyleColorVec4(ImGuiCol_TextDisabled));
+    const bool clicked = ImGui::Selectable(ownedName ? ownedName : labels[index].name.c_str(),
+        app.selectedPerk == perk && app.selectedDevelopment == index, ImGuiSelectableFlags_SpanAllColumns);
+    if (!allowed) ImGui::PopStyleColor();
+    if (ImGui::IsItemHovered()) {
+        app.selectedPerk = perk;
+        app.selectedDevelopment = index;
+        ImGui::BeginTooltip();
+        ImGui::PushTextWrapPos(ImGui::GetFontSize() * 28);
+        DevelopmentDescription(app, perk, index, canDevelop);
+        ImGui::PopTextWrapPos();
+        ImGui::EndTooltip();
+    }
+    if (clicked && allowed) {
+        if (!app.development.Dirty()) app.development.Begin(app.character);
+        std::string error;
+        if (!(perk ? app.development.BuyPerk(app.db, index, error) : app.development.BuySkill(app.db, index, error)))
+            app.Log("manual development [FAILED]: " + error);
+        app.quotesDirty = true;
+    }
+    ImGui::TableNextColumn();
+    ImGui::Text("%d", level);
+    ImGui::TableNextColumn();
+    if (quote.cost > 0) ImGui::Text("%d XP", quote.cost);
+    else ImGui::TextDisabled("-");
+    ImGui::PopID();
+}
+
+static bool BeginDevelopmentList(const char* id) {
+    if (!ImGui::BeginTable(id, 3, ImGuiTableFlags_SizingStretchProp)) return false;
+    ImGui::TableSetupColumn("Name", ImGuiTableColumnFlags_WidthStretch);
+    ImGui::TableSetupColumn("Level", ImGuiTableColumnFlags_WidthFixed, ImGui::GetFontSize() * 1.8f);
+    ImGui::TableSetupColumn("Cost", ImGuiTableColumnFlags_WidthFixed, ImGui::GetFontSize() * 4.8f);
+    return true;
+}
+
+static void GameTextControls(App& app) {
+    const char* label = app.gameTexts.selectedId.c_str();
+    for (const auto& pack : app.gameTexts.packs) if (pack.id == app.gameTexts.selectedId) { label = pack.label.c_str(); break; }
+    ImGui::SetNextItemWidth(230);
+    if (ImGui::BeginCombo("Game descriptions", label)) {
+        for (const auto& pack : app.gameTexts.packs) {
+            if (ImGui::Selectable(pack.label.c_str(), pack.id == app.gameTexts.selectedId)) {
+                if (app.gameTexts.Select(pack.id)) {
+                    app.cfg.gameTextPack = pack.id;
+                    app.dirty = true;
+                    RefreshDevelopmentLabels(app);
+                }
+            }
+        }
+        ImGui::EndCombo();
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Reload descriptions")) {
+        if (app.gameTexts.Reload()) {
+            RefreshDevelopmentLabels(app);
+            app.Log("Game descriptions reloaded; pending development unchanged");
+        }
+    }
+    ImGui::SameLine();
+    std::string picked;
+    if (ImGui::Button("Text source...") && ui::PickFile(picked)) {
+        app.cfg.gameTextSource = picked;
+        app.dirty = true;
+        app.textsDiscovered = false;
+        EnsureGameTexts(app);
+    }
+    Tip("Discover names and descriptions from a game's texts.res / textslmp.res, or an extracted .umtexts file.");
+    if (!app.gameTexts.error.empty()) ImGui::TextWrapped("%s", app.gameTexts.error.c_str());
+    ImGui::TextDisabled("Packs overlay local game texts; missing entries keep the base game's language.");
+}
+
+static void DevelopmentPanel(App& app) {
+    GameTextControls(app);
+    if (ImGui::Checkbox("Automatic experience allocation (GROW)", &app.cfg.grow)) app.dirty = true;
+    Tip("Automatic camp preparation spends free experience when enabled. Manual plans never hold automatic quest entry.");
+    if (app.character.members.empty() || !development::HasStats(app.character.members[0])) {
+        ImGui::TextDisabled("Load a complete multiplayer character to see its development.");
+        return;
+    }
+    if (!app.dbLoaded) ImGui::TextWrapped("Choose the active game/mod database to calculate purchases.");
+    const bool canDevelop = CanDevelop(app);
+    if (!canDevelop) ImGui::TextDisabled("Read only: purchases unlock after the server confirms this bot is in town.");
+    else ImGui::TextDisabled("Click a skill/ability to plan a purchase, then Confirm or Cancel. Quest entry discards unconfirmed plans.");
+    RefreshDevelopmentQuotes(app);
+    const auto& ch = app.development.Dirty() ? app.development.character : app.character;
+    const auto& m = ch.members[0];
+    const float height = std::max(190.0f, ImGui::GetContentRegionAvail().y - 190.0f);
+    if (ImGui::BeginTable("development-panels", 4, ImGuiTableFlags_Resizable | ImGuiTableFlags_BordersInnerV)) {
+        ImGui::TableSetupColumn("Statistics", ImGuiTableColumnFlags_WidthStretch, 0.85f);
+        ImGui::TableSetupColumn("Skills and owned abilities", ImGuiTableColumnFlags_WidthStretch, 1.35f);
+        ImGui::TableSetupColumn("Available abilities", ImGuiTableColumnFlags_WidthStretch, 1.35f);
+        ImGui::TableSetupColumn("Description", ImGuiTableColumnFlags_WidthStretch, 1.15f);
+        ImGui::TableNextColumn();
+        ImGui::BeginChild("statistics", ImVec2(0, height));
+        ImGui::SeparatorText("Statistics");
+        ImGui::TextWrapped("%s", m.strings[0].c_str());
+        ImGui::Text("Strength: %.0f", mp::GetF(m.stats, 0x10));
+        ImGui::Text("Dexterity: %.0f", mp::GetF(m.stats, 0x18));
+        ImGui::Text("Intelligence: %.0f", mp::GetF(m.stats, 0x20));
+        ImGui::Text("Actions: %.1f", mp::GetF(m.stats, 0x30));
+        ImGui::Text("Health max: %.1f", app.previewHealth);
+        ImGui::Text("Mana max: %.1f", app.previewMana);
+        Tip("Calculated character maximum, not the server's current health/mana. Pending abilities are included.");
+        ImGui::Text("Load: %.0f / %.0f", mp::GetF(m.stats, 0x50), mp::GetF(m.stats, 0x54));
+        ImGui::Text("Money: %u", mp::Money(ch));
+        ImGui::SeparatorText("Experience");
+        ImGui::Text("Total: %.0f", mp::GetF(m.stats, mp::kExpTotal));
+        ImGui::Text("Spent: %.0f", mp::GetF(m.stats, mp::kExpSpent));
+        ImGui::Text("Free: %.0f", mp::GetF(m.stats, mp::kExpTotal) - mp::GetF(m.stats, mp::kExpSpent));
+        ImGui::EndChild();
+        ImGui::TableNextColumn();
+        ImGui::BeginChild("skills-owned", ImVec2(0, height));
+        ImGui::SeparatorText("Skills");
+        if (BeginDevelopmentList("skills")) {
+            for (size_t i = 0; i < app.skillLabels.size(); ++i)
+                DevelopmentRow(app, false, i, growth::Level(m, development::kSkills[i].offset), canDevelop);
+            ImGui::EndTable();
+        }
+        ImGui::SeparatorText("Owned abilities");
+        if (BeginDevelopmentList("owned")) {
+            for (size_t group = 0; group < static_cast<size_t>(mp::kPerkGroups); ++group) {
+                const int level = growth::PerkLevel(m, group);
+                const size_t owned = group * 3 + static_cast<size_t>(std::clamp(level, 1, 3) - 1);
+                if (level > 0 && owned < app.perkLabels.size())
+                    DevelopmentRow(app, true, group * 3 + static_cast<size_t>(std::min(level, 2)), level, canDevelop, app.perkLabels[owned].name.c_str());
+            }
+            ImGui::EndTable();
+        }
+        ImGui::EndChild();
+        ImGui::TableNextColumn();
+        ImGui::BeginChild("available", ImVec2(0, height));
+        ImGui::SeparatorText("Available abilities");
+        if (BeginDevelopmentList("available-list")) {
+            for (size_t group = 0; group < static_cast<size_t>(mp::kPerkGroups); ++group)
+                if (!growth::PerkLevel(m, group)) DevelopmentRow(app, true, group * 3, 0, canDevelop);
+            ImGui::EndTable();
+        }
+        ImGui::EndChild();
+        ImGui::TableNextColumn();
+        ImGui::BeginChild("development-description", ImVec2(0, height));
+        ImGui::SeparatorText("Description");
+        DevelopmentDescription(app, app.selectedPerk, app.selectedDevelopment, canDevelop);
+        ImGui::EndChild();
+        ImGui::EndTable();
+    }
+    ImGui::Text("Pending: %zu purchases, %d XP", app.development.purchases.size(), app.development.totalCost);
+    ImGui::SameLine();
+    ImGui::BeginDisabled(!canDevelop || !app.development.Dirty());
+    if (ImGui::Button("Confirm")) ConfirmDevelopment(app);
+    ImGui::EndDisabled();
+    ImGui::SameLine();
+    ImGui::BeginDisabled(!app.development.Dirty());
+    if (ImGui::Button("Cancel")) CancelDevelopment(app, "discarded by user");
+    ImGui::EndDisabled();
+    ImGui::SeparatorText("Log");
+    LogPanel(app);
+}
+
 // `um-bot --install-desktop [--remove]` (Linux): the menu entry (um-bot.desktop, with this binary's path) and the
 // 256-pixel icon for the current user, so the bot shows in the application menu with its icon.
 static int InstallDesktop(bool remove) {
@@ -791,29 +1134,39 @@ static void Frame(App& app) {
     ImGui::Begin("um-bot", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings);
     ConnectionPanel(app);
     ImGui::Separator();
-    if (ImGui::BeginTable("cols", 2, ImGuiTableFlags_Resizable | ImGuiTableFlags_BordersInnerV)) {
-        ImGui::TableNextColumn();
-        ImGui::SeparatorText("Build");
-        BuildPanel(app);
-        ImGui::SeparatorText("Behaviour");
-        BehaviourPanel(app);
-        ImGui::SeparatorText("Movement");
-        MovementPanel(app);
-        ImGui::Spacing();
-        ImGui::BeginDisabled(!app.dirty);
-        if (ImGui::Button("Save settings")) {
-            if (bot::Save(app.cfg)) { app.dirty = false; app.Log("Settings saved to " + app.cfg.path); }
-            else app.Log("Cannot write " + app.cfg.path);
+    if (ImGui::BeginTabBar("bot-tabs")) {
+        if (ImGui::BeginTabItem("Companion")) {
+            if (ImGui::BeginTable("cols", 2, ImGuiTableFlags_Resizable | ImGuiTableFlags_BordersInnerV)) {
+                ImGui::TableNextColumn();
+                ImGui::SeparatorText("Build");
+                BuildPanel(app);
+                ImGui::SeparatorText("Behaviour");
+                BehaviourPanel(app);
+                ImGui::SeparatorText("Movement");
+                MovementPanel(app);
+                ImGui::Spacing();
+                ImGui::BeginDisabled(!app.dirty);
+                if (ImGui::Button("Save settings")) {
+                    if (bot::Save(app.cfg)) { app.dirty = false; app.Log("Settings saved to " + app.cfg.path); }
+                    else app.Log("Cannot write " + app.cfg.path);
+                }
+                ImGui::EndDisabled();
+                ImGui::SeparatorText("Log");
+                LogPanel(app);
+                ImGui::TableNextColumn();
+                ImGui::SeparatorText("Character");
+                CharacterPanel(app);
+                ImGui::SeparatorText("Status");
+                StatusPanel(app);
+                ImGui::EndTable();
+            }
+            ImGui::EndTabItem();
         }
-        ImGui::EndDisabled();
-        ImGui::SeparatorText("Log");
-        LogPanel(app);
-        ImGui::TableNextColumn();
-        ImGui::SeparatorText("Character");
-        CharacterPanel(app);
-        ImGui::SeparatorText("Status");
-        StatusPanel(app);
-        ImGui::EndTable();
+        if (ImGui::BeginTabItem("Character development")) {
+            DevelopmentPanel(app);
+            ImGui::EndTabItem();
+        }
+        ImGui::EndTabBar();
     }
     ImGui::End();
 }
@@ -1007,12 +1360,23 @@ int main(int argc, char** argv) {
     glfwSwapInterval(1);
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    { // the built-in font has no Cyrillic: merge a system font (as um-multitool does)
+    { // Like um-multitool, use one system face for ASCII and accented/Cyrillic letters.
         ImGuiIO& io = ImGui::GetIO();
-        io.Fonts->AddFontDefault();
+        bool haveFont = false;
         for (const char* path : {"C:\\Windows\\Fonts\\segoeui.ttf", "C:\\Windows\\Fonts\\arial.ttf",
+                                 "Z:\\System\\Library\\Fonts\\Supplemental\\Arial Unicode.ttf", // Wine/CrossOver on macOS
                                  "/usr/share/fonts/truetype/DejaVuSans.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
                                  "/usr/share/fonts/TTF/DejaVuSans.ttf", "/usr/share/fonts/dejavu/DejaVuSans.ttf"}) {
+            if (FILE* f = std::fopen(path, "rb")) {
+                std::fclose(f);
+                haveFont = io.Fonts->AddFontFromFileTTF(path, 15.0f) != nullptr;
+                if (haveFont) break;
+            }
+        }
+        if (!haveFont) io.Fonts->AddFontDefault();
+        for (const char* path : {"C:\\Windows\\Fonts\\malgun.ttf",
+                                 "/usr/share/fonts/truetype/nanum/NanumGothic.ttf", "/usr/share/fonts/nanum/NanumGothic.ttf",
+                                 "/usr/share/fonts/TTF/NanumGothic.ttf", "/usr/share/fonts/truetype/NanumGothic.ttf"}) {
             if (FILE* f = std::fopen(path, "rb")) {
                 std::fclose(f);
                 ImFontConfig config;
@@ -1031,11 +1395,13 @@ int main(int argc, char** argv) {
     App app;
     bot::Load(app.cfg);
     { i18n::Lang l; if (i18n::FromCode(app.cfg.language, l)) i18n::Set(l); }
-    app.Log("um-bot " + std::string(kVersion) + ": it joins the session, enters the chosen quest when the host is in it and follows the host. Fighting comes next.");
+    app.client.beforeQuestEntry = [&app] { CancelDevelopment(app, "automatic quest entry"); };
+    app.Log("um-bot " + std::string(kVersion) + ": companion controls and manual character development");
 
     while (!glfwWindowShouldClose(window)) {
         glfwWaitEventsTimeout(0.05);
         app.client.Update();
+        if (app.development.Dirty() && !app.client.InTown()) CancelDevelopment(app, "the bot left town");
         // The connection dropped without the user asking (a join race, a lost server): connect again a few times.
         if (app.keepConnected && app.client.state == net::Client::State::Failed) {
             if (app.retryAt == 0) app.retryAt = glfwGetTime() + 5;
@@ -1049,22 +1415,29 @@ int main(int argc, char** argv) {
             if (app.retryAt == 0) app.retryAt = glfwGetTime() + 3;
             else if (glfwGetTime() > app.retryAt) { app.retryAt = 0; app.client.reconnect = false; app.Log("connecting again after leaving the world"); StartConnection(app); }
         }
-        if ((app.cfg.shop || app.cfg.grow) && !app.shopped && app.client.state == net::Client::State::Accepted && app.client.joined && !app.character.members.empty()) { // the shop visit
+        if (app.cfg.saveProgress && !app.characterFor.empty() && !app.client.partyIn.empty()) {
+            CancelDevelopment(app, "fresh server character state");
+            mp::Character updated;
+            const std::string said = SaveProgress(app.client, app.characterFor, &updated);
+            if (!said.empty()) { app.Log(said); if (!updated.members.empty()) app.character = updated; }
+        } else if (!app.cfg.saveProgress) app.client.partyIn.clear();
+        if (!app.shopped && !app.cfg.shop && !app.cfg.grow) {
+            app.shopped = true;
+            app.client.holdEntry = false;
+        }
+        if ((app.cfg.shop || app.cfg.grow) && !app.shopped && app.client.InTown() && !app.character.members.empty()) {
             if (app.shopWaitFrom == 0) app.shopWaitFrom = glfwGetTime();
             if (app.client.chosenQuest.size() || !app.client.quests.empty()) {
+                CancelDevelopment(app, "automatic camp preparation");
                 if (app.dbLoaded) { const std::string said = DoCamp(app.character, app.db, app.cfg, app.client, app.shopSeed, app.characterFor); if (!said.empty()) app.Log(said); }
                 app.shopped = true; app.client.holdEntry = false;
             } else if (glfwGetTime() - app.shopWaitFrom > 8) { app.shopped = true; app.client.holdEntry = false; } // no quest list: go without
         }
         if ((!app.client.swapReceived.empty() || app.client.swapMoney) && !app.character.members.empty()) {
+            CancelDevelopment(app, "incoming item exchange");
             const std::string said = AddSwappedItems(app.character, app.client.TakeSwapped(), app.client.TakeSwapMoney(), app.characterFor, app.client); if (!said.empty()) app.Log(said);
             if (!said.empty() && app.cfg.shop && app.dbLoaded) { const std::string sold = DoSelling(app.character, app.db, app.cfg, app.client, app.shopSeed, app.characterFor); if (!sold.empty()) app.Log(sold); } // the loot it was given is sold at once
         }
-        if (app.cfg.saveProgress && !app.characterFor.empty() && !app.client.partyIn.empty()) {
-            mp::Character updated;
-            const std::string said = SaveProgress(app.client, app.characterFor, &updated);
-            if (!said.empty()) { app.Log(said); if (!updated.members.empty()) app.character = updated; }
-        } else if (!app.cfg.saveProgress) app.client.partyIn.clear();
         if (app.clientLogShown > app.client.log.size()) app.clientLogShown = 0; // the client trims its log
         for (; app.clientLogShown < app.client.log.size(); ++app.clientLogShown) app.Log(app.client.log[app.clientLogShown], false);
         ImGui_ImplOpenGL2_NewFrame();

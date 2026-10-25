@@ -17,8 +17,20 @@ The change is saved into the `.mp`, and the original is kept as `.bak`.
 
 **Experience:** in a multiplayer session the game splits every kill's experience among all the players by the square root of their experience totals, whoever struck the blow. A bot with a few hundred experience next to a host with millions gets a fraction of a percent; next to a host of about its own level it gets about half. Pick the bot's character accordingly.
 
-The window shows the character read only: its experience, money, attributes, skills, abilities and equipment (item
-names from the mod's database, `<mp folder>/../res/databaselmp.res`). Health and mana are computed by the game.
+The Companion tab shows a read-only character/equipment summary. The **Character development** tab follows the camp's
+four-panel layout: statistics, six skills and owned abilities, available abilities, and game-resource descriptions.
+Click a skill/ability to plan purchases; **Confirm** rechecks requirements and XP, saves the `.mp` (keeping its first
+backup as `.bak`) and updates the next quest upload. **Cancel** spends nothing. Purchases require the server to confirm
+this bot's own town/lobby state; disconnected and in-quest views are read only. Health/mana maxima are calculated previews,
+not live server health/mana. An automatic quest entry or camp preparation discards an unconfirmed plan without delaying entry.
+
+**Game descriptions:** the language/source selector is independent of the window language. It discovers local game/mod
+archives and `lang-packs`; **Text source...** adds an explicit archive or `.umtexts` file. `GAME_TEXT_SOURCE` also accepts an
+extracted-text folder. Select the desired pack, then use **Reload descriptions** after editing its files. Selection and reload
+do not change the character or its pending purchases. `GAME_TEXT_PACK` preserves the stable pack id. Missing descriptions are
+reported rather than invented; purchase costs and requirements always come from the selected game/mod database.
+Language packs are overlays: keys absent from a pack retain the base game's language. To replace those too, select
+a complete texts archive from that language's game installation as the explicit source.
 
 **Several bots:** run one um-bot per character, each from its own folder (its own `um-bot.cfg` and character). Two bots joined the same quest at once in the tests.
 
@@ -66,7 +78,9 @@ The settings are saved in `um-bot.cfg` next to the program.
   the live shop item for item) and the server accepts them byte for byte.
 - **Experience**: before a quest (before the shop) it spends its free experience like a player in the camp's skills window, at the game's own prices (the skill and ability costs were
   checked against the running game and against saved characters): skill points for the build (Melee or Archery, and some Astral Magic for the Healing spell), the ability of the weapon it wields, and
-  Health, Strength, Quickness, Lift and the like, chosen by worth per experience point, with the Damage <-> Defence slider weighing health. "Spend experience" turns it off.
+  Health, Strength, Quickness, Lift and the like, chosen by worth per experience point, with the Damage <-> Defence slider weighing health.
+  "Spend experience" (also "Automatic experience allocation" in Character development) controls the existing `GROW=0/1` setting,
+  independently of shopping and combat. Existing saved values are preserved; turn it off to leave free XP for manual purchases.
 - **Spells**: if it has no usable Healing spell, it wears one it carries, or buys the shop's Healing blueprint and makes the spell the way the camp's constructor does (spell object and container item, exactly
   the game's values, checked against saved characters and a live cast). It only takes a spell it can use: the magic skill, and the mana (cost x 25 / Intelligence against its maximum) - "Spend experience" raises the skill the spell needs first.
 - **Healing upgrade**: when it has the Healing spell it also looks at making a stronger one: the same blueprint with "effect" runes (each adds to the heal and to the mana cost and the skill needed), the best mix of up to
@@ -96,7 +110,8 @@ The bot picks lone monsters before packs (a hit monster calls its friends within
 
 ## Tests
 
-`make test` (in `tools/um-bot`) checks offline the rules that were verified in the running game: the skill and ability prices, the spell constructor against the saved characters in `Universal-Mod/mp`, the compressed upload, the shop stock, the mana formula and the settings. 44 checks.
+`make test` (in `tools/um-bot`) checks game-rule prices, spells, upload, shop, mana and settings against `Universal-Mod`
+fixtures, plus asset-free manual purchase legality/atomicity, text encoding/reload/precedence, and server-confirmed lobby/entry regressions.
 
 ## Building
 
@@ -112,4 +127,8 @@ Wayland by itself.
 ## The log file
 
 `um-bot.log` is written next to the program (the previous run's log is kept as `um-bot.log.1`): every line of the window's log with the clock time, each order the bot sends with the reason (`order: move to ... [follow the host]`, `order: attack unit ... [fight: target ...]`), what the SERVER says our hero is doing (`server order on our hero: ...`, so an order the bot did not send shows too), and every 3 s in a fight a `state:` line with the positions and the distance to the host. Send it with a bug report. If shopping is skipped it says why (`shop skipped: ...`), and a shop visit that buys nothing lists its reasons.
+
+Host-triggered returns log one `IN PROGRESS` action. `EXECUTED` requires a fresh confirmation of this bot's own lobby after
+reconnecting, not merely sending the leave request or disconnecting. Failures/cancellations never become successful returns.
+Manual development commits and discarded plans are also recorded in the same window/file log.
 

@@ -30,6 +30,8 @@ struct Config {
     std::string language = "en";  // the window's language: en, ru
     std::string character;       // the bot's character: a .mp file of the game's (or a mod's) mp folder
     std::string database;        // databaselmp.res / database.res (item and spell names; the Healing spell): empty = look beside the mp folder
+    std::string gameTextPack;    // stable language/source id for names and descriptions; empty = detected default
+    std::string gameTextSource;  // optional game texts archive or extracted texts folder
     bool saveProgress = true;    // write the party the server sends (experience, items) back into the character's .mp
     // Build
     Role role = Role::Archer;
@@ -86,6 +88,8 @@ inline void Load(Config& c) {
         else if (k == "NAME") c.name = v;
         else if (k == "CHARACTER") c.character = v;
         else if (k == "DATABASE") c.database = v;
+        else if (k == "GAME_TEXT_PACK") c.gameTextPack = v;
+        else if (k == "GAME_TEXT_SOURCE") c.gameTextSource = v;
         else if (k == "SAVE_PROGRESS") c.saveProgress = i != 0;
         else if (k == "LANGUAGE") c.language = v;
         else if (k == "ROLE") c.role = i == 1 ? Role::Archer : Role::Fighter; // the old setting: 0 melee, 1 ranged, (2 mage, 3 hybrid are gone)
@@ -114,6 +118,7 @@ inline bool Save(const Config& c) {
     if (!o) return false;
     o << "# um-bot settings\n"
       << "HOST=" << c.host << "\nPORT=" << c.port << "\nNAME=" << c.name << "\nCHARACTER=" << c.character << "\nDATABASE=" << c.database << "\nSAVE_PROGRESS=" << (c.saveProgress ? 1 : 0) << "\nLANGUAGE=" << c.language << "\n"
+      << "GAME_TEXT_PACK=" << c.gameTextPack << "\nGAME_TEXT_SOURCE=" << c.gameTextSource << "\n"
       << "BUILD=" << static_cast<int>(c.role) << "\nTANKINESS=" << c.tankiness << "\nGEAR_TARGET=" << c.gearTarget << "\nSHOP=" << (c.shop ? 1 : 0) << "\nGROW=" << (c.grow ? 1 : 0) << "\nSWAPS=" << (c.acceptSwaps ? 1 : 0) << "\nANNOUNCE=" << (c.announce ? 1 : 0) << "\nLEAVE_AT_EXIT=" << (c.leaveAtExit ? 1 : 0) << "\n"
       << "PRIORITY=" << static_cast<int>(c.priority) << "\nHEAL_PLAYER_BELOW=" << c.healPlayerBelow
       << "\nHEAL_SELF_BELOW=" << c.healSelfBelow << "\nMANA_RESERVE=" << c.manaReserve << "\nUSE_POTIONS=" << (c.usePotions ? 1 : 0) << "\n"

@@ -107,10 +107,11 @@ public:
     // The character: its name (with the clan tag), unit name, hero id (the .mp's u32) and the .mp's content (what is
     // uploaded when entering a quest). The JOIN: name\0 unit\0 u32 state, u8 0, u32 hero id.
     void SetCharacter(const std::string& name, const std::string& unit, uint32_t id, const std::vector<uint8_t>& mpRaw = {}) {
+        // The normal return reconnect reloads the same character after its final save.
+        if (hostReturn_ != HostReturn::AwaitingReconnect || name != name_ || unit != unit_)
+            FinishHostReturn("CANCELLED", "the character was reset before its own lobby was confirmed");
         name_ = name; unit_ = unit; heroId_ = 0; (void)id; mpRaw_ = mpRaw; // the hero id the file keeps (its last session's) is not sent in the JOIN: the server did not answer a first entry with a stale id (a 15 s stall)
-        phase_ = Phase::Lobby; worldUnit = 0; heroJoined_ = false; reconnect = false; leavingAt_ = 0;
-        tx_.clear(); txOffset_ = 0; unacked_.clear(); resend_.clear(); rxChunks_.clear(); rx_.clear(); rxParsed_ = 0; rxBase_ = 0; got_.clear(); seenMessages_.clear();
-        SetJoin(1, 0xFFFFFFFFu); // as the game: first without a hero, then with it
+        ResetSession();
     }
     // Orders our hero (stream message 0x30, read by the server's 0x66FFF0, the same path as a click on the ground):
     // u32 n, n x u32 unit id, u32 flags (?), f32 x, y, z.
@@ -606,7 +607,13 @@ public:
     bool leaveAtExit = true;    // leave the quest zone first when the host stands in a zone exit: the host cannot leave while other players are still in it
     bool sayLeaving = false;    // say it in the chat when it does
     bool autoEnter = true;      // enter the chosen quest when its zone opens
+    std::function<void()> beforeQuestEntry; // discard uncommitted camp edits before automatic entry; empty preserves CLI behavior
     uint32_t worldUnit = 0;     // our hero's unit in the quest world (0: not in it)
+    bool InTown() const {
+        if (state != State::Accepted || !joined || phase_ != Phase::Lobby || leavingAt_ > 0 || reconnect || !ownLobbyConfirmed_) return false;
+        const auto own = players.find(MySlot());
+        return own != players.end() && !name_.empty() && own->second.name == name_ && own->second.state == 1;
+    }
 
     ~Client() { Close(); }
 
@@ -615,9 +622,12 @@ public:
 
     // Starts: resolves the server, opens a UDP socket, asks for its info.
     bool Connect(const std::string& host, int port) {
-        Close();
+        const bool returning = hostReturn_ == HostReturn::AwaitingReconnect;
+        Close(returning);
         error.clear();
         players.clear(); questStates.clear(); // a new session: the player records and the quest states of the previous connection are stale (the bot entered a closed zone, and its entry timeout cut a swap)
+        ResetSession();
+        if (returning) hostReturn_ = HostReturn::AwaitingLobby;
 #ifdef _WIN32
         static bool wsa = false;
         if (!wsa) { WSADATA d; WSAStartup(MAKEWORD(2, 2), &d); wsa = true; }
@@ -957,15 +967,10 @@ public:
     }
 
     void Disconnect() {
-        if (sock_ != kBad && state == State::Accepted) {
-            std::vector<uint8_t> p{0x01};
-            Put32(p, clientId);
-            Send(p);
-            Log("disconnected");
-        }
-        Close();
-        state = State::Idle;
+        DisconnectSession(false);
     }
+    // Cancel only the logged action; a pending final save may still finish normally.
+    void CancelHostReturn(const std::string& reason) { FinishHostReturn("CANCELLED", reason); }
     void SendRaw(const std::vector<uint8_t>& m) { StreamMessage(m); } // research
     void LootBody(uint32_t body) { Loot(body); }       // research: the loot order on a body
     // Says a line in the session's chat (kind 6, a new object per line; the server prints it as "Name: text"). Sent a few times, as the lobby objects are.
@@ -988,7 +993,12 @@ public:
     }
     bool reconnect = false;     // set after LeaveWorld: the owner connects again
     void LeaveSteps() {
-        if (leavingAt_ > 0 && Now() - leavingAt_ > 2) { leavingAt_ = 0; Disconnect(); worldUnit = 0; reconnect = true; }
+        if (leavingAt_ > 0 && Now() - leavingAt_ > 2) {
+            const bool returning = hostReturn_ == HostReturn::Leaving;
+            if (returning) hostReturn_ = HostReturn::AwaitingReconnect;
+            DisconnectSession(returning); // only this intentional disconnect keeps the host-return action alive
+            worldUnit = 0; reconnect = true;
+        }
     }
     void GoToLobby() { LeaveZone(); }   // leave the quest zone, stay in the session
     // Stream message 0x06 (server OnMsg_ChangeMapByName 0x670E00): a map name and an entry dword; the hero goes to that map (research: how a real client leaves a quest).
@@ -1031,6 +1041,8 @@ private:
     int pktDumped_ = 0;
     int hpLogged_ = -1, mpLogged_ = -1;
     double leavingAt_ = 0;
+    enum class HostReturn { None, Leaving, AwaitingReconnect, AwaitingLobby } hostReturn_ = HostReturn::None;
+    bool ownLobbyConfirmed_ = false;
     double hostGoneAt_ = 0, joinWatchAt_ = 0; int joinRetries_ = 0;
     int joinSends_ = 0;                        // the JOIN goes 4 times after each change
     std::set<uint16_t> got_;                   // the server's packets received (the ack bits)
@@ -1049,6 +1061,33 @@ private:
     double phaseAt_ = 0, respawnAt_ = -1, viewAt_ = 0;
     int respawnStep_ = 0;
     bool heroJoined_ = false;
+    void ResetSession() {
+        phase_ = Phase::Lobby; worldUnit = 0; heroJoined_ = false; joined = false; ownLobbyConfirmed_ = false; reconnect = false; leavingAt_ = 0;
+        hostGoneAt_ = 0; joinWatchAt_ = 0; joinRetries_ = 0; retries_ = 0;
+        respawnAt_ = -1; respawnStep_ = 0; respawnPhase_ = 0; deadAt_ = 0; partyOutAt_ = 0;
+        tx_.clear(); txOffset_ = 0; unacked_.clear(); resend_.clear(); rxChunks_.clear(); rx_.clear(); rxParsed_ = 0; rxBase_ = 0; got_.clear(); seenMessages_.clear();
+        seq_ = 1; ackSeq_ = 0; updates_ = 0; std::memset(win, 0, sizeof win); pos = 0;
+        SetJoin(1, 0xFFFFFFFFu); // as the game: first without a hero, then with it
+    }
+    void FinishHostReturn(const char* result, const std::string& why) {
+        if (hostReturn_ == HostReturn::None) return;
+        hostReturn_ = HostReturn::None;
+        Log(std::string("host return: ") + result + " (" + why + ")");
+    }
+    void ConfirmHostReturn() {
+        if (hostReturn_ == HostReturn::AwaitingLobby && InTown())
+            FinishHostReturn("EXECUTED", "our own lobby was confirmed after reconnect");
+    }
+    void DisconnectSession(bool preserveHostReturn) {
+        if (sock_ != kBad && state == State::Accepted) {
+            std::vector<uint8_t> p{0x01};
+            Put32(p, clientId);
+            Send(p);
+            Log("disconnected");
+        }
+        Close(preserveHostReturn);
+        state = State::Idle;
+    }
     int dumped_ = 0;
     double followAt_ = 0, fightAt_ = 0, attackedAt_ = 0;
     double lootUntil_ = 0;      // a trip to the body is under way until then: no leash, no follow (unless something attacks us)
@@ -1099,7 +1138,9 @@ private:
     // snapshot (our new hero id), "09" (ready: the server spawns the hero), JOIN 0 with that id.
     void Enter() {
         if (phase_ == Phase::Lobby && !heroJoined_ && joinSends_ == 0) { heroJoined_ = true; SetJoin(1, heroId_); return; }
-        if (phase_ == Phase::Lobby && autoEnter && joined && !holdEntry && ZoneOpen() && !mpRaw_.empty()) {
+        if (phase_ == Phase::Lobby && autoEnter && joined && !holdEntry && leavingAt_ == 0 && !reconnect && hostReturn_ == HostReturn::None && ZoneOpen() && !mpRaw_.empty()) {
+            if (beforeQuestEntry) beforeQuestEntry();
+            ownLobbyConfirmed_ = false;
             phase_ = Phase::Loading; phaseAt_ = Now(); worldSince_ = Now(); SetJoin(3, heroId_);
             if (worldQuest_ != chosenQuest) ClearWorld(); // another quest = another world
             worldQuest_ = chosenQuest;
@@ -1132,6 +1173,8 @@ private:
     // players must leave the zone before the host can). The next quest is entered again by Enter() when its zone is open and autoEnter is set.
     void LeaveZone() {
         if (phase_ != Phase::InWorld && phase_ != Phase::Entering) return;
+        FinishHostReturn("CANCELLED", "an in-session lobby request interrupted the reconnect");
+        ownLobbyConfirmed_ = false;
         Log("leaving the quest zone (back to the lobby)");
         phase_ = Phase::Lobby; worldUnit = 0; heroJoined_ = true;
         fightTarget_ = 0; leashed_ = false; paceSent_ = -1; hostGoneAt_ = 0; // the world state stays: re-entering the same quest resends no creations (the host's world is the same); a new quest clears it in Enter()
@@ -1179,12 +1222,16 @@ private:
     }
     // The host left the quest zone (no other player is in it for a while): follow it back to the lobby.
     void WatchHost() {
-        if (phase_ != Phase::InWorld || !leaveWithHost) { hostGoneAt_ = 0; return; }
+        if (phase_ != Phase::InWorld || !leaveWithHost || !worldUnit || leavingAt_ > 0 || hostReturn_ != HostReturn::None) { hostGoneAt_ = 0; return; }
         bool hostIn = false;
         for (const auto& kv : players) if (IsHost(kv.second) && kv.second.unitId != worldUnit && kv.second.name != name_ && kv.second.state == 0 && kv.second.unitId) hostIn = true;
         if (hostIn) { hostGoneAt_ = 0; return; }
         if (hostGoneAt_ == 0) hostGoneAt_ = Now();
-        else if (Now() - hostGoneAt_ > 3) { Log("the host left the zone: leaving it too"); LeaveWorld(); }
+        else if (Now() - hostGoneAt_ > 3) {
+            hostReturn_ = HostReturn::Leaving;
+            Log("host return: IN PROGRESS (the host left the quest zone; returning to town)");
+            LeaveWorld();
+        }
     }
     // Join race: the server did not list us (another client left just before, or the first packets were lost): ask again, then give up.
     // Our body: where our hero died and which unit it was (looted for what the death took: players lose their inventory and some money to the body, recoverable by looting it).
@@ -1327,7 +1374,7 @@ private:
     static void Put32(std::vector<uint8_t>& p, uint32_t v) { for (int i = 0; i < 4; ++i) p.push_back(static_cast<uint8_t>(v >> (8 * i))); }
     static uint32_t Get32(const uint8_t* b) { uint32_t v; std::memcpy(&v, b, 4); return v; }
     void Log(const std::string& s) { BotLogLine(s); log.push_back(s); if (log.size() > 2000) log.erase(log.begin(), log.begin() + 500); }
-    bool Fail(const std::string& why) { error = why; state = State::Failed; Log("failed: " + why); Close(); return false; }
+    bool Fail(const std::string& why) { error = why; state = State::Failed; FinishHostReturn("FAILED", why); Log("failed: " + why); Close(); return false; }
     void Send(const std::vector<uint8_t>& p) {
         sendto(sock_, reinterpret_cast<const char*>(p.data()), static_cast<int>(p.size()), 0, reinterpret_cast<const sockaddr*>(&server_), sizeof server_);
     }
@@ -1339,7 +1386,9 @@ private:
         p.resize(33, 0);
         Send(p);
     }
-    void Close() {
+    void Close(bool preserveHostReturn = false) {
+        if (!preserveHostReturn) FinishHostReturn("CANCELLED", "the connection closed before our own lobby was confirmed");
+        joined = false; ownLobbyConfirmed_ = false; leavingAt_ = 0; reconnect = false; hostGoneAt_ = 0;
         if (sock_ == kBad) return;
 #ifdef _WIN32
         closesocket(sock_);
@@ -1377,7 +1426,7 @@ private:
             auto u16 = [&]() { uint16_t v = 0; if (o + 2 <= n) std::memcpy(&v, b + o, 2); o += 2; return v; };
             std::string text;
             if (!payload) { // removed
-                if (kind == 1) players.erase(id);
+                if (kind == 1) { if (id == MySlot()) ownLobbyConfirmed_ = false; players.erase(id); }
                 else if (kind == 8) questStates.erase(id);
                 else if (kind == 11) quests.erase(id);
                 else if (kind == 9) chosenQuest.clear();
@@ -1386,6 +1435,10 @@ private:
             switch (kind) {
             case 1: {
                 Player p; p.name = str(); p.unit = str(); p.state = u32(); p.flag = o < n ? b[o] : 0; o += 1; p.unitId = u32(); p.tail = u32(); players[id] = p;
+                if (!name_.empty() && p.name == name_) {
+                    joined = true;
+                    if (id == MySlot()) ownLobbyConfirmed_ = o <= n && p.state == 1 && phase_ == Phase::Lobby && leavingAt_ == 0 && !reconnect;
+                }
                 // Our hero again after a death (respawned): a new unit id in our record.
                 if (p.name == name_ && worldUnit && p.state == 0 && IsPlayerId(p.unitId) && p.unitId != worldUnit) {
                     Log("our hero is now unit " + std::to_string(p.unitId) + " (respawned?)");
@@ -1507,9 +1560,11 @@ private:
             state = State::Rejected;
             error = "rejected by the server (reason " + std::to_string(n >= 6 ? b[5] : -1) + ")";
             Log(error);
+            FinishHostReturn("FAILED", error);
             Close();
             break;
         case 0x00: // the server's update: acknowledged in the next keep-alive (its content is not decoded yet)
+            if (state != State::Accepted) return;
             if (n >= 9) { // what the server acknowledged of ours: u16 ack, u32 bits (bit i = ack - 1 - i)
                 uint16_t ack; uint32_t bits; std::memcpy(&ack, b + 3, 2); std::memcpy(&bits, b + 5, 4);
                 for (auto it = unacked_.begin(); it != unacked_.end();) {
@@ -1553,6 +1608,7 @@ private:
                 Log("joined: the server lists \"" + name_ + "\" (chat: connected, face in the lobby)");
             }
             ReadMessages(b, n);
+            ConfirmHostReturn(); // only a fresh own record on this connection can finish a return
             break;
         default:
             Log("received a packet of type " + std::to_string(b[0]) + " (" + std::to_string(n) + " bytes): not handled yet");

@@ -60,6 +60,9 @@ tools/um-multitool/imgui.ini
 tools/um-multitool/build/
 tools/um-multitool/um-multitool.log
 tools/um-bot/tests/um_bot_tests
+tools/um-bot/tests/development_tests
+tools/um-bot/tests/game_texts_tests
+tools/um-bot/tests/net_lifecycle_tests
 
 # EIStarter-UM test binary and its run files
 tools/EIStarter-UM/tests/launcher_tests
