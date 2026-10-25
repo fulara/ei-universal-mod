@@ -22,11 +22,29 @@ The Polish text directories already existed in this repository and were retained
 
 Text payloads retain their original encoding, including CP1250 Polish text. Do not blindly re-save `.umtexts` files as UTF-8. See the [grouped text format](../../../docs/file-formats/umtexts-format.md).
 
+## Russian acknowledgement fallbacks
+
+[`rus-sfx-fallback_res`](rus-sfx-fallback_res) contains only three WAV files taken unchanged from the GOG Russian 1.06 base-game `sfx.res`:
+
+```text
+acks/HGNBF/Kill/9.wav
+acks/HGNBF/Rest/10.wav
+acks/HMT/Bored/112.wav
+```
+
+The original acknowledgement database references these paths, but the preserved Polish archive does not contain them. They are Russian fallbacks, not new Polish recordings. Their directory casing matches the Polish tree; their payload bytes are unchanged from the Russian archive.
+
+Keep the original `pol-sfx_res` reference unchanged. Merge the fallback subset only into a temporary build directory, without replacing any existing Polish file. The resulting `sfx.res` has 4,137 entries instead of 4,134 and may play a Russian acknowledgement where the Polish recording is absent. Do not pack or install the three-file subset as a standalone replacement for `sfx.res`.
+
+## Scenario text identifiers
+
+Use the current UM maps rather than replacing them with maps from an old localization. A static check of the 222 UM map-dump `.eis` / `.yaml` files found 11 literal `SAY` identifiers, all already present in `pol-texts_res`; no additional `SendStringEvent` / `say_block` calls were found in the English quest source tree. No blanket aliases for the differently named Russian scenario strings are added. This check does not resolve dynamically constructed identifiers or translate new UM content.
+
 ## Rebuild the game archives
 
 Use [um-multitool](../../../tools/um-multitool/README.md), not a ZIP archiver. `restool --pack` rebuilds the raw asset directories; `texts --pack` rebuilds the grouped text directories.
 
-The following is a POSIX-shell example, run from the repository root with `um-multitool` on `PATH`. It writes all output to a new temporary directory, leaving the reference files unchanged:
+The following is a POSIX-shell example, run from the repository root with `um-multitool` on `PATH`. It writes all output to a new temporary directory, leaving the reference files unchanged. The SFX inputs are copied there first; fallback files are added only when the target path does not already exist, preserving any existing Polish recordings:
 
 ```sh
 REF="extra-assets/reference-assets/cotls-vanilla"
@@ -34,7 +52,13 @@ OUT="$(mktemp -d "${TMPDIR:-/tmp}/ei-cotls-pl.XXXXXX")"
 
 um-multitool restool --pack "$REF/pol-menus_res" -o "$OUT/menus.res"
 um-multitool restool --pack "$REF/pol-speech_res" -o "$OUT/speech.res"
-um-multitool restool --pack "$REF/pol-sfx_res" -o "$OUT/sfx.res"
+cp -R "$REF/pol-sfx_res" "$OUT/sfx-source"
+for file in acks/HGNBF/Kill/9.wav acks/HGNBF/Rest/10.wav acks/HMT/Bored/112.wav; do
+    if [ ! -e "$OUT/sfx-source/$file" ]; then
+        cp "$REF/rus-sfx-fallback_res/$file" "$OUT/sfx-source/$file"
+    fi
+done
+um-multitool restool --pack "$OUT/sfx-source" -o "$OUT/sfx.res"
 um-multitool texts --pack "$REF/pol-texts_res" -o "$OUT/texts.res"
 um-multitool texts --pack "$REF/pol-textslmp_res" -o "$OUT/textslmp.res"
 
