@@ -58,6 +58,52 @@ int main(int argc, char** argv) {
         winreg::Value v; CHECK(winreg::Get(kAddonKey, "LandscapeDrawRadius", v) && v.dword == 250);
         CHECK(winreg::Get(std::string(kCloneKey) + "\\terrain settings", "LOD1", v) && v.bytes.size() == 4);
     }
+    // Every window mode survives saving; changing away from framed clears its flag.
+    {
+        LauncherConfig c = LoadConfig(tmp);
+        const bool fullscreen[] = {true, false, false, false, false};
+        const bool borderless[] = {false, false, true, true, true};
+        const bool scaled[] = {false, false, false, true, false};
+        for (int mode = 0; mode != 5; ++mode) {
+            c.SetWindowMode(4);
+            c.SetWindowMode(mode);
+            CHECK(SaveConfig(tmp, c));
+            LauncherConfig d = LoadConfig(tmp);
+            CHECK(d.WindowMode() == mode);
+            CHECK(d.game.GetBool("general settings", "fullscreen") == fullscreen[mode]);
+            CHECK(d.borderless == borderless[mode]);
+            CHECK(d.borderlessScale == scaled[mode]);
+            CHECK(d.borderlessFrame == (mode == 4));
+            CHECK(d.game.GetFloat("terrain settings", "LOD1") == 90.f);
+        }
+        // An older launcher file with no frame key keeps its scaled mode.
+        IniFile old;
+        c.game.Save(old);
+        old.SetBool("Launcher", "Borderless", true);
+        old.SetBool("Launcher", "BorderlessScale", true);
+        CHECK(old.Save(ConfigPath(tmp)));
+        CHECK(LoadConfig(tmp).WindowMode() == 3);
+    }
+    // The plugin file keeps unrelated settings while framed takes precedence and off clears every mode key.
+    {
+        const std::string path = (tmp / "um-window.ini").string();
+        std::ofstream(path, std::ios::binary) << "; keep this comment\r\n[Window]\r\nBorderless=0\r\nScale=1\r\nCustom=keep\r\n[Other]\r\nFrame=7\r\n";
+        CHECK(SaveWindowIni(path, true, true, true));
+        IniFile ini; CHECK(ini.Load(path));
+        CHECK(ini.GetInt("Window", "Borderless", -1) == 1);
+        CHECK(ini.GetInt("Window", "Scale", -1) == 0);
+        CHECK(ini.GetInt("Window", "Frame", -1) == 1);
+        CHECK(ini.Get("Window", "Custom") == "keep");
+        CHECK(ini.GetInt("Other", "Frame", -1) == 7);
+        CHECK(ReadTextFile(path).find("; keep this comment\r\n") == 0);
+        CHECK(SaveWindowIni(path, false, true, true));
+        CHECK(ini.Load(path));
+        CHECK(ini.GetInt("Window", "Borderless", -1) == 0);
+        CHECK(ini.GetInt("Window", "Scale", -1) == 0);
+        CHECK(ini.GetInt("Window", "Frame", -1) == 0);
+        CHECK(ini.Get("Window", "Custom") == "keep");
+        CHECK(ini.GetInt("Other", "Frame", -1) == 7);
+    }
     // path settings: a path without its closing backslash gets one (the game appends "3DfpFPU.dll" to it), usable paths are kept, a relative GOG path is replaced
     {
         fs::path game = fs::temp_directory_path() / "EIStarter-UM-test-game"; fs::create_directories(game / "res");

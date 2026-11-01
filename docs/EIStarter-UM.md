@@ -38,8 +38,8 @@ button (mod information, its readme / changelog, and the mod's own script button
 filtering, textures, shadows, terrain LOD, lighting / shadowing frequency, movies, audio), Addon (landscape / objects draw radius, pause when
 minimized, addon.log levels), Multiplayer (console, "do not load .MQ from the host", second speed), Camera (every camera value, and the **Original camera** button), Paths (game folder,
 resources, CD, the engine exe name), Utils (mod skins, mod.config, close when the game is up, debug log. New: **Window mode** = Fullscreen /
-Windowed / **Borderless window** / **Borderless scaled**. In EIStarter's Windowed mode the game is a frameless window that minimizes and pauses when it loses the focus
-(a multiplayer game then desyncs); Borderless keeps it running and keeps the mouse inside. EIStarter's presets (disabled there) and its "Russian
+Windowed / **Borderless window** / **Borderless scaled** / **Windowed framed**. In EIStarter's Windowed mode the game is a frameless window that minimizes and pauses when it loses the focus
+(a multiplayer game then desyncs); the enhanced modes keep it running. Windowed framed adds a movable native title bar without changing the game resolution. EIStarter's presets (disabled there) and its "Russian
 charset fix for WinXP" checkbox (it did nothing) are not carried over.
 
 Files beside the exe: `EIStarter-UM.cfg` (all settings), `EIStarter-UM.log` (what the launcher did, the replacement of `EIStarter With Debug.bat`),
@@ -74,8 +74,24 @@ it from what EIStarter left (the clone, then Nival's key). The `[Game: <key>]` s
 
 `Engine\um-window.asi` (`window/`, built from `resources/universal-mod/um-dll/um_window.cpp`, the code of um.dll's `BORDERLESS`) is loaded by addon.dll like
 any `*.asi`; the launcher switches it with `Engine\um-window.ini` (`[Window] Borderless=1`). It subclasses the game window: a deactivation never reaches the
-game, the cursor is confined to the window while it has the focus. Needs the game's `fullscreen=0` (the launcher's window mode takes care of both). When
+game, the cursor is confined to the window while it has the focus. **Ctrl + left Alt** releases the mouse (AltGr does not); click inside the game to recapture it. The recapture click is not sent to the game. Needs the game's `fullscreen=0` (the launcher's window mode takes care of both). When
 a mod loads um.dll, um.dll's own `BORDERLESS` does it (the launcher sets it in the mod's `um.cfg`) and the plugin stays out of the way.
+
+### Windowed framed (movable game window)
+
+**Windowed framed** adds a native title bar, system menu and minimize button. Drag the title bar to move the game, including between monitors. The client area stays at the game's resolution; resizing and maximizing are disabled. It keeps multiplayer running when unfocused, like Borderless window. Ctrl + left Alt releases the mouse until a click inside the game; dragging the title bar does not recapture it.
+
+The launcher saves `[Launcher] BorderlessFrame=true` in `EIStarter-UM.cfg` and writes `BORDERLESS=true`, `BORDERLESS_FRAME=true`, `BORDERLESS_SCALE=false` to the mod's `um.cfg`, plus `[Window] Borderless=1`, `Frame=1`, `Scale=0` to `Engine\um-window.ini`. Selecting another window mode clears the frame flag. Frame takes precedence if both frame and scale are enabled manually.
+
+With native DirectDraw, the framed mode keeps a client-sized front buffer and presents it through the window's DC. Blits, colour keys, primary-surface reads, locks and GDI writes use that buffer, not the primary monitor's desktop rectangle. This avoids missing 2D menus on monitors with negative coordinates or when the window crosses a monitor edge. It adds a GPU read-back for presentation; use a lower game resolution if needed. D7VK's own window presentation and the other window modes are unchanged.
+
+For Wine's macOS driver, the launcher temporarily sets these values under `HKEY_CURRENT_USER\Software\Wine\AppDefaults\<game executable>\Mac Driver`, using the configured executable's basename:
+- `OpenGLSurfaceMode` (`REG_SZ`) = `behind`, only in **Windowed framed**: the client's GDI output must be above wined3d's OpenGL view.
+- `LeftOptionIsAlt` (`REG_SZ`) = `Y`, in enhanced windowed modes: Control + left Option becomes the release shortcut. Right Option's text-composition mapping is unchanged.
+
+The driver caches the options before creating a window. As soon as the game window appears, the launcher restores the previous registry values exactly, including missing values, so another mode or a direct launch does not inherit the overrides. Startup failure, timeout and launcher shutdown restore them too. A saved startup journal recovers an interrupted launcher at its next start; concurrent starts cannot change a transaction still in flight.
+
+Native title-bar dragging enters a modal Windows move loop on the game thread. Avoid holding the title bar for long during multiplayer; normal ticking resumes when the drag ends.
 
 ### Borderless scaled (a lower resolution fills the screen)
 

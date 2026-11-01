@@ -35,19 +35,22 @@ EIStarter-UM.exe: $(SRCS) $(HDRS) EIStarter-UM-res.o
 
 # um-window.asi: the borderless-window plugin (resources/universal-mod/um-dll/um_window.cpp built on its own); addon.dll loads it from Engine\.
 window: window/um-window.asi
-window/um-window.asi: window/um_window_plugin.cpp window/um_window_standalone.hpp ../../resources/universal-mod/um-dll/um_window.cpp
+window/um-window.asi: window/um_window_plugin.cpp window/um_window_standalone.hpp ../../resources/universal-mod/um-dll/um_window.cpp ../../resources/universal-mod/um-dll/um_cursor_map.hpp
 	$(WIN_CXX) -shared -DUM_WINDOW_STANDALONE -o $@ window/um_window_plugin.cpp ../../resources/universal-mod/um-dll/um_window.cpp -Iwindow -std=c++17 -O2 -static -static-libgcc -s -Wall -Wextra -lgdi32
 
 STARTER ?= .
-test: tests/launcher_tests tests/softrender_test
+test: tests/launcher_tests tests/softrender_test tests/cursor_map_test
 	./tests/launcher_tests "$(STARTER)"
 	./tests/softrender_test
+	./tests/cursor_map_test
+tests/cursor_map_test: ../../resources/universal-mod/um-dll/tests/cursor_map_test.cpp ../../resources/universal-mod/um-dll/um_cursor_map.hpp
+	$(CXX) -std=c++17 -O1 -Wall -Wextra -o $@ $<
 tests/softrender_test: tests/softrender_test.cpp softrender.hpp
 	$(CXX) -std=c++17 -O1 -Wall -Wextra -I. -isystem $(IMGUI_DIR) -o $@ $<
 tests/launcher_tests: tests/launcher_tests.cpp $(HDRS)
 	$(CXX) -std=c++17 -O1 -Wall -Wextra -pthread -I. -I../um-multitool -o $@ $<
 
 clean:
-	rm -f EIStarter-UM.exe EIStarter-UM-res.o window/um-window.asi tests/launcher_tests tests/softrender_test
+	rm -f EIStarter-UM.exe EIStarter-UM-res.o window/um-window.asi tests/launcher_tests tests/softrender_test tests/cursor_map_test
 
 .PHONY: all win window test clean
