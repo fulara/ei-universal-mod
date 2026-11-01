@@ -62,6 +62,7 @@ struct App {
     // The game start.
     enum class Phase { Idle, Starting, Running, Failed } phase = Phase::Idle;
     platform::Process proc;
+    WineWindowStartup wineWindowStartup;
     double phaseStart = 0, windowSeen = 0;
     std::string status, failure;
     bool showInfo = false;
@@ -76,6 +77,14 @@ struct App {
         char t[32]; std::strftime(t, sizeof t, "%H:%M:%S", std::localtime(&now));
         log << t << " " << line << "\n"; log.flush();
     }
+
+    bool RestoreWineWindowStartup() {
+        std::string error;
+        if (wineWindowStartup.Restore(error)) return true;
+        Log(error); message = error;
+        return false;
+    }
+    ~App() { RestoreWineWindowStartup(); }
 
     // Mod updates (update.hpp). The mod's two lines are installed side by side so their saves never mix: the newest release into mods/Universal-Mod,
     // the newest pre-release (beta) into mods/Universal-Mod-Beta.
@@ -225,6 +234,7 @@ struct App {
     bool GameFolderOk() const { return LooksLikeGameFolder(cfg.game.GetString("Path Settings", "Work Path")); }
 
     void Play() {
+        if (phase == Phase::Starting || !RestoreWineWindowStartup()) return;
         Log("Play: mod '" + (CurrentMod() ? CurrentMod()->folder : std::string()) + "', engine " + cfg.exeName);
         const fs::path exe = dir / "Engine" / cfg.exeName;
         std::error_code ec;
@@ -237,31 +247,34 @@ struct App {
         static App* self = this;
         SyncResult r = SyncRegistry(cfg, dir, CurrentMod()->folder, cfg.debugLog ? +[](const std::string& line) { self->Log("  " + line); } : nullptr);
         if (!r.ok) { message = r.error; Log(message); return; }
-        ApplyBorderless();
+        const bool enhanced = cfg.borderless && !cfg.game.GetBool("general settings", "fullscreen");
+        ApplyBorderless(enhanced);
         std::string error;
-        if (!platform::Start(exe, dir / "Engine", proc, error)) { failure = error; phase = Phase::Failed; Log("start failed: " + error); return; }
+        if (!wineWindowStartup.Begin(exe, enhanced, enhanced && cfg.borderlessFrame, error)) {
+            failure = error; phase = Phase::Failed; Log(error); return;
+        }
+        if (!platform::Start(exe, dir / "Engine", proc, error)) {
+            RestoreWineWindowStartup();
+            failure = error; phase = Phase::Failed; Log("start failed: " + error); return;
+        }
         Log("game started");
         phase = Phase::Starting; phaseStart = glfwGetTime(); windowSeen = 0; status = "Starting the game...";
     }
 
     // Borderless windowed (the game window keeps running when it loses the focus, the mouse stays inside): um.dll does it for the mods that use it
     // (um.cfg BORDERLESS), Engine\\um-window.asi (window/) for every other mod, switched by Engine\\um-window.ini.
-    void ApplyBorderless() {
-        const bool on = cfg.borderless && !cfg.game.GetBool("general settings", "fullscreen");
-        const bool scale = on && cfg.borderlessScale;
-        std::error_code ec;
+    void ApplyBorderless(bool on) {
+        const bool frame = on && cfg.borderlessFrame;
+        const bool scale = on && cfg.borderlessScale && !frame;
         if (CurrentMod()) {
             const std::string umcfg = (fs::path(CurrentMod()->path) / "um.cfg").string();
             if (SetCfgLine(umcfg, "BORDERLESS", on ? "true" : "false")) Log(std::string("um.cfg BORDERLESS ") + (on ? "on" : "off"));
             if (SetCfgLineAfter(umcfg, "BORDERLESS_SCALE", scale ? "true" : "false", "BORDERLESS")) Log(std::string("um.cfg BORDERLESS_SCALE ") + (scale ? "on" : "off"));
+            if (SetCfgLineAfter(umcfg, "BORDERLESS_FRAME", frame ? "true" : "false", "BORDERLESS_SCALE")) Log(std::string("um.cfg BORDERLESS_FRAME ") + (frame ? "on" : "off"));
         }
-        if (fs::exists(dir / "Engine" / "um-window.asi", ec)) {
-            IniFile ini;
-            ini.SetInt("Window", "Borderless", on ? 1 : 0);
-            ini.SetInt("Window", "Scale", scale ? 1 : 0);
-            ini.Save((dir / "Engine" / "um-window.ini").string());
-            Log(std::string("Engine/um-window.ini Borderless ") + (on ? "1" : "0") + " Scale " + (scale ? "1" : "0"));
-        }
+        const std::string windowIni = (dir / "Engine" / "um-window.ini").string();
+        SaveWindowIni(windowIni, on, scale, frame);
+        Log(std::string("Engine/um-window.ini Borderless ") + (on ? "1" : "0") + " Scale " + (scale ? "1" : "0") + " Frame " + (frame ? "1" : "0"));
     }
 
     void Poll() {
@@ -278,6 +291,7 @@ struct App {
         if (phase != Phase::Starting && phase != Phase::Running) return;
         int code = 0;
         if (!platform::Running(proc, code)) {
+            RestoreWineWindowStartup();
             failure = "The game exited (code " + std::to_string(code) + "). See addon.log.";
             Log(failure);
             phase = phase == Phase::Starting ? Phase::Failed : Phase::Idle;
@@ -285,9 +299,15 @@ struct App {
         }
         if (phase == Phase::Starting) {
             if (platform::HasWindow(proc)) {
-                if (windowSeen == 0) { windowSeen = glfwGetTime(); Log("game window up"); }
-                if (glfwGetTime() - windowSeen > 1.0) { phase = Phase::Running; status = "The game is running."; if (cfg.closeOnStart) quit = true; }
-            } else if (glfwGetTime() - phaseStart > 120) { failure = "The game did not start within 120 s."; phase = Phase::Failed; Log(failure); }
+                if (windowSeen == 0) {
+                    windowSeen = glfwGetTime(); Log("game window up");
+                    RestoreWineWindowStartup(); // macdrv has cached its options before creating the window
+                }
+                if (glfwGetTime() - windowSeen > 1.0) { phase = Phase::Running; status = "The game is running."; if (cfg.closeOnStart && !wineWindowStartup.Pending()) quit = true; }
+            } else if (glfwGetTime() - phaseStart > 120) {
+                RestoreWineWindowStartup();
+                failure = "The game did not start within 120 s."; phase = Phase::Failed; Log(failure);
+            }
         }
     }
 };
@@ -853,12 +873,28 @@ int main(int argc, char** argv) {
 
     app.Log("loading the settings");
     app.cfg = LoadConfig(app.dir);
+    {
+        std::string error;
+        if (!WineWindowStartup::Recover(error)) { app.Log(error); app.message = error; }
+    }
     app.languages = EnumerateLanguages(app.dir);
     if (!app.languages.empty() && std::find(app.languages.begin(), app.languages.end(), app.cfg.language) == app.languages.end()) app.cfg.language = app.languages[0];
     app.ReloadMods();
     app.ApplySkin();
-    if (app.cfg.firstRun) { // a mod that already runs borderless (um.cfg BORDERLESS=true) keeps doing so
-        if (const ModInfo* m = app.CurrentMod()) app.cfg.borderless = LowerAscii(GetCfgLine((fs::path(m->path) / "um.cfg").string(), "BORDERLESS")) == "true";
+    if (app.cfg.firstRun) { // preserve the selected mod's existing enhanced window mode
+        std::string umcfg;
+        if (const ModInfo* m = app.CurrentMod()) umcfg = (fs::path(m->path) / "um.cfg").string();
+        if (!GetCfgLine(umcfg, "BORDERLESS").empty()) {
+            app.cfg.borderless = LowerAscii(GetCfgLine(umcfg, "BORDERLESS")) == "true";
+            app.cfg.borderlessFrame = LowerAscii(GetCfgLine(umcfg, "BORDERLESS_FRAME")) == "true";
+            app.cfg.borderlessScale = !app.cfg.borderlessFrame && LowerAscii(GetCfgLine(umcfg, "BORDERLESS_SCALE")) == "true";
+        } else {
+            IniFile ini;
+            ini.Load((app.dir / "Engine" / "um-window.ini").string());
+            app.cfg.borderless = ini.GetBool("Window", "Borderless", false);
+            app.cfg.borderlessFrame = ini.GetBool("Window", "Frame", false);
+            app.cfg.borderlessScale = !app.cfg.borderlessFrame && ini.GetBool("Window", "Scale", false);
+        }
         app.Save();
     }
     if (!app.GameFolderOk()) { // look for the game where an installation puts it

@@ -6,7 +6,9 @@
 #pragma once
 
 #include <filesystem>
+#include <fstream>
 #include <map>
+#include <sstream>
 #include <string>
 
 #include "gamesettings.hpp"
@@ -36,8 +38,9 @@ struct LauncherConfig {
     std::string exeName = "game.exe";
     bool closeOnStart = true;      // leave when the game window is up
     bool debugLog = false;         // more detail in EIStarter-UM.log
-    bool borderless = false;       // windowed game without a frame (needs fullscreen off)
+    bool borderless = false;       // enhanced windowed mode (needs fullscreen off)
     bool borderlessScale = false;  // with borderless: the window covers the monitor and the game picture is scaled up to it (black bars keep the aspect ratio)
+    bool borderlessFrame = false;  // with borderless: movable native frame, fixed game-resolution client area (takes precedence over scaling)
     AddonOptions addon;
     GameSettings game;
     bool checkUpdatesAtStart = true;     // look for a newer mod in the background at start
@@ -46,9 +49,65 @@ struct LauncherConfig {
     std::map<std::string, std::string> updateKeys; // per mod folder: the build the updater installed last (update::Release::Key)
     std::map<std::string, std::string> updateRepos; // "*" = an owner/repo overriding the built-in one
     bool firstRun = false;         // no EIStarter-UM.cfg existed
+
+    int WindowMode() const {
+        return game.GetBool("general settings", "fullscreen") ? 0 : (borderless ? (borderlessFrame ? 4 : (borderlessScale ? 3 : 2)) : 1);
+    }
+    void SetWindowMode(int mode) {
+        game.SetBool("general settings", "fullscreen", mode == 0);
+        borderless = mode >= 2;
+        borderlessScale = mode == 3;
+        borderlessFrame = mode == 4;
+    }
 };
 
 inline std::string ConfigPath(const fs::path& dir) { return (dir / "EIStarter-UM.cfg").string(); }
+
+// Update only the plugin's mode keys, keeping comments and unrelated sections/settings.
+inline bool SaveWindowIni(const std::string& path, bool borderless, bool scale, bool frame) {
+    const std::string text = ReadTextFile(path);
+    const std::string newline = text.find("\r\n") != std::string::npos ? "\r\n" : "\n";
+    const char* keys[] = {"Borderless", "Scale", "Frame"};
+    const char* lowerKeys[] = {"borderless", "scale", "frame"};
+    const bool values[] = {borderless, borderless && scale && !frame, borderless && frame};
+    bool written[3] = {}, inWindow = false, foundWindow = false;
+    std::string output;
+    auto appendMissing = [&]() {
+        for (int i = 0; i != 3; ++i) if (!written[i]) {
+            output += std::string(keys[i]) + "=" + (values[i] ? "1" : "0") + newline;
+            written[i] = true;
+        }
+    };
+    std::istringstream input(text);
+    std::string line;
+    while (std::getline(input, line)) {
+        if (!line.empty() && line.back() == '\r') line.pop_back();
+        const size_t start = line.find_first_not_of(" \t");
+        if (start != std::string::npos && line[start] == '[') {
+            if (inWindow) appendMissing();
+            const size_t end = line.find(']', start + 1);
+            inWindow = end != std::string::npos && LowerAscii(line.substr(start + 1, end - start - 1)) == "window";
+            foundWindow = foundWindow || inWindow;
+        } else if (inWindow && start != std::string::npos && line[start] != ';' && line[start] != '#') {
+            const size_t equal = line.find('=', start);
+            if (equal != std::string::npos && equal > start) {
+                const size_t end = line.find_last_not_of(" \t", equal - 1);
+                const std::string key = LowerAscii(line.substr(start, end - start + 1));
+                for (int i = 0; i != 3; ++i) if (key == lowerKeys[i]) {
+                    line = std::string(keys[i]) + "=" + (values[i] ? "1" : "0");
+                    written[i] = true;
+                }
+            }
+        }
+        output += line + newline;
+    }
+    if (!foundWindow) output += "[Window]" + newline;
+    appendMissing();
+    std::ofstream out(path, std::ios::binary | std::ios::trunc);
+    if (!out) return false;
+    out << output;
+    return out.good();
+}
 
 inline AddonOptions ReadAddonRegistry() {
     AddonOptions a;
@@ -76,6 +135,7 @@ inline LauncherConfig LoadConfig(const fs::path& dir) {
         c.debugLog = ini.GetBool("Launcher", "DebugLog", false);
         c.borderless = ini.GetBool("Launcher", "Borderless", false);
         c.borderlessScale = ini.GetBool("Launcher", "BorderlessScale", false);
+        c.borderlessFrame = ini.GetBool("Launcher", "BorderlessFrame", false);
         c.checkUpdatesAtStart = ini.GetBool("Launcher", "CheckUpdatesAtStart", true);
         c.cameraCheck = ini.GetBool("Launcher", "CameraCheck", true);
         for (const IniFile::Section& s : ini.Sections()) {
@@ -127,6 +187,7 @@ inline bool SaveConfig(const fs::path& dir, const LauncherConfig& c) {
     ini.SetBool("Launcher", "DebugLog", c.debugLog);
     ini.SetBool("Launcher", "Borderless", c.borderless);
     ini.SetBool("Launcher", "BorderlessScale", c.borderlessScale);
+    ini.SetBool("Launcher", "BorderlessFrame", c.borderlessFrame);
     ini.SetBool("Launcher", "CheckUpdatesAtStart", c.checkUpdatesAtStart);
     ini.SetBool("Launcher", "CameraCheck", c.cameraCheck);
     for (const auto& kv : c.updateKeys) ini.Set("Updates", kv.first, kv.second);

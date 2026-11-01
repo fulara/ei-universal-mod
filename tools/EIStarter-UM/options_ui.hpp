@@ -125,13 +125,11 @@ private:
         ImGui::TableNextColumn();
         // Window mode (the original had a FullScreen checkbox; borderless windowed is new).
         {
-            int mode = g.GetBool("general settings", "fullscreen") ? 0 : (edit_.borderless ? (edit_.borderlessScale ? 3 : 2) : 1);
-            if (Combo(tx, "Window mode", "lbWindowMode", "cbbWindowMode", {"Fullscreen", "Windowed", "Borderless window", "Borderless scaled"}, mode)) {
-                g.SetBool("general settings", "fullscreen", mode == 0);
-                edit_.borderless = mode >= 2;
-                edit_.borderlessScale = mode == 3;
+            int mode = edit_.WindowMode();
+            if (Combo(tx, "Window mode", "lbWindowMode", "cbbWindowMode", {"Fullscreen", "Windowed", "Borderless window", "Borderless scaled", "Windowed framed"}, mode)) {
+                edit_.SetWindowMode(mode);
             }
-            if (ImGui::IsItemHovered()) ImGui::SetTooltip(edit_.borderlessScale ? "Borderless scaled: the window covers the screen and a lower game resolution is scaled up to it (black bars keep the aspect ratio).\nSet the game resolution below your screen's in Video." : modBorderless_ ? "Keeps running when unfocused; the mouse stays inside.\nWritten to the mod's um.cfg at every Play." : "Keeps running when unfocused; the mouse stays inside.");
+            if (ImGui::IsItemHovered()) ImGui::SetTooltip(edit_.borderlessFrame ? "Windowed framed: drag the native title bar to move the game. The client area keeps the game's resolution; resizing is disabled.\nKeeps running when unfocused. Ctrl + left Alt releases the mouse; click inside the game to recapture." : edit_.borderlessScale ? "Borderless scaled: the window covers the screen and a lower game resolution is scaled up to it (black bars keep the aspect ratio).\nSet the game resolution below your screen's in Video.\nCtrl + left Alt releases the mouse; click inside the game to recapture." : modBorderless_ ? "Keeps running when unfocused; the mouse stays inside.\nCtrl + left Alt releases the mouse; click inside the game to recapture.\nWritten to the mod's um.cfg at every Play." : "Keeps running when unfocused; the mouse stays inside.\nCtrl + left Alt releases the mouse; click inside the game to recapture.");
         }
         bool b;
         b = g.GetBool("general settings", "mipmapping"); if (Check(tx, "cbMipMapping", "Mip-Mapping", b)) g.SetBool("general settings", "mipmapping", b);
