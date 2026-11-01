@@ -351,6 +351,7 @@ extern bool g_enableMsaa;
 void TraceInstallDevice(void* device); // um_trace.cpp: UM_TRACE_D3D research tracer
 extern bool g_enableBorderless;
 extern bool g_enableScale;
+extern bool g_enableFrame;
 void InstallWindowHooks(); // um_window.cpp
 void WindowScaleDirectDrawCreated(void* directDraw, bool stretchesByItself); // um_window.cpp: BORDERLESS_SCALE
 bool PatchImportedFunction(HMODULE module, const char* functionName, ULONG_PTR replacement, ULONG_PTR* original); // um_hooks.cpp

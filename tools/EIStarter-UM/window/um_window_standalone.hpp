@@ -16,3 +16,4 @@ bool PatchImportedFunction(HMODULE module, const char* functionName, ULONG_PTR r
 void InstallWindowHooks();
 extern bool g_enableBorderless;
 extern bool g_enableScale;
+extern bool g_enableFrame;

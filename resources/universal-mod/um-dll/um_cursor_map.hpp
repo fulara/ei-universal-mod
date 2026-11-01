@@ -12,6 +12,13 @@ struct CursorMap {
     double scale = 1.0;
     int winX = 0, winY = 0, gameW = 0, gameH = 0;
 
+    // Moving a window invalidates the previous warp's screen origin and fractional travel.
+    void SetGeometry(int x, int y, int width, int height, double factor) {
+        winX = x; winY = y; gameW = width; gameH = height; scale = factor;
+        haveSet_ = false;
+        carryX_ = carryY_ = 0;
+    }
+
     // The game's SetCursorPos(gx, gy): returns the screen position to warp the real pointer to.
     void ToScreen(int gx, int gy, long& sx, long& sy) {
         sx = winX + std::lround(gx * scale); sy = winY + std::lround(gy * scale);

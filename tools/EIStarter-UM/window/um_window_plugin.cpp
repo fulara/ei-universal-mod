@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Kyr4l
 // um-window.asi: the BORDERLESS feature of um.dll (um_window.cpp) as a plugin of its own, for mods that do not use um.dll. addon.dll loads
-// the *.asi files of Engine\. EIStarter-UM writes Engine\um-window.ini ([Window] Borderless=1, Scale=1) when "Borderless window" is chosen in its Options.
+// the *.asi files of Engine\. EIStarter-UM writes Engine\um-window.ini ([Window] Borderless=1, Scale=1 or Frame=1) for enhanced windowed modes.
 // When um.dll is loaded it does the same job (um.cfg BORDERLESS), so this one stays out of the way.
 #ifndef UM_WINDOW_STANDALONE
 #define UM_WINDOW_STANDALONE
@@ -70,6 +70,7 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID) {
     if (GetPrivateProfileIntA("Window", "Borderless", 0, ini) == 0) return TRUE;
     g_enableBorderless = true;
     g_enableScale = GetPrivateProfileIntA("Window", "Scale", 0, ini) != 0; // the monitor-sized, letterboxed window (um_window.cpp)
+    g_enableFrame = GetPrivateProfileIntA("Window", "Frame", 0, ini) != 0; // native movable frame, fixed client size (takes precedence over Scale)
     InstallWindowHooks();
     PluginLog("INFO", "um-window.asi loaded: borderless window on");
     return TRUE;

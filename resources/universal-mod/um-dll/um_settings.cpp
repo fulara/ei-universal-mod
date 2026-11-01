@@ -198,6 +198,8 @@ const SettingDef kSettings[] = {
         "; -- Window --"),
     BoolSetting("BORDERLESS_SCALE", &g_enableScale, false, true,
         "; With BORDERLESS: the window covers the whole monitor and the game's frame is scaled up to it (black bars keep the aspect ratio), so a lower resolution fills the screen. (true/false)"),
+    BoolSetting("BORDERLESS_FRAME", &g_enableFrame, false, true,
+        "; With BORDERLESS: a movable native title bar and fixed-size frame at the game resolution; overrides BORDERLESS_SCALE. Ctrl+left Alt releases the mouse, a client click captures it again. (true/false)"),
     BoolSetting("DLL_SERVER_ENABLED", &g_dllServerEnabled, false, true,
         "; Let um-multitool connect to the running game (this computer only, no password: it can read the game's memory). Restart needed; (true/false)",
         "; -- DLL server --"),
